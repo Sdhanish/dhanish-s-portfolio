@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, lazy, Suspense } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { AnimatePresence } from 'motion/react';
 import Lenis from 'lenis';
 import Navbar from './components/Navbar';
@@ -12,9 +12,8 @@ import Contact from './components/Contact';
 import Footer from './components/Footer';
 import InitialLoader from './components/InitialLoader';
 import WhatsAppButton from './components/WhatsAppButton';
+import ResumeModal from './components/ResumeModal';
 import { portfolioData } from './data';
-
-const ResumeModal = lazy(() => import('./components/ResumeModal'));
 
 export default function App() {
   const [theme, setTheme] = useState<'light' | 'dark'>(() => {
@@ -143,12 +142,10 @@ export default function App() {
       {/* Animated Printable Resume Modal */}
       <AnimatePresence>
         {isResumeOpen && (
-          <Suspense fallback={null}>
-            <ResumeModal
-              isOpen={isResumeOpen}
-              onClose={handleCloseResume}
-            />
-          </Suspense>
+          <ResumeModal
+            isOpen={isResumeOpen}
+            onClose={handleCloseResume}
+          />
         )}
       </AnimatePresence>
     </div>
