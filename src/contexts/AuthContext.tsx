@@ -31,17 +31,21 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     console.log(`[Auth Init] Checking auth state on origin: "${window.location.origin}", host: "${window.location.hostname}"`);
+    console.log(`[Auth Init] Invoking getRedirectResult(auth)...`);
     
     // Check for incoming redirect sign-in result
     getRedirectResult(auth)
       .then((result) => {
+        console.log(`[Auth getRedirectResult Promise Resolved] Result object:`, result);
         if (result?.user) {
-          console.log(`[Auth Redirect Result] Successfully authenticated user: ${result.user.email}`);
+          console.log(`[Auth Redirect Result Success] User: ${result.user.email} (uid: ${result.user.uid})`);
+        } else {
+          console.log(`[Auth Redirect Result] getRedirectResult resolved with null/undefined (no pending redirect auth payload on domain "${window.location.hostname}").`);
         }
       })
       .catch((err) => {
-        console.warn(`[Auth Redirect Result Error]`, err);
-        if (err.code === 'auth/unauthorized-domain') {
+        console.error(`[Auth Redirect Result Error] [Code: ${err?.code}]:`, err);
+        if (err?.code === 'auth/unauthorized-domain') {
           setAuthError(`Unauthorized Domain: The domain "${window.location.hostname}" is not authorized in your Firebase Console. Please add it under Authentication -> Settings -> Authorized Domains.`);
         } else {
           setAuthError(err.message || 'Redirect sign-in failed');
@@ -49,7 +53,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       });
 
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
-      console.log(`[Auth State Change] User state: ${user ? user.email : 'Unauthenticated'}`);
+      console.log(`[Auth onAuthStateChanged] Listener triggered. User state:`, user ? `Logged in as ${user.email} (uid: ${user.uid})` : 'Unauthenticated (null)');
       setLoading(true);
       if (user) {
         const userEmail = user.email ? user.email.toLowerCase().trim() : '';

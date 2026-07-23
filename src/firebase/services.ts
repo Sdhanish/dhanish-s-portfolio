@@ -67,23 +67,32 @@ export function handleFirestoreError(error: unknown, operationType: OperationTyp
     operationType,
     path
   };
-  console.warn(`[Firestore ${operationType} on ${path || 'unknown'}]: Operating with local fallback.`, errInfo.error);
+  console.warn(`[Firestore ${operationType} on ${path || 'unknown'} Failed]: Operating with local fallback. Details:`, errInfo.error, error);
   return errInfo;
 }
 
-// Timeout helper for Firestore queries to prevent long 10s backend hangs
-export function withTimeout<T>(promise: Promise<T>, timeoutMs: number = 2500): Promise<T> {
+// Timeout helper for Firestore queries with 15000ms limit and detailed logging
+export function withTimeout<T>(promise: Promise<T>, timeoutMs: number = 15000, label: string = 'Firestore query'): Promise<T> {
+  const startTime = Date.now();
+  console.log(`[${label}] Request started (timeout set to ${timeoutMs}ms)...`);
   return new Promise((resolve, reject) => {
     const timer = setTimeout(() => {
-      reject(new Error(`Firestore query timed out after ${timeoutMs}ms`));
+      const elapsed = Date.now() - startTime;
+      const timeoutErr = new Error(`[${label}] Timed out after ${elapsed}ms`);
+      console.warn(`[${label}] TIMEOUT EXCEEDED after ${elapsed}ms`);
+      reject(timeoutErr);
     }, timeoutMs);
     promise
       .then((res) => {
         clearTimeout(timer);
+        const elapsed = Date.now() - startTime;
+        console.log(`[${label}] Succeeded in ${elapsed}ms`);
         resolve(res);
       })
       .catch((err) => {
         clearTimeout(timer);
+        const elapsed = Date.now() - startTime;
+        console.error(`[${label}] Failed after ${elapsed}ms:`, err);
         reject(err);
       });
   });
@@ -108,7 +117,7 @@ export async function initializeFirestoreData(force: boolean = false): Promise<{
     const settingsRef = doc(db, 'settings', 'main');
     let settingsSnap;
     try {
-      settingsSnap = await withTimeout(getDoc(settingsRef), 2500);
+      settingsSnap = await withTimeout(getDoc(settingsRef), 15000, 'Init Settings Check');
     } catch (err) {
       handleFirestoreError(err, OperationType.GET, 'settings/main');
       console.warn('[initializeFirestoreData] Firestore access limited or permission denied. Operating with local fallbacks.');
@@ -136,7 +145,7 @@ export async function initializeFirestoreData(force: boolean = false): Promise<{
 
     // 3. Projects
     try {
-      const existingProjects = await withTimeout(getDocs(collection(db, 'projects')), 2500);
+      const existingProjects = await withTimeout(getDocs(collection(db, 'projects')), 15000, 'Init Projects Check');
       if (existingProjects.empty || force) {
         if (force && !existingProjects.empty) {
           for (const docSnap of existingProjects.docs) {
@@ -155,7 +164,7 @@ export async function initializeFirestoreData(force: boolean = false): Promise<{
 
     // 4. Skills
     try {
-      const existingSkills = await withTimeout(getDocs(collection(db, 'skills')), 2500);
+      const existingSkills = await withTimeout(getDocs(collection(db, 'skills')), 15000, 'Init Skills Check');
       if (existingSkills.empty || force) {
         if (force && !existingSkills.empty) {
           for (const docSnap of existingSkills.docs) {
@@ -174,7 +183,7 @@ export async function initializeFirestoreData(force: boolean = false): Promise<{
 
     // 5. Services
     try {
-      const existingServices = await withTimeout(getDocs(collection(db, 'services')), 2500);
+      const existingServices = await withTimeout(getDocs(collection(db, 'services')), 15000, 'Init Services Check');
       if (existingServices.empty || force) {
         if (force && !existingServices.empty) {
           for (const docSnap of existingServices.docs) {
@@ -193,7 +202,7 @@ export async function initializeFirestoreData(force: boolean = false): Promise<{
 
     // 6. Timeline
     try {
-      const existingTimeline = await withTimeout(getDocs(collection(db, 'timeline')), 2500);
+      const existingTimeline = await withTimeout(getDocs(collection(db, 'timeline')), 15000, 'Init Timeline Check');
       if (existingTimeline.empty || force) {
         if (force && !existingTimeline.empty) {
           for (const docSnap of existingTimeline.docs) {
@@ -223,7 +232,7 @@ export async function initializeFirestoreData(force: boolean = false): Promise<{
 export async function fetchPersonalInfo(): Promise<PersonalInfo> {
   try {
     const docRef = doc(db, 'personalInfo', 'main');
-    const snap = await withTimeout(getDoc(docRef), 2500);
+    const snap = await withTimeout(getDoc(docRef), 15000, 'Fetch PersonalInfo');
     if (snap.exists()) {
       return snap.data() as PersonalInfo;
     }
@@ -236,8 +245,10 @@ export async function fetchPersonalInfo(): Promise<PersonalInfo> {
 
 export async function savePersonalInfo(data: PersonalInfo): Promise<void> {
   try {
+    console.log('[savePersonalInfo] Request started...');
     const docRef = doc(db, 'personalInfo', 'main');
     await setDoc(docRef, data, { merge: true });
+    console.log('[savePersonalInfo] Succeeded');
   } catch (err) {
     handleFirestoreError(err, OperationType.WRITE, 'personalInfo/main');
     throw err;
@@ -249,7 +260,7 @@ export async function fetchProjects(): Promise<ProjectItem[]> {
   try {
     const colRef = collection(db, 'projects');
     const q = query(colRef, orderBy('order', 'asc'));
-    const snap = await withTimeout(getDocs(q), 2500);
+    const snap = await withTimeout(getDocs(q), 15000, 'Fetch Projects');
 
     if (snap.empty) {
       return portfolioData.projects.map((p, i) => ({ ...p, id: `default-proj-${i}` }));
@@ -318,7 +329,7 @@ export async function fetchSkills(): Promise<SkillItem[]> {
   try {
     const colRef = collection(db, 'skills');
     const q = query(colRef, orderBy('order', 'asc'));
-    const snap = await withTimeout(getDocs(q), 2500);
+    const snap = await withTimeout(getDocs(q), 15000, 'Fetch Skills');
 
     if (snap.empty) {
       return portfolioData.skills.map((s, i) => ({ ...s, id: `default-skill-${i}` }));
@@ -367,7 +378,7 @@ export async function fetchServices(): Promise<ServiceItem[]> {
   try {
     const colRef = collection(db, 'services');
     const q = query(colRef, orderBy('order', 'asc'));
-    const snap = await withTimeout(getDocs(q), 2500);
+    const snap = await withTimeout(getDocs(q), 15000, 'Fetch Services');
 
     if (snap.empty) {
       return portfolioData.services.map((s, i) => ({ ...s, id: `default-service-${i}` }));
@@ -416,7 +427,7 @@ export async function fetchTimeline(): Promise<TimelineItem[]> {
   try {
     const colRef = collection(db, 'timeline');
     const q = query(colRef, orderBy('order', 'asc'));
-    const snap = await withTimeout(getDocs(q), 2500);
+    const snap = await withTimeout(getDocs(q), 15000, 'Fetch Timeline');
 
     if (snap.empty) {
       return portfolioData.timeline.map((t, i) => ({ ...t, id: t.id || `default-time-${i}` }));
@@ -465,7 +476,7 @@ export async function fetchMessages(): Promise<MessageItem[]> {
   try {
     const colRef = collection(db, 'messages');
     const q = query(colRef, orderBy('createdAt', 'desc'));
-    const snap = await withTimeout(getDocs(q), 2500);
+    const snap = await withTimeout(getDocs(q), 15000, 'Fetch Messages');
     return snap.docs.map(docSnap => {
       const data = docSnap.data();
       return {
@@ -519,7 +530,7 @@ export async function deleteMessage(id: string): Promise<void> {
 export async function fetchSettings(): Promise<SettingsItem> {
   try {
     const docRef = doc(db, 'settings', 'main');
-    const snap = await withTimeout(getDoc(docRef), 2500);
+    const snap = await withTimeout(getDoc(docRef), 15000, 'Fetch Settings');
     if (snap.exists()) {
       return { ...defaultSettings, ...(snap.data() as Partial<SettingsItem>) };
     }
