@@ -138,7 +138,7 @@ export default function Hero({ onOpenResume }: HeroProps) {
   const typingWords = useMemo(() => {
     return roles && roles.length > 0 
       ? roles.map(r => r.toUpperCase())
-      : ["FULL STACK DEVELOPER", "MERN STACK EXPERT", "SOFTWARE ENGINEER", "NEXT.JS ARCHITECT"];
+      : ["FULL STACK DEVELOPER", "MERN STACK DEVELOPER", "FRONTEND DEVELOPER"];
   }, [roles]);
 
   const handleScrollToProjects = (e: MouseEvent<HTMLButtonElement>) => {
@@ -179,7 +179,7 @@ export default function Hero({ onOpenResume }: HeroProps) {
       />
 
       {/* Readability overlay */}
-      <div className="absolute inset-0 bg-black/60 dark:bg-black/75 lg:bg-white/0 lg:dark:bg-black/30 pointer-events-none" />
+      <div className="absolute inset-0 bg-black/60 dark:bg-black/75 lg:bg-black/10 lg:dark:bg-black/30 pointer-events-none" />
 
       {/* Main Container */}
       <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-12 lg:px-20 w-full flex-1 flex flex-col justify-center pt-24 pb-16">
@@ -197,7 +197,7 @@ export default function Hero({ onOpenResume }: HeroProps) {
               transition={{ duration: 0.6 }}
             >
               <span className="inline-block font-cormorant scale-y-[1.3] font-extrabold italic text-5xl lg:text-6xl xl:text-7xl tracking-[0.15em] text-[#1B2410]/30 dark:text-neutral-300/10 select-none">
-                Hey,
+                Hello,
               </span>
             </motion.div>
 
@@ -302,8 +302,8 @@ export default function Hero({ onOpenResume }: HeroProps) {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
           >
-            <span className="inline-block scale-y-[1.2] font-extrabold font-cormorant text-xl italic tracking-[0.3em] text-neutral-300/80 font-bold block select-none">
-              Hey,
+            <span className="inline-block  font-extrabold font-cormorant text-xl italic tracking-[0.3em] text-neutral-300/80 font-bold block select-none">
+              Hello,
             </span>
           </motion.div>
 

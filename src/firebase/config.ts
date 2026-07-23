@@ -1,6 +1,6 @@
 import { initializeApp, getApps } from 'firebase/app';
 import { getAuth, GoogleAuthProvider } from 'firebase/auth';
-import { getFirestore } from 'firebase/firestore';
+import { initializeFirestore } from 'firebase/firestore';
 import { getStorage } from 'firebase/storage';
 import appletConfig from '../../firebase-applet-config.json';
 
@@ -25,8 +25,14 @@ export const auth = getAuth(app);
 export const googleProvider = new GoogleAuthProvider();
 googleProvider.setCustomParameters({ prompt: 'select_account' });
 
-// Initialize Firestore specifying custom database ID
-export const db = getFirestore(app, firestoreDatabaseId);
+// Initialize Firestore specifying custom database ID and auto-detecting long polling fallback
+export const db = initializeFirestore(
+  app,
+  {
+    experimentalAutoDetectLongPolling: true,
+  },
+  firestoreDatabaseId
+);
 
 // Initialize Storage
 export const storage = getStorage(app);

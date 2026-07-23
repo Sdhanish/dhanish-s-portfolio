@@ -3,10 +3,10 @@ import { PortfolioData } from './types';
 export const portfolioData: PortfolioData = {
   personalInfo: {
     name: "DHANISH S",
-    roles: ["Full Stack Developer", "MERN Stack Specialist", "Software Engineer"],
-    introduction: "Recent MCA graduate and Full Stack Developer with hands-on experience building responsive web applications using React.js, Node.js, Express.js, and modern databases.",
-    aboutText: "Recent MCA graduate with hands-on experience in developing full-stack web applications using React.js, Node.js, Express.js, JavaScript, PHP, and MySQL/MongoDB. Experienced in building responsive user interfaces, RESTful APIs, authentication systems, and database-driven applications through academic projects and training. Strong understanding of software development principles, Git workflows, debugging, and problem-solving. Passionate about building scalable web applications and eager to contribute as a Full Stack Developer.",
-    location: "Kochi, Kerala",
+    roles: ["Full Stack Developer", "MERN Stack Developer", "Frontend Developer"],
+    introduction: "Full Stack Developer with hands-on experience building responsive web applications using React.js, Node.js, Express.js, and modern databases.",
+    aboutText: "MCA graduate with hands-on experience in developing full-stack web applications using React.js, Node.js, Express.js, JavaScript, PHP, and MySQL/MongoDB. Experienced in building responsive user interfaces, RESTful APIs, authentication systems, and database-driven applications through academic projects and training. Strong understanding of software development principles, Git workflows, debugging, and problem-solving. Passionate about building scalable web applications and eager to contribute as a Full Stack Developer.",
+    location: "Pathanathitta, Kerala",
     email: "sdhanish92@gmail.com",
     phone: "+91 7909122902",
     linkedin: "https://linkedin.com/in/dhanishs",
