@@ -1,13 +1,20 @@
 import { initializeApp, getApps } from 'firebase/app';
 import { getAuth, GoogleAuthProvider } from 'firebase/auth';
-import { initializeFirestore } from 'firebase/firestore';
+import { getFirestore } from 'firebase/firestore';
 import { getStorage } from 'firebase/storage';
 import appletConfig from '../../firebase-applet-config.json';
 
-// Construct active Firebase configuration (prefers environment variables if provided)
+// Construct active Firebase configuration
+const getCurrentAuthDomain = () => {
+  if (typeof window !== 'undefined' && window.location.hostname && !window.location.hostname.includes('localhost') && !window.location.hostname.includes('run.app')) {
+    return window.location.hostname;
+  }
+  return import.meta.env.VITE_FIREBASE_AUTH_DOMAIN || appletConfig.authDomain;
+};
+
 const config = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY || appletConfig.apiKey,
-  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN || appletConfig.authDomain,
+  authDomain: getCurrentAuthDomain(),
   projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID || appletConfig.projectId,
   storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET || appletConfig.storageBucket,
   messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID || appletConfig.messagingSenderId,
@@ -25,10 +32,8 @@ export const auth = getAuth(app);
 export const googleProvider = new GoogleAuthProvider();
 googleProvider.setCustomParameters({ prompt: 'select_account' });
 
-// Initialize Firestore specifying custom database ID and force long-polling for sandbox/proxy environment compatibility
-export const db = initializeFirestore(app, {
-  experimentalForceLongPolling: true,
-}, firestoreDatabaseId);
+// Initialize Firestore specifying custom database ID
+export const db = getFirestore(app, firestoreDatabaseId);
 
 // Initialize Storage
 export const storage = getStorage(app);

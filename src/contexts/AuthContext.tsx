@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useState, ReactNode } from 'react';
-import { User, signInWithPopup, signOut, onAuthStateChanged } from 'firebase/auth';
+import { User, signInWithPopup, signInWithRedirect, getRedirectResult, signOut, onAuthStateChanged } from 'firebase/auth';
 import { auth, googleProvider } from '../firebase/config';
 
 interface AuthContextType {
@@ -8,6 +8,7 @@ interface AuthContextType {
   loading: boolean;
   authError: string | null;
   loginWithGoogle: () => Promise<void>;
+  loginWithGoogleRedirect: () => Promise<void>;
   logout: () => Promise<void>;
   clearAuthError: () => void;
 }
@@ -29,7 +30,26 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [authError, setAuthError] = useState<string | null>(null);
 
   useEffect(() => {
+    console.log(`[Auth Init] Checking auth state on origin: "${window.location.origin}", host: "${window.location.hostname}"`);
+    
+    // Check for incoming redirect sign-in result
+    getRedirectResult(auth)
+      .then((result) => {
+        if (result?.user) {
+          console.log(`[Auth Redirect Result] Successfully authenticated user: ${result.user.email}`);
+        }
+      })
+      .catch((err) => {
+        console.warn(`[Auth Redirect Result Error]`, err);
+        if (err.code === 'auth/unauthorized-domain') {
+          setAuthError(`Unauthorized Domain: The domain "${window.location.hostname}" is not authorized in your Firebase Console. Please add it under Authentication -> Settings -> Authorized Domains.`);
+        } else {
+          setAuthError(err.message || 'Redirect sign-in failed');
+        }
+      });
+
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
+      console.log(`[Auth State Change] User state: ${user ? user.email : 'Unauthenticated'}`);
       setLoading(true);
       if (user) {
         const userEmail = user.email ? user.email.toLowerCase().trim() : '';
@@ -59,22 +79,59 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const loginWithGoogle = async () => {
     setAuthError(null);
     setLoading(true);
+    console.log(`[Auth Step 1/3] Initiating Google Sign-In with popup on ${window.location.origin}...`);
+    
     try {
       const result = await signInWithPopup(auth, googleProvider);
       const user = result.user;
       if (user) {
+        console.log(`[Auth Step 2/3] Popup Auth Succeeded for user: ${user.email}`);
         setCurrentUser(user);
         setIsAdmin(true);
         setAuthError(null);
       }
     } catch (err: any) {
-      console.error('Google Sign-In Error:', err);
+      console.warn(`[Auth Step 2/3] Popup Auth Failed/Blocked [code: ${err.code}]:`, err);
+      
       if (err.code === 'auth/unauthorized-domain') {
         setAuthError(`Unauthorized Domain: The domain "${window.location.hostname}" is not authorized in your Firebase Console. Please add it under Authentication -> Settings -> Authorized Domains.`);
-      } else if (err.code !== 'auth/popup-closed-by-user') {
+        setLoading(false);
+        return;
+      }
+
+      // If popup was closed by user, blocked by browser COOP, or cancelled, fall back to redirect automatically
+      if (
+        err.code === 'auth/popup-closed-by-user' ||
+        err.code === 'auth/popup-blocked' ||
+        err.code === 'auth/cancelled-popup-request' ||
+        err.message?.includes('Cross-Origin-Opener-Policy') ||
+        err.message?.includes('closed')
+      ) {
+        console.log(`[Auth Step 3/3] Popup blocked/closed by COOP policy on desktop browser. Falling back to signInWithRedirect...`);
+        try {
+          await signInWithRedirect(auth, googleProvider);
+          return; // Redirecting browser
+        } catch (redirectErr: any) {
+          console.error(`[Auth Step 3/3] Redirect Fallback Failed:`, redirectErr);
+          setAuthError(`Google Redirect Auth Failed: ${redirectErr.message}`);
+        }
+      } else {
         setAuthError(err.message || 'Failed to sign in with Google');
       }
     } finally {
+      setLoading(false);
+    }
+  };
+
+  const loginWithGoogleRedirect = async () => {
+    setAuthError(null);
+    setLoading(true);
+    console.log(`[Auth] Directly launching signInWithRedirect on ${window.location.origin}...`);
+    try {
+      await signInWithRedirect(auth, googleProvider);
+    } catch (err: any) {
+      console.error(`[Auth Redirect Launch Failed]`, err);
+      setAuthError(err.message || 'Failed to launch Google Redirect Auth');
       setLoading(false);
     }
   };
@@ -100,6 +157,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         loading,
         authError,
         loginWithGoogle,
+        loginWithGoogleRedirect,
         logout,
         clearAuthError
       }}
