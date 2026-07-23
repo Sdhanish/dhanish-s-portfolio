@@ -5,16 +5,9 @@ import { getStorage } from 'firebase/storage';
 import appletConfig from '../../firebase-applet-config.json';
 
 // Construct active Firebase configuration
-const getCurrentAuthDomain = () => {
-  if (typeof window !== 'undefined' && window.location.hostname && !window.location.hostname.includes('localhost') && !window.location.hostname.includes('run.app')) {
-    return window.location.hostname;
-  }
-  return import.meta.env.VITE_FIREBASE_AUTH_DOMAIN || appletConfig.authDomain;
-};
-
 const config = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY || appletConfig.apiKey,
-  authDomain: getCurrentAuthDomain(),
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN || appletConfig.authDomain,
   projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID || appletConfig.projectId,
   storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET || appletConfig.storageBucket,
   messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID || appletConfig.messagingSenderId,
