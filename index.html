@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dhanish S. | Full Stack Developer & MERN Specialist</title>
+
+<link rel="icon" type="image/png" href="/logo.png" />
+<link rel="apple-touch-icon" href="/logo.png" />
+
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Official portfolio of Dhanish S, a Full Stack Developer & MERN Specialist based in Kochi, Kerala. Specialized in React.js, Node.js, Express.js, Next.js, and modern databases." />
+    <meta name="keywords" content="Dhanish S, Dhanish, Full Stack Developer, MERN Stack Developer, React Developer, Frontend Developer, Node.js, Express.js, Next.js, Web Developer Portfolio, Kochi, Kerala" />
+    <meta name="author" content="Dhanish S" />
+    <meta name="robots" content="index, follow" />
+    <meta name="theme-color" content="#0D0D0D" />
+    <link rel="canonical" href="https://dhanish-s.vercel.app/" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://dhanish-s.vercel.app/" />
+    <meta property="og:title" content="Dhanish S. | Full Stack Developer & MERN Specialist" />
+    <meta property="og:description" content="Explore the portfolio of Dhanish S - Full Stack Developer specializing in MERN stack, React.js, Next.js, Node.js, and scalable web solutions." />
+    <meta property="og:site_name" content="Dhanish S Portfolio" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:image" content="https://dhanish-s.vercel.app/og-image.png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="Dhanish S Portfolio" />
+
+    <!-- Twitter Cards -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Dhanish S. | Full Stack Developer & MERN Specialist" />
+    <meta name="twitter:description" content="Explore the portfolio of Dhanish S - Full Stack Developer specializing in MERN stack, React.js, Next.js, Node.js, and scalable web solutions." />
+    <meta name="twitter:image" content="https://dhanish-s.vercel.app/og-image.png" />
+
+    <!-- Preconnect & Fonts Performance Optimizations -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <!-- Theme Inline Script to Prevent FOUT -->
+    <script>
+      (function() {
+        try {
+          var saved = localStorage.getItem('portfolio-theme');
+          if (saved === 'dark' || (!saved && (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches || true))) {
+            document.documentElement.classList.add('dark');
+          } else {
+            document.documentElement.classList.remove('dark');
+          }
+        } catch (e) {}
+      })();
+    </script>
+
+    <!-- JSON-LD Structured Data (Person & WebSite Schema) -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "Person",
+            "@id": "https://dhanish-s.vercel.app/#person",
+            "name": "Dhanish S",
+            "jobTitle": "Full Stack Developer & MERN Specialist",
+            "description": "Full Stack Developer with hands-on experience building responsive web applications using React.js, Node.js, Express.js, and modern databases.",
+            "url": "https://dhanish-s.vercel.app/",
+            "email": "sdhanish92@gmail.com",
+            "telephone": "+917909122902",
+            "address": {
+              "@type": "PostalAddress",
+              "addressLocality": "Kochi",
+              "addressRegion": "Kerala",
+              "addressCountry": "India"
+            },
+            "sameAs": [
+              "https://github.com/Sdhanish",
+              "https://linkedin.com/in/dhanishs",
+              "https://instagram.com/sdhanish_"
+            ]
+          },
+          {
+            "@type": "WebSite",
+            "@id": "https://dhanish-s.vercel.app/#website",
+            "url": "https://dhanish-s.vercel.app/",
+            "name": "Dhanish S Portfolio",
+            "publisher": {
+              "@id": "https://dhanish-s.vercel.app/#person"
+            }
+          }
+        ]
+      }
+    </script>
+  </head>
+  <body>
+    <!-- Accessibility Skip Link -->
+    <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:bg-[#6C8E12] focus:text-white dark:focus:bg-[#BDF869] dark:focus:text-black focus:font-extrabold focus:rounded-xl focus:shadow-2xl transition-all">
+      Skip to main content
+    </a>
+
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
+

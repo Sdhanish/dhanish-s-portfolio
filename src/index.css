@@ -1,0 +1,82 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Manrope:wght@600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap');
+@import "tailwindcss";
+
+@variant dark (&:where(.dark, .dark *));
+
+:root {
+  --bg: #F7F7F4;
+  --surface: #FFFFFF;
+  --surface-hover: #F1F1ED;
+  --text-primary: #111111;
+  --text-secondary: #666666;
+  --text-muted: #9A9A9A;
+  --border: #E5E5E5;
+}
+
+.dark {
+  --bg: #0D0D0D;
+  --surface: #171717;
+  --surface-hover: #202020;
+  --text-primary: #FFFFFF;
+  --text-secondary: #C4C4C4;
+  --text-muted: #8A8A8A;
+  --border: rgba(255, 255, 255, 0.08);
+}
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Manrope", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+  --font-great-vibes: "Great Vibes", cursive;
+  --font-cormorant: "Cormorant Garamond", serif;
+
+  /* Premium Accent Color */
+  --color-brand-accent: #D6FF4F;
+  --color-brand-accent-hover: #C5EF3E;
+
+  /* Theme semantic variables */
+  --color-portfolio-bg: var(--bg);
+  --color-portfolio-surface: var(--surface);
+  --color-portfolio-surface-hover: var(--surface-hover);
+  --color-portfolio-text-primary: var(--text-primary);
+  --color-portfolio-text-secondary: var(--text-secondary);
+  --color-portfolio-text-muted: var(--text-muted);
+  --color-portfolio-border: var(--border);
+
+  /* Compatibility & Direct override fallbacks */
+  --color-brand-yellow: #D6FF4F;
+  --color-brand-hover: #C5EF3E;
+  --color-matte-black: #0D0D0D;
+  --color-card-dark: #171717;
+}
+
+/* Custom font utilities */
+.font-great-vibes {
+  font-family: "Great Vibes", cursive;
+}
+
+.font-cormorant {
+  font-family: "Cormorant Garamond", serif;
+}
+
+/* Base scroll smooth rules */
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 80px;
+}
+
+/* Fine-tune smooth webkit antialiasing */
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Custom fade animation for abstract shapes */
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
