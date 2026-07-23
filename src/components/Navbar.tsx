@@ -31,26 +31,49 @@ export default function Navbar({ theme, toggleTheme, onOpenResume }: NavbarProps
   ];
 
   useEffect(() => {
+    let ticking = false;
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
-
-      // Determine active section based on scroll position
-      const scrollPosition = window.scrollY + 160; // offset
-      for (const link of navLinks) {
-        const element = document.querySelector(link.href);
-        if (element) {
-          const top = (element as HTMLElement).offsetTop;
-          const height = (element as HTMLElement).offsetHeight;
-          if (scrollPosition >= top && scrollPosition < top + height) {
-            setActiveSection(link.href.replace('#', ''));
-          }
-        }
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const scrolled = window.scrollY > 20;
+          setIsScrolled((prev) => (prev !== scrolled ? scrolled : prev));
+          ticking = false;
+        });
+        ticking = true;
       }
     };
-    window.addEventListener('scroll', handleScroll);
-    // Run once initially to set the state
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
     handleScroll();
-    return () => window.removeEventListener('scroll', handleScroll);
+
+    // IntersectionObserver for asynchronous, zero-reflow active section detection
+    const observerOptions = {
+      root: null,
+      rootMargin: '-20% 0px -70% 0px',
+      threshold: 0,
+    };
+
+    const sectionElements: Element[] = [];
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          setActiveSection(entry.target.id);
+        }
+      });
+    }, observerOptions);
+
+    navLinks.forEach((link) => {
+      const el = document.querySelector(link.href);
+      if (el) {
+        observer.observe(el);
+        sectionElements.push(el);
+      }
+    });
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      observer.disconnect();
+    };
   }, []);
 
   const handleLinkClick = (e: MouseEvent<HTMLAnchorElement>, href: string) => {
@@ -72,7 +95,7 @@ export default function Navbar({ theme, toggleTheme, onOpenResume }: NavbarProps
     <>
       <nav
         id="navbar"
-        className={`fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[92%] max-w-6xl rounded-full transition-all duration-500 border ${
+        className={`fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[92%] max-w-6xl rounded-full transition-all duration-500 border gpu-layer ${
           isScrolled
             ? 'bg-white/35 dark:bg-neutral-950/85 backdrop-blur-md border-[#6C8E12]/25 dark:border-neutral-800/80 py-2.5 shadow-lg shadow-black/5 dark:shadow-none'
             : 'bg-white/20 dark:bg-neutral-950/50 backdrop-blur-sm border-[#6C8E12]/20 dark:border-neutral-800/40 py-3.5'

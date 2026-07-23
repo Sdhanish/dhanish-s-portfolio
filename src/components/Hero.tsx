@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo, MouseEvent } from 'react';
+import { useState, useEffect, useMemo, memo, MouseEvent } from 'react';
 import { ArrowUpRight, Github, Linkedin, Mail } from 'lucide-react';
 import { motion } from 'motion/react';
 import { usePortfolio } from '../contexts/PortfolioContext';
@@ -9,6 +9,54 @@ import defaultHeroDark from '../assets/images/dhanish-light-theme.png';
 interface HeroProps {
   onOpenResume: () => void;
 }
+
+// Subcomponent for typing text so timer ticks do NOT re-render parent Hero component
+const TypedRoles = memo(function TypedRoles({ words }: { words: string[] }) {
+  const [wordIndex, setWordIndex] = useState(0);
+  const [displayedText, setDisplayedText] = useState('');
+  const [isDeleting, setIsDeleting] = useState(false);
+
+  useEffect(() => {
+    if (!words || words.length === 0) return;
+
+    const safeIndex = wordIndex % words.length;
+    const currentWord = words[safeIndex] || '';
+
+    let timer: NodeJS.Timeout;
+
+    if (isDeleting) {
+      if (displayedText === '') {
+        timer = setTimeout(() => {
+          setIsDeleting(false);
+          setWordIndex((prev) => (prev + 1) % words.length);
+        }, 300);
+      } else {
+        timer = setTimeout(() => {
+          setDisplayedText((prev) => prev.slice(0, -1));
+        }, 40);
+      }
+    } else {
+      if (displayedText === currentWord) {
+        timer = setTimeout(() => {
+          setIsDeleting(true);
+        }, 2000);
+      } else {
+        timer = setTimeout(() => {
+          setDisplayedText(currentWord.slice(0, displayedText.length + 1));
+        }, 75);
+      }
+    }
+
+    return () => clearTimeout(timer);
+  }, [displayedText, isDeleting, wordIndex, words]);
+
+  return (
+    <span>
+      {displayedText}
+      <span className="animate-[pulse_1s_infinite] ml-1 text-[#6C8E12] dark:text-[#BDF869]">|</span>
+    </span>
+  );
+});
 
 export default function Hero({ onOpenResume }: HeroProps) {
   const { personalInfo } = usePortfolio();
@@ -93,44 +141,6 @@ export default function Hero({ onOpenResume }: HeroProps) {
       : ["FULL STACK DEVELOPER", "MERN STACK EXPERT", "SOFTWARE ENGINEER", "NEXT.JS ARCHITECT"];
   }, [roles]);
 
-  const [wordIndex, setWordIndex] = useState(0);
-  const [displayedText, setDisplayedText] = useState("");
-  const [isDeleting, setIsDeleting] = useState(false);
-
-  useEffect(() => {
-    if (!typingWords || typingWords.length === 0) return;
-
-    const safeIndex = wordIndex % typingWords.length;
-    const currentWord = typingWords[safeIndex] || "";
-
-    let timer: NodeJS.Timeout;
-
-    if (isDeleting) {
-      if (displayedText === "") {
-        timer = setTimeout(() => {
-          setIsDeleting(false);
-          setWordIndex((prev) => (prev + 1) % typingWords.length);
-        }, 300);
-      } else {
-        timer = setTimeout(() => {
-          setDisplayedText((prev) => prev.slice(0, -1));
-        }, 40);
-      }
-    } else {
-      if (displayedText === currentWord) {
-        timer = setTimeout(() => {
-          setIsDeleting(true);
-        }, 2000);
-      } else {
-        timer = setTimeout(() => {
-          setDisplayedText(currentWord.slice(0, displayedText.length + 1));
-        }, 75);
-      }
-    }
-
-    return () => clearTimeout(timer);
-  }, [displayedText, isDeleting, wordIndex, typingWords]);
-
   const handleScrollToProjects = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     const projectsSection = document.querySelector('#projects');
@@ -154,23 +164,22 @@ export default function Hero({ onOpenResume }: HeroProps) {
   return (
     <section
       id="hero"
-      className="relative min-h-screen w-full flex flex-col justify-start overflow-hidden transition-colors duration-300"
+      className="relative min-h-screen w-full flex flex-col justify-start overflow-hidden transition-colors duration-300 gpu-layer"
     >
-      {/* Background image (slightly blurred, scaled up to hide blur edges) */}
-      {/* Background image for light mode */}
+      {/* Background image for light mode (GPU-accelerated, zero full-screen blur filter) */}
       <div
-        className="absolute inset-0 scale-[1.08] lg:scale-100 bg-cover bg-center bg-no-repeat blur-[2px] lg:blur-none block dark:hidden transition-all duration-300"
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat block dark:hidden transition-all duration-300 gpu-layer"
         style={{ backgroundImage: `url('${displayHeroLight}')` }}
       />
 
-      {/* Background image for dark mode */}
+      {/* Background image for dark mode (GPU-accelerated, zero full-screen blur filter) */}
       <div
-        className="absolute inset-0 scale-[1.08] lg:scale-100 bg-cover bg-center bg-no-repeat blur-[2px] lg:blur-none hidden dark:block transition-all duration-300"
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat hidden dark:block transition-all duration-300 gpu-layer"
         style={{ backgroundImage: `url('${displayHeroDark}')` }}
       />
 
-      {/* Readability overlay - centered radial black gradient on desktop with identical opacity for light & dark themes */}
-      <div className="absolute inset-0 bg-black/60 dark:bg-black/75 lg:bg-white/0  lg:dark:bg-black/30 pointer-events-none" />
+      {/* Readability overlay */}
+      <div className="absolute inset-0 bg-black/60 dark:bg-black/75 lg:bg-white/0 lg:dark:bg-black/30 pointer-events-none" />
 
       {/* Main Container */}
       <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-12 lg:px-20 w-full flex-1 flex flex-col justify-center pt-24 pb-16">
@@ -236,8 +245,7 @@ export default function Hero({ onOpenResume }: HeroProps) {
             <div className="space-y-2 text-right">
               <div className="min-h-[120px] lg:min-h-[220px] flex items-center justify-end py-4">
                 <h3 className="text-2xl sm:text-3xl lg:text-[3.5rem] xl:text-[4rem] font-sans font-extrabold tracking-tighter text-[#1B2410] dark:text-white leading-[1.1] uppercase max-w-md">
-                  {displayedText}
-                  <span className="animate-[pulse_1s_infinite] ml-1 text-[#6C8E12] dark:text-[#BDF869]">|</span>
+                  <TypedRoles words={typingWords} />
                 </h3>
               </div>
             </div>
@@ -312,8 +320,7 @@ export default function Hero({ onOpenResume }: HeroProps) {
           {/* 2. Title / Specialization - WHITE TEXT IN MOBILE / TABLET */}
           <div className="h-16 flex items-center justify-center px-4">
             <h3 className="text-2xl sm:text-3xl font-sans font-black tracking-tighter text-white leading-none uppercase">
-              {displayedText}
-              <span className="animate-[pulse_1s_infinite] ml-1 text-[#BDF869]">|</span>
+              <TypedRoles words={typingWords} />
             </h3>
           </div>
 

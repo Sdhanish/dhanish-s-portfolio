@@ -168,7 +168,7 @@ export default function Projects() {
               onDragEnd={isCarousel ? handleDragEnd : undefined}
               animate={{ x: isCarousel ? `-${activeSlide * (100 / visibleCards)}%` : '0%' }}
               transition={{ duration: 0.75, ease: [0.16, 1, 0.3, 1] }}
-              className={`flex ${isCarousel ? 'cursor-grab active:cursor-grabbing select-none' : ''}`}
+              className={`flex gpu-layer ${isCarousel ? 'cursor-grab active:cursor-grabbing select-none' : ''}`}
             >
               {displayProjects.map((project, index) => {
                 const origIndex = totalOriginal > 0 ? index % totalOriginal : 0;

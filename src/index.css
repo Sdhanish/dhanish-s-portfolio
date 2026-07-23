@@ -59,16 +59,30 @@
   font-family: "Cormorant Garamond", serif;
 }
 
-/* Base scroll smooth rules */
+/* Base scroll rules - Lenis handles smooth scrolling frame-by-frame; set auto to prevent dual-smoothing stutter */
 html {
-  scroll-behavior: smooth;
+  scroll-behavior: auto !important;
   scroll-padding-top: 80px;
 }
 
-/* Fine-tune smooth webkit antialiasing */
+/* Fine-tune rendering and hardware acceleration */
 body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* GPU hardware compositing optimization helpers */
+.gpu-layer {
+  will-change: transform, opacity;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* Performance optimization for offscreen sections */
+.content-visibility-auto {
+  content-visibility: auto;
+  contain-intrinsic-size: 1px 1000px;
 }
 
 /* Custom fade animation for abstract shapes */

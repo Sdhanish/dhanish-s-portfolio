@@ -93,7 +93,7 @@ export default function Skills() {
             No skills listed in this category.
           </div>
         ) : (
-          <motion.div layout className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 sm:gap-5">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 sm:gap-5">
           <AnimatePresence mode="popLayout">
             {visibleSkills.map((skill, index) => {
               const techConfig = techDetailsMap[skill.name];
@@ -102,16 +102,12 @@ export default function Skills() {
               return (
                 <motion.div
                   key={`${skill.id || skill.name}-${skill.category}-${index}`}
-                  layout
-                  initial={{ opacity: 0, scale: 0.9, y: 20 }}
+                  initial={{ opacity: 0, scale: 0.9, y: 15 }}
                   animate={{ opacity: 1, scale: 1, y: 0 }}
-                  exit={{ opacity: 0, scale: 0.9, y: 20 }}
-                  transition={{ duration: 0.35, delay: index * 0.02, ease: 'easeOut' }}
-                  whileHover={{ y: -7, scale: 1.02 }}
-                  className="group relative flex flex-col justify-between p-4 sm:p-5 bg-white/90 dark:bg-neutral-900/90 backdrop-blur-md rounded-2xl border border-neutral-200/90 dark:border-neutral-800/90 transition-all duration-300 cursor-pointer shadow-[0_8px_20px_-6px_rgba(0,0,0,0.06)] hover:shadow-[0_20px_35px_-8px_rgba(0,0,0,0.12)] dark:shadow-[0_8px_25px_-6px_rgba(0,0,0,0.5)] dark:hover:shadow-[0_22px_40px_-10px_rgba(0,0,0,0.8)] hover:border-[#6C8E12]/60 dark:hover:border-[#BDF869]/60"
-                  style={{
-                    transformStyle: 'preserve-3d',
-                  }}
+                  exit={{ opacity: 0, scale: 0.9, y: 15 }}
+                  transition={{ duration: 0.25, delay: index * 0.015, ease: 'easeOut' }}
+                  whileHover={{ y: -5, scale: 1.02 }}
+                  className="group relative flex flex-col justify-between p-4 sm:p-5 bg-white/90 dark:bg-neutral-900/90 rounded-2xl border border-neutral-200/90 dark:border-neutral-800/90 transition-all duration-200 cursor-pointer shadow-sm hover:shadow-xl dark:shadow-sm dark:hover:shadow-2xl hover:border-[#6C8E12]/60 dark:hover:border-[#BDF869]/60 gpu-layer"
                 >
                   {/* Subtle 3D Top-Glow Highlight */}
                   <div 
@@ -145,7 +141,7 @@ export default function Skills() {
               );
             })}
           </AnimatePresence>
-        </motion.div>
+        </div>
         )}
 
         {/* View More / Show Less Toggle Button */}

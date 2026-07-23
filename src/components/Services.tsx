@@ -198,7 +198,7 @@ export default function Services() {
               onDragEnd={handleDragEnd}
               animate={{ x: `-${activeSlide * (100 / visibleCards)}%` }}
               transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-              className="flex cursor-grab active:cursor-grabbing select-none"
+              className="flex cursor-grab active:cursor-grabbing select-none gpu-layer"
             >
               {displayServices.map((service, index) => {
                 const config = iconConfigMap[service.iconName] || iconConfigMap['Layout'];
