@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo, memo, MouseEvent } from 'react';
 import { ArrowUpRight, Github, Linkedin, Mail } from 'lucide-react';
-import { motion } from 'motion/react';
+import { motion, AnimatePresence, useReducedMotion } from 'motion/react';
 import { usePortfolio } from '../contexts/PortfolioContext';
 
 import defaultHeroLight from '../assets/images/dhanish-light-theme.png';
@@ -10,50 +10,126 @@ interface HeroProps {
   onOpenResume: () => void;
 }
 
-// Subcomponent for typing text so timer ticks do NOT re-render parent Hero component
-const TypedRoles = memo(function TypedRoles({ words }: { words: string[] }) {
-  const [wordIndex, setWordIndex] = useState(0);
-  const [displayedText, setDisplayedText] = useState('');
-  const [isDeleting, setIsDeleting] = useState(false);
+// Subcomponent for cinematic, smooth fading & sand/dust dissolve title transitions
+const CinematicRoles = memo(function CinematicRoles({
+  words,
+  align = 'right',
+}: {
+  words: string[];
+  align?: 'left' | 'center' | 'right';
+}) {
+  const [index, setIndex] = useState(0);
+  const shouldReduceMotion = useReducedMotion();
 
   useEffect(() => {
-    if (!words || words.length === 0) return;
+    if (!words || words.length <= 1) return;
+    const interval = setInterval(() => {
+      setIndex((prev) => (prev + 1) % words.length);
+    }, 3600);
 
-    const safeIndex = wordIndex % words.length;
-    const currentWord = words[safeIndex] || '';
+    return () => clearInterval(interval);
+  }, [words]);
 
-    let timer: NodeJS.Timeout;
+  const currentWord = words[index % (words.length || 1)] || '';
 
-    if (isDeleting) {
-      if (displayedText === '') {
-        timer = setTimeout(() => {
-          setIsDeleting(false);
-          setWordIndex((prev) => (prev + 1) % words.length);
-        }, 300);
-      } else {
-        timer = setTimeout(() => {
-          setDisplayedText((prev) => prev.slice(0, -1));
-        }, 40);
-      }
-    } else {
-      if (displayedText === currentWord) {
-        timer = setTimeout(() => {
-          setIsDeleting(true);
-        }, 2000);
-      } else {
-        timer = setTimeout(() => {
-          setDisplayedText(currentWord.slice(0, displayedText.length + 1));
-        }, 75);
-      }
-    }
+  // Generate deterministic offsets for letter dissolution & sand/dust effect
+  const letters = useMemo(() => {
+    return currentWord.split('').map((char, i) => {
+      const seed = (char.charCodeAt(0) * (i + 1)) % 100;
+      const xOffset = ((seed % 17) - 8) * 1.2; // -9.6px to +9.6px subtle horizontal dispersion
+      const yOffset = -10 - (seed % 8); // -10px to -18px upward float
+      const particleDelay = (i % 6) * 0.025; // Subtle staggered dissolve
+      return {
+        char,
+        xOffset,
+        yOffset,
+        particleDelay,
+      };
+    });
+  }, [currentWord]);
 
-    return () => clearTimeout(timer);
-  }, [displayedText, isDeleting, wordIndex, words]);
+  if (shouldReduceMotion) {
+    return <span className="inline-block">{currentWord}</span>;
+  }
 
   return (
-    <span>
-      {displayedText}
-      <span className="animate-[pulse_1s_infinite] ml-1 text-[#6C8E12] dark:text-[#BDF869]">|</span>
+    <span className="relative inline-block w-full">
+      <AnimatePresence mode="popLayout" initial={false}>
+        <motion.span
+          key={`role-${index}-${currentWord}`}
+          className="inline-flex flex-wrap items-center gap-x-[0.2em]"
+          style={{
+            justifyContent: align === 'right' ? 'flex-end' : align === 'center' ? 'center' : 'flex-start',
+            textAlign: align,
+          }}
+          initial="initial"
+          animate="animate"
+          exit="exit"
+        >
+          {letters.map((item, i) => (
+            <span key={i} className="relative inline-block overflow-visible whitespace-pre">
+              <motion.span
+                className="inline-block"
+                variants={{
+                  initial: {
+                    opacity: 0,
+                    y: 8,
+                    filter: 'blur(8px)',
+                    scale: 0.97,
+                  },
+                  animate: {
+                    opacity: 1,
+                    y: 0,
+                    filter: 'blur(0px)',
+                    scale: 1,
+                    transition: {
+                      duration: 0.8,
+                      ease: [0.16, 1, 0.3, 1],
+                      delay: i * 0.018,
+                    },
+                  },
+                  exit: {
+                    opacity: 0,
+                    y: item.yOffset,
+                    x: item.xOffset,
+                    filter: 'blur(10px)',
+                    scale: 1.06,
+                    transition: {
+                      duration: 0.85,
+                      ease: [0.25, 0.1, 0.25, 1],
+                      delay: item.particleDelay,
+                    },
+                  },
+                }}
+              >
+                {item.char === ' ' ? '\u00A0' : item.char}
+              </motion.span>
+
+              {/* Fine dust particle floating away on exit */}
+              <motion.span
+                className="absolute top-1/2 left-1/2 w-1 h-1 rounded-full bg-[#6C8E12]/70 dark:bg-[#BDF869]/70 pointer-events-none"
+                style={{ marginLeft: '-2px', marginTop: '-2px' }}
+                variants={{
+                  initial: { opacity: 0, scale: 0 },
+                  animate: { opacity: 0, scale: 0 },
+                  exit: {
+                    opacity: [0, 0.7, 0],
+                    x: [0, item.xOffset * 1.6],
+                    y: [0, item.yOffset * 1.5],
+                    scale: [0.4, 1.2, 0],
+                    filter: 'blur(1px)',
+                    transition: {
+                      duration: 0.85,
+                      ease: 'easeOut',
+                      delay: item.particleDelay + 0.04,
+                    },
+                  },
+                }}
+              />
+            </span>
+          ))}
+        </motion.span>
+      </AnimatePresence>
     </span>
   );
 });
@@ -241,11 +317,11 @@ export default function Hero({ onOpenResume }: HeroProps) {
           {/* RIGHT SECTION: Specialization titles & Links */}
           <div className="lg:col-span-6 flex flex-col justify-between space-y-8 text-right mt-8 lg:mt-16">
 
-            {/* Specialization Typing Animation */}
+            {/* Specialization Title Animation */}
             <div className="space-y-2 text-right">
               <div className="min-h-[120px] lg:min-h-[220px] flex items-center justify-end py-4">
-                <h3 className="text-2xl sm:text-3xl lg:text-[3.5rem] xl:text-[4rem] font-sans font-extrabold tracking-tighter text-[#1B2410] dark:text-white leading-[1.1] uppercase max-w-md">
-                  <TypedRoles words={typingWords} />
+                <h3 className="text-2xl sm:text-3xl lg:text-[3.5rem] xl:text-[4rem] font-sans font-extrabold tracking-tighter text-[#1B2410] dark:text-white leading-[1.1] uppercase max-w-md w-full">
+                  <CinematicRoles words={typingWords} align="right" />
                 </h3>
               </div>
             </div>
@@ -318,9 +394,9 @@ export default function Hero({ onOpenResume }: HeroProps) {
           </motion.h2>
 
           {/* 2. Title / Specialization - WHITE TEXT IN MOBILE / TABLET */}
-          <div className="h-16 flex items-center justify-center px-4">
-            <h3 className="text-2xl sm:text-3xl font-sans font-black tracking-tighter text-white leading-none uppercase">
-              <TypedRoles words={typingWords} />
+          <div className="min-h-[64px] flex items-center justify-center px-4 w-full">
+            <h3 className="text-2xl sm:text-3xl font-sans font-black tracking-tighter text-white leading-none uppercase w-full">
+              <CinematicRoles words={typingWords} align="center" />
             </h3>
           </div>
 
