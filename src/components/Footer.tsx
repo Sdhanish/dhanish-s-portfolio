@@ -1,6 +1,14 @@
 import { MouseEvent } from 'react';
+import { motion } from 'motion/react';
 import { Github, Linkedin, Instagram, Mail, ArrowUp, Heart, Code2 } from 'lucide-react';
 import { usePortfolio } from '../contexts/PortfolioContext';
+import { scrollToSection } from '../utils/scroll';
+import {
+  FADE_IN_UP,
+  BUTTON_INTERACTION,
+  ICON_BUTTON_INTERACTION,
+  VIEWPORT_ONCE,
+} from '../utils/motion';
 
 export default function Footer() {
   const { personalInfo, logoUrl } = usePortfolio();
@@ -18,23 +26,11 @@ export default function Footer() {
 
   const handleLinkClick = (e: MouseEvent<HTMLAnchorElement>, href: string) => {
     e.preventDefault();
-    const element = document.querySelector(href);
-    if (element) {
-      const offset = 80;
-      const elementPosition = element.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.scrollY - offset;
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: 'smooth',
-      });
-    }
+    scrollToSection(href, 80);
   };
 
   const handleScrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth',
-    });
+    scrollToSection(document.body, 0);
   };
 
   return (
@@ -43,7 +39,13 @@ export default function Footer() {
       {/* Top Accent Bar */}
       <div className="h-1 w-full bg-gradient-to-r from-transparent via-[#6C8E12] dark:via-[#BDF869] to-transparent opacity-60" />
 
-      <div className="max-w-7xl mx-auto px-6 md:px-12 py-12 md:py-16">
+      <motion.div
+        initial="hidden"
+        whileInView="visible"
+        viewport={VIEWPORT_ONCE}
+        variants={FADE_IN_UP}
+        className="max-w-7xl mx-auto px-6 md:px-12 py-12 md:py-16"
+      >
         
         {/* Main Footer Row */}
         <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center justify-between pb-10 border-b border-neutral-200/80 dark:border-neutral-800/80">
@@ -84,7 +86,8 @@ export default function Footer() {
 
           {/* Social Icons & Back to Top */}
           <div className="md:col-span-3 flex items-center justify-center md:justify-end space-x-3">
-            <a
+            <motion.a
+              {...ICON_BUTTON_INTERACTION}
               href={github}
               target="_blank"
               rel="noopener noreferrer"
@@ -92,9 +95,10 @@ export default function Footer() {
               className="p-2.5 rounded-xl bg-neutral-100 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 text-neutral-700 dark:text-neutral-300 hover:bg-[#6C8E12] hover:text-white dark:hover:bg-[#BDF869] dark:hover:text-black hover:border-[#6C8E12] dark:hover:border-[#BDF869] transition-all duration-300 shadow-sm cursor-pointer"
             >
               <Github className="w-4 h-4" />
-            </a>
+            </motion.a>
 
-            <a
+            <motion.a
+              {...ICON_BUTTON_INTERACTION}
               href={linkedin}
               target="_blank"
               rel="noopener noreferrer"
@@ -102,9 +106,10 @@ export default function Footer() {
               className="p-2.5 rounded-xl bg-neutral-100 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 text-neutral-700 dark:text-neutral-300 hover:bg-[#6C8E12] hover:text-white dark:hover:bg-[#BDF869] dark:hover:text-black hover:border-[#6C8E12] dark:hover:border-[#BDF869] transition-all duration-300 shadow-sm cursor-pointer"
             >
               <Linkedin className="w-4 h-4" />
-            </a>
+            </motion.a>
 
-            <a
+            <motion.a
+              {...ICON_BUTTON_INTERACTION}
               href={instagram}
               target="_blank"
               rel="noopener noreferrer"
@@ -112,24 +117,26 @@ export default function Footer() {
               className="p-2.5 rounded-xl bg-neutral-100 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 text-neutral-700 dark:text-neutral-300 hover:bg-[#6C8E12] hover:text-white dark:hover:bg-[#BDF869] dark:hover:text-black hover:border-[#6C8E12] dark:hover:border-[#BDF869] transition-all duration-300 shadow-sm cursor-pointer"
             >
               <Instagram className="w-4 h-4" />
-            </a>
+            </motion.a>
 
-            <a
+            <motion.a
+              {...ICON_BUTTON_INTERACTION}
               href={`mailto:${email}`}
               aria-label="Email Address"
               className="p-2.5 rounded-xl bg-neutral-100 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 text-neutral-700 dark:text-neutral-300 hover:bg-[#6C8E12] hover:text-white dark:hover:bg-[#BDF869] dark:hover:text-black hover:border-[#6C8E12] dark:hover:border-[#BDF869] transition-all duration-300 shadow-sm cursor-pointer"
             >
               <Mail className="w-4 h-4" />
-            </a>
+            </motion.a>
 
-            <button
+            <motion.button
+              {...ICON_BUTTON_INTERACTION}
               onClick={handleScrollToTop}
               aria-label="Scroll to top"
               className="p-2.5 rounded-xl bg-[#6C8E12]/10 dark:bg-[#BDF869]/10 border border-[#6C8E12]/30 dark:border-[#BDF869]/30 text-[#6C8E12] dark:text-[#BDF869] hover:bg-[#6C8E12] hover:text-white dark:hover:bg-[#BDF869] dark:hover:text-black transition-all duration-300 shadow-sm cursor-pointer ml-2 group"
               title="Back to Top"
             >
               <ArrowUp className="w-4 h-4 group-hover:-translate-y-0.5 transition-transform" />
-            </button>
+            </motion.button>
           </div>
 
         </div>
@@ -146,7 +153,7 @@ export default function Footer() {
           </div>
         </div>
 
-      </div>
+      </motion.div>
     </footer>
   );
 }

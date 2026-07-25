@@ -2,6 +2,12 @@ import { useState, useEffect } from 'react';
 import { motion } from 'motion/react';
 import { Github, ExternalLink, ArrowUpRight, ChevronLeft, ChevronRight, Sparkles, FolderGit2 } from 'lucide-react';
 import { usePortfolio } from '../contexts/PortfolioContext';
+import {
+  FADE_IN_UP,
+  BUTTON_INTERACTION,
+  ICON_BUTTON_INTERACTION,
+  VIEWPORT_ONCE,
+} from '../utils/motion';
 
 export default function Projects() {
   const { projects: allProjects } = usePortfolio();
@@ -50,16 +56,6 @@ export default function Projects() {
 
   const maxSlideIndex = isCarousel ? Math.max(0, displayProjects.length - visibleCards) : 0;
 
-  // Auto-slide ticker interval (3.8s per step) only if carousel mode is active
-  useEffect(() => {
-    if (!isCarousel || isHovered || maxSlideIndex <= 0) return;
-    const timer = setInterval(() => {
-      setActiveSlide((prev) => (prev >= maxSlideIndex ? 0 : prev + 1));
-    }, 3800);
-
-    return () => clearInterval(timer);
-  }, [isCarousel, isHovered, maxSlideIndex]);
-
   const nextSlide = () => {
     if (!isCarousel) return;
     setActiveSlide((prev) => (prev >= maxSlideIndex ? 0 : prev + 1));
@@ -91,7 +87,13 @@ export default function Projects() {
       <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10">
         
         {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-6">
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={VIEWPORT_ONCE}
+          variants={FADE_IN_UP}
+          className="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-6"
+        >
           <div className="space-y-2">
             <span className="font-mono text-xs font-bold uppercase tracking-[0.25em] text-[#6C8E12] dark:text-[#BDF869]">
               05 / Creative Output
@@ -106,8 +108,9 @@ export default function Projects() {
           <div className="flex flex-wrap items-center gap-3">
             <div className="flex flex-wrap gap-1.5 p-1 bg-neutral-100 dark:bg-neutral-900 rounded-2xl border border-neutral-200 dark:border-neutral-800">
               {categories.map((category) => (
-                <button
+                <motion.button
                   key={category}
+                  {...BUTTON_INTERACTION}
                   onClick={() => handleCategoryChange(category)}
                   className={`px-3.5 py-1.5 rounded-xl text-xs font-mono font-extrabold uppercase tracking-wider transition-all duration-300 cursor-pointer ${
                     activeCategory === category
@@ -116,7 +119,7 @@ export default function Projects() {
                   }`}
                 >
                   {category}
-                </button>
+                </motion.button>
               ))}
             </div>
 
@@ -125,7 +128,7 @@ export default function Projects() {
               <span>Project 0{currentOriginalIndex + 1} / 0{totalOriginal}</span>
             </div>
           </div>
-        </div>
+        </motion.div>
 
         {/* Slidable Carousel Container with Glassmorphism Arrows */}
         {filteredProjects.length === 0 ? (

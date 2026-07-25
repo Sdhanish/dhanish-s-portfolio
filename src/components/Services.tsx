@@ -14,8 +14,13 @@ import {
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { usePortfolio } from '../contexts/PortfolioContext';
-
-// Custom rich icon configuration map
+import { scrollToSection } from '../utils/scroll';
+import {
+  FADE_IN_UP,
+  BUTTON_INTERACTION,
+  ICON_BUTTON_INTERACTION,
+  VIEWPORT_ONCE,
+} from '../utils/motion';
 
 const iconConfigMap: Record<string, { icon: ReactNode; bgLight: string; bgDark: string; color: string }> = {
   Layout: {
@@ -86,21 +91,6 @@ export default function Services() {
 
   const maxSlideIndex = Math.max(0, displayServices.length - visibleCards);
 
-  // Auto-slide ticker interval (3.5 seconds per step, slowly & infinitely)
-  useEffect(() => {
-    if (isHovered || maxSlideIndex <= 0) return;
-    const timer = setInterval(() => {
-      setActiveSlide((prev) => {
-        if (prev >= maxSlideIndex) {
-          return 0;
-        }
-        return prev + 1;
-      });
-    }, 3500);
-
-    return () => clearInterval(timer);
-  }, [isHovered, maxSlideIndex]);
-
   const nextSlide = () => {
     setActiveSlide((prev) => (prev >= maxSlideIndex ? 0 : prev + 1));
   };
@@ -120,12 +110,7 @@ export default function Services() {
 
   const handleScrollToContact = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    const contactSection = document.querySelector('#contact');
-    if (contactSection) {
-      const offset = 80;
-      const position = contactSection.getBoundingClientRect().top + window.scrollY - offset;
-      window.scrollTo({ top: position, behavior: 'smooth' });
-    }
+    scrollToSection('#contact', 80);
   };
 
   const currentOriginalIndex = totalOriginal > 0 ? activeSlide % totalOriginal : 0;
@@ -139,7 +124,13 @@ export default function Services() {
       <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10">
         
         {/* Section Header */}
-        <div className="mb-14 space-y-3">
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={VIEWPORT_ONCE}
+          variants={FADE_IN_UP}
+          className="mb-14 space-y-3"
+        >
           <div className="flex items-center space-x-2">
             <span className="font-mono text-xs font-bold uppercase tracking-[0.25em] text-[#6C8E12] dark:text-[#BDF869]">
               04 / Core Capabilities
@@ -159,7 +150,7 @@ export default function Services() {
               <span>Solution 0{currentOriginalIndex + 1} / 0{totalOriginal}</span>
             </div>
           </div>
-        </div>
+        </motion.div>
 
         {/* Slidable Carousel Container with Glassmorphism Arrows */}
         {services.length === 0 ? (

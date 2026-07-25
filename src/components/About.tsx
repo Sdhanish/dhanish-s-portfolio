@@ -1,7 +1,16 @@
-import { MouseEvent } from 'react';
-import { MapPin, GraduationCap, Calendar, Mail, Linkedin, Github, Instagram, ArrowRight, Sparkles, ExternalLink } from 'lucide-react';
+import { MapPin, GraduationCap, Calendar, Mail, Linkedin, Github, Instagram, Sparkles } from 'lucide-react';
 import { motion } from 'motion/react';
 import { usePortfolio } from '../contexts/PortfolioContext';
+import {
+  FADE_IN_UP,
+  FADE_IN_SOFT,
+  IMAGE_REVEAL,
+  CARD_REVEAL,
+  STAGGER_CONTAINER,
+  BUTTON_INTERACTION,
+  ICON_BUTTON_INTERACTION,
+  VIEWPORT_ONCE,
+} from '../utils/motion';
 
 import lightImg from '../assets/images/dhanish-side.jpeg';
 import darkImg from '../assets/images/dhanish-side.jpeg';
@@ -25,7 +34,7 @@ export default function About() {
     {
       icon: <Calendar className="w-4 h-4 text-[#6C8E12] dark:text-[#BDF869]" />,
       label: 'Availability',
-      value: 'Open to Full-Time & High-Impact Roles',
+      value: 'Open to Full-Time Roles',
     },
     {
       icon: <Mail className="w-4 h-4 text-[#6C8E12] dark:text-[#BDF869]" />,
@@ -33,16 +42,6 @@ export default function About() {
       value: email,
     },
   ];
-
-  const handleScrollToContact = (e: MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    const contactSection = document.querySelector('#contact');
-    if (contactSection) {
-      const offset = 80;
-      const position = contactSection.getBoundingClientRect().top + window.scrollY - offset;
-      window.scrollTo({ top: position, behavior: 'smooth' });
-    }
-  };
 
   return (
     <section id="about" className="py-24 bg-white dark:bg-neutral-950 text-[#1B2410] dark:text-neutral-100 transition-colors duration-300 relative overflow-hidden">
@@ -52,7 +51,13 @@ export default function About() {
       <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-20 relative z-10">
         
         {/* Section Header */}
-        <div className="mb-16 space-y-3">
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={VIEWPORT_ONCE}
+          variants={FADE_IN_UP}
+          className="mb-16 space-y-3"
+        >
           <div className="flex items-center space-x-2">
             <span className="font-mono text-xs font-bold uppercase tracking-[0.25em] text-[#6C8E12] dark:text-[#BDF869]">
               01 / Professional Journey
@@ -63,12 +68,18 @@ export default function About() {
           </h2>
           {/* Accent bar */}
           <div className="w-16 h-1 bg-[#6C8E12] dark:bg-[#BDF869] rounded-full mt-2" />
-        </div>
+        </motion.div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
           
           {/* LEFT SIDE: Image Frame with Premium Half Border Effect & Social Icons */}
-          <div className="lg:col-span-5 flex flex-col items-center lg:items-start space-y-8">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={VIEWPORT_ONCE}
+            variants={IMAGE_REVEAL}
+            className="lg:col-span-5 flex flex-col items-center lg:items-start space-y-8"
+          >
             
             {/* Image Frame Container */}
             <div className="relative w-full max-w-md mx-auto lg:mx-0 group">
@@ -145,7 +156,8 @@ export default function About() {
               </div>
 
               <div className="flex items-center gap-3 pt-1">
-                <a
+                <motion.a
+                  {...BUTTON_INTERACTION}
                   href={github}
                   target="_blank"
                   rel="noopener noreferrer"
@@ -154,9 +166,10 @@ export default function About() {
                 >
                   <Github className="w-4 h-4" />
                   <span>GitHub</span>
-                </a>
+                </motion.a>
 
-                <a
+                <motion.a
+                  {...BUTTON_INTERACTION}
                   href={linkedin}
                   target="_blank"
                   rel="noopener noreferrer"
@@ -165,9 +178,10 @@ export default function About() {
                 >
                   <Linkedin className="w-4 h-4" />
                   <span>LinkedIn</span>
-                </a>
+                </motion.a>
 
-                <a
+                <motion.a
+                  {...ICON_BUTTON_INTERACTION}
                   href={instagram}
                   target="_blank"
                   rel="noopener noreferrer"
@@ -175,36 +189,46 @@ export default function About() {
                   aria-label="Instagram Profile"
                 >
                   <Instagram className="w-4 h-4" />
-                </a>
+                </motion.a>
 
-                <a
+                <motion.a
+                  {...ICON_BUTTON_INTERACTION}
                   href={`mailto:${email}`}
                   className="p-3 rounded-xl border border-[#6C8E12]/30 dark:border-neutral-800 bg-white dark:bg-neutral-900 text-[#1B2410] dark:text-neutral-200 hover:border-[#6C8E12] hover:bg-[#6C8E12] hover:text-white dark:hover:border-[#BDF869] dark:hover:bg-[#BDF869] dark:hover:text-black transition-all duration-300 shadow-sm hover:shadow-[0_0_15px_rgba(108,142,18,0.3)] dark:hover:shadow-[0_0_18px_rgba(189,248,105,0.4)]"
                   aria-label="Send Email"
                 >
                   <Mail className="w-4 h-4" />
-                </a>
+                </motion.a>
               </div>
             </div>
 
-          </div>
+          </motion.div>
 
           {/* RIGHT SIDE: Description & Quick Facts */}
-          <div className="lg:col-span-7 space-y-8">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={VIEWPORT_ONCE}
+            variants={STAGGER_CONTAINER}
+            className="lg:col-span-7 space-y-8"
+          >
             
-            <div className="space-y-4">
+            <motion.div variants={FADE_IN_SOFT} className="space-y-4">
               <h3 className="text-2xl sm:text-3xl font-sans font-black text-[#1B2410] dark:text-white tracking-tight leading-snug uppercase">
-                Specialized MERN Stack & Frontend Developer based in India.
+                Full Stack & MERN Developer
               </h3>
               
               <p className="text-neutral-700 dark:text-neutral-300 leading-relaxed text-base sm:text-lg font-normal">
                 {aboutText}
               </p>
             
-            </div>
+            </motion.div>
 
             {/* Quick Facts Card Grid */}
-            <div className="p-6 sm:p-8 rounded-2xl border border-neutral-200/80 dark:border-neutral-800 bg-neutral-50/60 dark:bg-neutral-900/50 backdrop-blur-sm space-y-6 shadow-sm hover:border-[#6C8E12]/40 dark:hover:border-[#BDF869]/40 transition-colors">
+            <motion.div
+              variants={CARD_REVEAL}
+              className="p-6 sm:p-8 rounded-2xl border border-neutral-200/80 dark:border-neutral-800 bg-neutral-50/60 dark:bg-neutral-900/50 backdrop-blur-sm space-y-6 shadow-sm hover:border-[#6C8E12]/40 dark:hover:border-[#BDF869]/40 transition-colors"
+            >
               <div className="flex items-center justify-between border-b border-neutral-200 dark:border-neutral-800 pb-3">
                 <h4 className="font-mono text-xs uppercase tracking-widest text-[#6C8E12] dark:text-[#BDF869] font-extrabold">
                   Quick Specifications
@@ -231,30 +255,9 @@ export default function About() {
                   </div>
                 ))}
               </div>
-            </div>
+            </motion.div>
 
-            {/* Call to Action Buttons */}
-            <div className="pt-2 flex flex-col sm:flex-row gap-4 items-center">
-              <button
-                onClick={handleScrollToContact}
-                className="group w-full sm:w-auto flex items-center justify-center space-x-2.5 px-7 py-3.5 bg-[#6C8E12] hover:bg-[#58740E] text-white dark:bg-[#BDF869] dark:hover:bg-[#a6e054] dark:text-black border border-transparent rounded-xl text-xs uppercase tracking-wider font-extrabold transition-all duration-300 cursor-pointer shadow-md hover:shadow-[0_0_20px_rgba(108,142,18,0.4)] dark:hover:shadow-[0_0_20px_rgba(189,248,105,0.4)]"
-              >
-                <span>Work With Me</span>
-                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-              </button>
-
-              <a
-                href={linkedin}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-full sm:w-auto flex items-center justify-center space-x-2 px-7 py-3.5 border rounded-xl text-xs uppercase tracking-wider font-extrabold transition-all duration-300 cursor-pointer border-[#6C8E12] text-[#1B2410] bg-transparent hover:bg-[#6C8E12] hover:text-white hover:border-[#6C8E12] hover:shadow-[0_0_18px_rgba(108,142,18,0.35)] dark:border-[#BDF869] dark:text-[#BDF869] dark:bg-transparent dark:hover:bg-[#BDF869] dark:hover:text-black dark:hover:border-[#BDF869] dark:hover:shadow-[0_0_20px_rgba(189,248,105,0.4)]"
-              >
-                <span>Connect on LinkedIn</span>
-                <ExternalLink className="w-3.5 h-3.5" />
-              </a>
-            </div>
-
-          </div>
+          </motion.div>
 
         </div>
 

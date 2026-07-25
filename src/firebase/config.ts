@@ -25,11 +25,11 @@ export const auth = getAuth(app);
 export const googleProvider = new GoogleAuthProvider();
 googleProvider.setCustomParameters({ prompt: 'select_account' });
 
-// Initialize Firestore specifying custom database ID and auto-detecting long polling fallback
+// Initialize Firestore specifying custom database ID and forcing long polling
 export const db = initializeFirestore(
   app,
   {
-    experimentalAutoDetectLongPolling: true,
+    experimentalForceLongPolling: true,
   },
   firestoreDatabaseId
 );

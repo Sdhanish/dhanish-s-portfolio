@@ -3,6 +3,7 @@ import { Menu, X, FileText } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import ThemeToggle from './ThemeToggle';
 import { usePortfolio } from '../contexts/PortfolioContext';
+import { scrollToSection } from '../utils/scroll';
 
 
 interface NavbarProps {
@@ -79,26 +80,17 @@ export default function Navbar({ theme, toggleTheme, onOpenResume }: NavbarProps
   const handleLinkClick = (e: MouseEvent<HTMLAnchorElement>, href: string) => {
     e.preventDefault();
     setIsOpen(false);
-    const element = document.querySelector(href);
-    if (element) {
-      const offset = 100; // height of floating navbar + padding
-      const elementPosition = element.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.scrollY - offset;
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: 'smooth',
-      });
-    }
+    scrollToSection(href, 100);
   };
 
   return (
     <>
       <nav
         id="navbar"
-        className={`fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[92%] max-w-6xl rounded-full transition-all duration-500 border gpu-layer ${
+        className={`fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[92%] max-w-6xl rounded-full transition-all duration-300 border gpu-layer ${
           isScrolled
-            ? 'bg-white/35 dark:bg-neutral-950/85 backdrop-blur-md border-[#6C8E12]/25 dark:border-neutral-800/80 py-2.5 shadow-lg shadow-black/5 dark:shadow-none'
-            : 'bg-white/20 dark:bg-neutral-950/50 backdrop-blur-sm border-[#6C8E12]/20 dark:border-neutral-800/40 py-3.5'
+            ? 'bg-white/70 dark:bg-neutral-950/90 backdrop-blur-md border-[#6C8E12]/25 dark:border-neutral-800/80 py-2.5 shadow-lg shadow-black/5 dark:shadow-none'
+            : 'bg-white/40 dark:bg-neutral-950/60 backdrop-blur-sm border-[#6C8E12]/20 dark:border-neutral-800/40 py-3.5'
         }`}
       >
         <div className="px-6 md:px-8 flex items-center justify-between">
@@ -107,7 +99,7 @@ export default function Navbar({ theme, toggleTheme, onOpenResume }: NavbarProps
             href="#"
             onClick={(e) => {
               e.preventDefault();
-              window.scrollTo({ top: 0, behavior: 'smooth' });
+              scrollToSection(document.body, 0);
               setActiveSection('about');
             }}
             className="flex items-center space-x-3 text-neutral-900 dark:text-neutral-50 group"

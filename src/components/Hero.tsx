@@ -2,6 +2,7 @@ import { useState, useEffect, useMemo, memo, MouseEvent } from 'react';
 import { ArrowUpRight, Github, Linkedin, Mail } from 'lucide-react';
 import { motion, AnimatePresence, useReducedMotion } from 'motion/react';
 import { usePortfolio } from '../contexts/PortfolioContext';
+import { scrollToSection } from '../utils/scroll';
 
 import defaultHeroLight from '../assets/images/dhanish-light-theme.png';
 import defaultHeroDark from '../assets/images/dhanish-light-theme.png';
@@ -25,107 +26,71 @@ const CinematicRoles = memo(function CinematicRoles({
     if (!words || words.length <= 1) return;
     const interval = setInterval(() => {
       setIndex((prev) => (prev + 1) % words.length);
-    }, 3600);
+    }, 4500); // 4.5s per title for a relaxed, luxury pace
 
     return () => clearInterval(interval);
   }, [words]);
 
-  const currentWord = words[index % (words.length || 1)] || '';
+  const currentPhrase = words[index % (words.length || 1)] || '';
 
-  // Generate deterministic offsets for letter dissolution & sand/dust effect
-  const letters = useMemo(() => {
-    return currentWord.split('').map((char, i) => {
-      const seed = (char.charCodeAt(0) * (i + 1)) % 100;
-      const xOffset = ((seed % 17) - 8) * 1.2; // -9.6px to +9.6px subtle horizontal dispersion
-      const yOffset = -10 - (seed % 8); // -10px to -18px upward float
-      const particleDelay = (i % 6) * 0.025; // Subtle staggered dissolve
-      return {
-        char,
-        xOffset,
-        yOffset,
-        particleDelay,
-      };
+  // Split phrase into words, then words into letters to ensure natural typography letter-spacing
+  const parsedWords = useMemo(() => {
+    let globalCharIndex = 0;
+    return currentPhrase.split(' ').map((wordStr, wIdx) => {
+      const letters = wordStr.split('').map((char) => {
+        const i = globalCharIndex++;
+        const seed = (char.charCodeAt(0) * (i + 1)) % 100;
+        const xOffset = ((seed % 15) - 7) * 1.0; // -7px to +7px soft horizontal drift
+        const yOffset = -12 - (seed % 10); // -12px to -22px upward float
+        const particleDelay = (i % 8) * 0.03; // Smooth staggered particle dissipation
+        return {
+          char,
+          xOffset,
+          yOffset,
+          particleDelay,
+          index: i,
+        };
+      });
+      return { wordStr, letters, wIdx };
     });
-  }, [currentWord]);
+  }, [currentPhrase]);
 
   if (shouldReduceMotion) {
-    return <span className="inline-block">{currentWord}</span>;
+    return <span className="inline-block font-sans font-black">{currentPhrase}</span>;
   }
 
   return (
-    <span className="relative inline-block w-full">
-      <AnimatePresence mode="popLayout" initial={false}>
+    <span className="relative inline-block w-full font-sans font-black">
+      <AnimatePresence mode="wait" initial={false}>
         <motion.span
-          key={`role-${index}-${currentWord}`}
-          className="inline-flex flex-wrap items-center gap-x-[0.2em]"
+          key={`role-${index}-${currentPhrase}`}
+          className="inline-flex flex-wrap items-center gap-x-[0.3em] tracking-tight font-sans font-black"
           style={{
             justifyContent: align === 'right' ? 'flex-end' : align === 'center' ? 'center' : 'flex-start',
             textAlign: align,
           }}
-          initial="initial"
-          animate="animate"
-          exit="exit"
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -8 }}
+          transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
         >
-          {letters.map((item, i) => (
-            <span key={i} className="relative inline-block overflow-visible whitespace-pre">
-              <motion.span
-                className="inline-block"
-                variants={{
-                  initial: {
-                    opacity: 0,
-                    y: 8,
-                    filter: 'blur(8px)',
-                    scale: 0.97,
-                  },
-                  animate: {
-                    opacity: 1,
-                    y: 0,
-                    filter: 'blur(0px)',
-                    scale: 1,
-                    transition: {
-                      duration: 0.8,
-                      ease: [0.16, 1, 0.3, 1],
-                      delay: i * 0.018,
-                    },
-                  },
-                  exit: {
-                    opacity: 0,
-                    y: item.yOffset,
-                    x: item.xOffset,
-                    filter: 'blur(10px)',
-                    scale: 1.06,
-                    transition: {
-                      duration: 0.85,
-                      ease: [0.25, 0.1, 0.25, 1],
-                      delay: item.particleDelay,
-                    },
-                  },
-                }}
-              >
-                {item.char === ' ' ? '\u00A0' : item.char}
-              </motion.span>
-
-              {/* Fine dust particle floating away on exit */}
-              <motion.span
-                className="absolute top-1/2 left-1/2 w-1 h-1 rounded-full bg-[#6C8E12]/70 dark:bg-[#BDF869]/70 pointer-events-none"
-                style={{ marginLeft: '-2px', marginTop: '-2px' }}
-                variants={{
-                  initial: { opacity: 0, scale: 0 },
-                  animate: { opacity: 0, scale: 0 },
-                  exit: {
-                    opacity: [0, 0.7, 0],
-                    x: [0, item.xOffset * 1.6],
-                    y: [0, item.yOffset * 1.5],
-                    scale: [0.4, 1.2, 0],
-                    filter: 'blur(1px)',
-                    transition: {
-                      duration: 0.85,
-                      ease: 'easeOut',
-                      delay: item.particleDelay + 0.04,
-                    },
-                  },
-                }}
-              />
+          {parsedWords.map(({ wordStr, letters, wIdx }) => (
+            <span key={`${wIdx}-${wordStr}`} className="inline-flex items-center whitespace-nowrap font-sans font-black">
+              {letters.map((item) => (
+                <motion.span
+                  key={item.index}
+                  className="inline-block font-sans font-black"
+                  initial={{ opacity: 0, y: 6 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{
+                    duration: 0.4,
+                    ease: [0.16, 1, 0.3, 1],
+                    delay: item.index * 0.015,
+                  }}
+                >
+                  {item.char}
+                </motion.span>
+              ))}
             </span>
           ))}
         </motion.span>
@@ -219,22 +184,12 @@ export default function Hero({ onOpenResume }: HeroProps) {
 
   const handleScrollToProjects = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    const projectsSection = document.querySelector('#projects');
-    if (projectsSection) {
-      const offset = 80;
-      const position = projectsSection.getBoundingClientRect().top + window.scrollY - offset;
-      window.scrollTo({ top: position, behavior: 'smooth' });
-    }
+    scrollToSection('#projects', 80);
   };
 
   const handleScrollToContact = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    const contactSection = document.querySelector('#contact');
-    if (contactSection) {
-      const offset = 80;
-      const position = contactSection.getBoundingClientRect().top + window.scrollY - offset;
-      window.scrollTo({ top: position, behavior: 'smooth' });
-    }
+    scrollToSection('#contact', 80);
   };
 
   return (
@@ -255,39 +210,39 @@ export default function Hero({ onOpenResume }: HeroProps) {
       />
 
       {/* Readability overlay */}
-      <div className="absolute inset-0 bg-black/60 dark:bg-black/75 lg:bg-black/10 lg:dark:bg-black/30 pointer-events-none" />
+      <div className="absolute inset-0 bg-black/60 dark:bg-black/75 lg:bg-black/0 lg:dark:bg-black/30 pointer-events-none" />
 
       {/* Main Container */}
-      <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-12 lg:px-20 w-full flex-1 flex flex-col justify-center pt-24 pb-16">
+      <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-12 lg:px-20 w-full flex-1 flex flex-col justify-center lg:justify-between pt-24 pb-16 lg:pt-20 lg:pb-6">
 
-        {/* DESKTOP VIEW: Left section = name & buttons; Right section = title, description, links */}
-        <div className="hidden lg:grid grid-cols-12 gap-8 lg:gap-16 w-full items-stretch">
+        {/* DESKTOP VIEW: Left section = name, buttons & get in touch at bottom; Right section = title at top */}
+        <div className="hidden lg:grid grid-cols-12 gap-8 lg:gap-16 w-full flex-1 items-stretch">
 
-          {/* LEFT SECTION: Name and Buttons */}
-          <div className="lg:col-span-6 flex flex-col justify-between text-left mt-8 lg:mt-16 animate-fade-in">
+          {/* LEFT SECTION: Hello, Name, Buttons, and Get in Touch aligned to bottom */}
+          <div className="lg:col-span-6 flex flex-col justify-end text-left space-y-6 pb-0 animate-fade-in">
 
-            {/* "Hey there" text in dark olive in light theme / light gray in dark theme */}
+            {/* "Hello," text in dark olive in light theme / light gray in dark theme */}
             <motion.div
               initial={{ opacity: 0, x: -15 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6 }}
             >
-              <span className="inline-block font-cormorant scale-y-[1.3] font-extrabold italic text-5xl lg:text-6xl xl:text-7xl tracking-[0.15em] text-[#1B2410]/30 dark:text-neutral-300/10 select-none">
+              <span className="inline-block font-serif scale-y-[1.3] font-extrabold italic text-5xl lg:text-6xl xl:text-7xl tracking-[0.15em] text-[#1B2410]/30 dark:text-neutral-300/10 select-none">
                 Hello,
               </span>
             </motion.div>
 
-            <motion.h2
+            <motion.h1
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-              className="text-4xl sm:text-4xl lg:text-[3.1rem] xl:text-[4.0rem] font-sans font-black tracking-tighter text-[#1B2410] dark:text-white leading-[1.05] uppercase"
+              className="text-4xl sm:text-4xl lg:text-[3.1rem] xl:text-[4.0rem] font-sans font-black tracking-tight text-[#1B2410] dark:text-white leading-[1.05] uppercase"
             >
               I'M <br />
-              <span className="text-[#1B2410] dark:text-white font-black">
+              <span className="text-[#1B2410] dark:text-white font-sans font-black">
                 {name || 'DHANISH S.'}
               </span>
-            </motion.h2>
+            </motion.h1>
 
             {/* Action Buttons */}
             <motion.div
@@ -314,20 +269,20 @@ export default function Hero({ onOpenResume }: HeroProps) {
 
           </div>
 
-          {/* RIGHT SECTION: Specialization titles & Links */}
-          <div className="lg:col-span-6 flex flex-col justify-between space-y-8 text-right mt-8 lg:mt-16">
+          {/* RIGHT SECTION: Specialization titles at top, Get in touch links at bottom */}
+          <div className="lg:col-span-6 flex flex-col justify-between text-right pt-10 lg:pt-14 xl:pt-16 pb-0">
 
             {/* Specialization Title Animation */}
             <div className="space-y-2 text-right">
-              <div className="min-h-[120px] lg:min-h-[220px] flex items-center justify-end py-4">
-                <h3 className="text-2xl sm:text-3xl lg:text-[3.5rem] xl:text-[4rem] font-sans font-extrabold tracking-tighter text-[#1B2410] dark:text-white leading-[1.1] uppercase max-w-md w-full">
+              <div className="flex items-start justify-end pt-1 pb-4">
+                <h1 className="text-2xl sm:text-3xl lg:text-[3.6rem] font-sans font-black text-[#1B2410] dark:text-white leading-[1.08] uppercase max-w-md w-full tracking-tight">
                   <CinematicRoles words={typingWords} align="right" />
-                </h3>
+                </h1>
               </div>
             </div>
 
-            {/* Connect Details & Social icons */}
-            <div className="flex flex-col items-end justify-start gap-4 pt-2">
+            {/* Connect Details & Social icons on Right Side Bottom */}
+            <div className="flex flex-col items-end gap-3 pt-4">
               <button
                 onClick={handleScrollToContact}
                 className="flex items-center space-x-1.5 text-xs uppercase tracking-widest font-black text-[#6C8E12] hover:text-[#1B2410] dark:text-[#BDF869] dark:hover:text-white transition-colors cursor-pointer group"
@@ -336,7 +291,7 @@ export default function Hero({ onOpenResume }: HeroProps) {
                 <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
               </button>
 
-              <div className="flex items-center space-x-3">
+              <div className="flex items-center space-x-2.5">
                 <a
                   href={github}
                   target="_blank"
@@ -378,26 +333,26 @@ export default function Hero({ onOpenResume }: HeroProps) {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
           >
-            <span className="inline-block  font-extrabold font-cormorant text-xl italic tracking-[0.3em] text-neutral-300/80 font-bold block select-none">
+            <span className="inline-block tracking-[0.3em]  font-extrabold scale-y[1.2] font-serif text-xl italic text-neutral-300/80 font-bold block select-none">
               Hello,
             </span>
           </motion.div>
 
           {/* 1. Name - WHITE TEXT IN MOBILE / TABLET */}
-          <motion.h2
+          <motion.h1
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="text-4xl sm:text-5xl font-sans font-black tracking-tighter text-white leading-none uppercase px-4"
+            className="text-4xl sm:text-5xl font-sans font-black tracking-tight text-white leading-none uppercase px-4"
           >
-            I'M <span className="text-white font-black">{name || 'DHANISH S.'}</span>
-          </motion.h2>
+            I'M <span className="text-white font-sans font-black">{name || 'DHANISH S.'}</span>
+          </motion.h1>
 
           {/* 2. Title / Specialization - WHITE TEXT IN MOBILE / TABLET */}
           <div className="min-h-[64px] flex items-center justify-center px-4 w-full">
-            <h3 className="text-2xl sm:text-3xl font-sans font-black tracking-tighter text-white leading-none uppercase w-full">
+            <h1 className="text-2xl sm:text-3xl font-sans font-black tracking-tight text-white leading-none uppercase w-full">
               <CinematicRoles words={typingWords} align="center" />
-            </h3>
+            </h1>
           </div>
 
           {/* 3. Action Buttons */}

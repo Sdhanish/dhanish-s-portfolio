@@ -4,6 +4,13 @@ import { Cpu, Layout, Database, Terminal, Wrench, ChevronDown, ChevronUp, Sparkl
 import { usePortfolio } from '../contexts/PortfolioContext';
 import { SkillItem } from '../types';
 import { TechIcon, techDetailsMap } from './TechIcon';
+import {
+  FADE_IN_UP,
+  FAST_STAGGER_CONTAINER,
+  CARD_REVEAL,
+  BUTTON_INTERACTION,
+  VIEWPORT_ONCE,
+} from '../utils/motion';
 
 export default function Skills() {
   const { skills } = usePortfolio();
@@ -42,7 +49,13 @@ export default function Skills() {
       <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10">
         
         {/* Section Title */}
-        <div className="mb-14 space-y-3">
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={VIEWPORT_ONCE}
+          variants={FADE_IN_UP}
+          className="mb-14 space-y-3"
+        >
           <div className="flex items-center space-x-2">
             <span className="font-mono text-xs font-bold uppercase tracking-[0.25em] text-[#6C8E12] dark:text-[#BDF869]">
               02 / Technical Ecosystem
@@ -52,11 +65,18 @@ export default function Skills() {
             Tech Stack & Skills
           </h2>
           <div className="w-16 h-1 bg-[#6C8E12] dark:bg-[#BDF869] rounded-full mt-2" />
-        </div>
+        </motion.div>
 
         {/* Category Filters */}
-        <div className="flex flex-wrap gap-2.5 mb-10">
-          <button
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={VIEWPORT_ONCE}
+          variants={FADE_IN_UP}
+          className="flex flex-wrap gap-2.5 mb-10"
+        >
+          <motion.button
+            {...BUTTON_INTERACTION}
             onClick={() => handleCategoryChange('All')}
             className={`px-4 py-2.5 rounded-xl text-xs font-extrabold uppercase tracking-wider transition-all duration-300 cursor-pointer border ${
               activeCategory === 'All'
@@ -65,14 +85,15 @@ export default function Skills() {
             }`}
           >
             All Stack ({skills.length})
-          </button>
+          </motion.button>
 
           {categories.map((cat) => {
             const count = skills.filter(s => s.category === cat.name).length;
             const isActive = activeCategory === cat.name;
             return (
-              <button
+              <motion.button
                 key={cat.name}
+                {...BUTTON_INTERACTION}
                 onClick={() => handleCategoryChange(cat.name)}
                 className={`flex items-center space-x-2 px-4 py-2.5 rounded-xl text-xs font-extrabold uppercase tracking-wider transition-all duration-300 cursor-pointer border ${
                   isActive
@@ -82,10 +103,10 @@ export default function Skills() {
               >
                 {cat.icon}
                 <span>{cat.name} ({count})</span>
-              </button>
+              </motion.button>
             );
           })}
-        </div>
+        </motion.div>
 
         {/* 3D Interactive Skills Grid */}
         {filteredSkills.length === 0 ? (
@@ -93,7 +114,13 @@ export default function Skills() {
             No skills listed in this category.
           </div>
         ) : (
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 sm:gap-5">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={VIEWPORT_ONCE}
+            variants={FAST_STAGGER_CONTAINER}
+            className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 sm:gap-5"
+          >
           <AnimatePresence mode="popLayout">
             {visibleSkills.map((skill, index) => {
               const techConfig = techDetailsMap[skill.name];
@@ -102,10 +129,8 @@ export default function Skills() {
               return (
                 <motion.div
                   key={`${skill.id || skill.name}-${skill.category}-${index}`}
-                  initial={{ opacity: 0, scale: 0.9, y: 15 }}
-                  animate={{ opacity: 1, scale: 1, y: 0 }}
-                  exit={{ opacity: 0, scale: 0.9, y: 15 }}
-                  transition={{ duration: 0.25, delay: index * 0.015, ease: 'easeOut' }}
+                  layout
+                  variants={CARD_REVEAL}
                   whileHover={{ y: -5, scale: 1.02 }}
                   className="group relative flex flex-col justify-between p-4 sm:p-5 bg-white/90 dark:bg-neutral-900/90 rounded-2xl border border-neutral-200/90 dark:border-neutral-800/90 transition-all duration-200 cursor-pointer shadow-sm hover:shadow-xl dark:shadow-sm dark:hover:shadow-2xl hover:border-[#6C8E12]/60 dark:hover:border-[#BDF869]/60 gpu-layer"
                 >
@@ -141,13 +166,20 @@ export default function Skills() {
               );
             })}
           </AnimatePresence>
-        </div>
+        </motion.div>
         )}
 
         {/* View More / Show Less Toggle Button */}
         {hasMore && (
-          <div className="mt-12 flex flex-col items-center justify-center">
-            <button
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={VIEWPORT_ONCE}
+            variants={FADE_IN_UP}
+            className="mt-12 flex flex-col items-center justify-center"
+          >
+            <motion.button
+              {...BUTTON_INTERACTION}
               onClick={() => setShowAll(!showAll)}
               className="group flex items-center space-x-3 px-8 py-4 rounded-2xl bg-white dark:bg-neutral-900 border-2 border-[#6C8E12]/40 dark:border-[#BDF869]/40 text-[#1B2410] dark:text-neutral-100 font-extrabold text-xs uppercase tracking-widest hover:border-[#6C8E12] dark:hover:border-[#BDF869] hover:bg-[#6C8E12]/10 dark:hover:bg-[#BDF869]/10 transition-all duration-300 shadow-md hover:shadow-[0_0_20px_rgba(108,142,18,0.25)] dark:hover:shadow-[0_0_25px_rgba(189,248,105,0.3)] cursor-pointer"
             >
@@ -162,12 +194,12 @@ export default function Skills() {
               ) : (
                 <ChevronDown className="w-4 h-4 text-[#6C8E12] dark:text-[#BDF869] group-hover:translate-y-1 transition-transform" />
               )}
-            </button>
+            </motion.button>
             
             <p className="font-mono text-[11px] text-neutral-500 dark:text-neutral-400 mt-3 select-none">
               Showing {visibleSkills.length} of {filteredSkills.length} technologies
             </p>
-          </div>
+          </motion.div>
         )}
 
       </div>

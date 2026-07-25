@@ -14,6 +14,11 @@ import {
 } from 'lucide-react';
 import { usePortfolio } from '../contexts/PortfolioContext';
 import { TimelineItem } from '../types';
+import {
+  FADE_IN_UP,
+  BUTTON_INTERACTION,
+  VIEWPORT_ONCE,
+} from '../utils/motion';
 
 export default function Education() {
   const { timeline } = usePortfolio();
@@ -33,7 +38,7 @@ export default function Education() {
   const smoothProgress = useSpring(scrollYProgress, {
     stiffness: 100,
     damping: 30,
-    restDelta: 0.001
+    restDelta: 0.01
   });
 
   const filteredItems = filter === 'All' 
@@ -73,7 +78,13 @@ export default function Education() {
       <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10">
         
         {/* Section Header */}
-        <div className="mb-10 space-y-2">
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={VIEWPORT_ONCE}
+          variants={FADE_IN_UP}
+          className="mb-10 space-y-2"
+        >
           <div className="flex items-center space-x-2">
             <span className="font-mono text-xs font-bold uppercase tracking-[0.25em] text-[#6C8E12] dark:text-[#BDF869]">
               03 / Career & Learning Path
@@ -83,11 +94,18 @@ export default function Education() {
             Experience & Education
           </h2>
           <div className="w-16 h-1 bg-[#6C8E12] dark:bg-[#BDF869] rounded-full mt-2" />
-        </div>
+        </motion.div>
 
         {/* Filter Navigation Tabs */}
-        <div className="flex flex-wrap gap-2 mb-10">
-          <button
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={VIEWPORT_ONCE}
+          variants={FADE_IN_UP}
+          className="flex flex-wrap gap-2 mb-10"
+        >
+          <motion.button
+            {...BUTTON_INTERACTION}
             onClick={() => setFilter('All')}
             className={`flex items-center space-x-2 px-4 py-2 rounded-xl text-xs font-extrabold uppercase tracking-wider transition-all duration-300 cursor-pointer border ${
               filter === 'All'
@@ -97,9 +115,10 @@ export default function Education() {
           >
             <Layers className="w-3.5 h-3.5" />
             <span>All ({timeline.length})</span>
-          </button>
+          </motion.button>
 
-          <button
+          <motion.button
+            {...BUTTON_INTERACTION}
             onClick={() => setFilter('Experience')}
             className={`flex items-center space-x-2 px-4 py-2 rounded-xl text-xs font-extrabold uppercase tracking-wider transition-all duration-300 cursor-pointer border ${
               filter === 'Experience'
@@ -109,9 +128,10 @@ export default function Education() {
           >
             <Briefcase className="w-3.5 h-3.5" />
             <span>Experience ({timeline.filter(i => i.type === 'Experience').length})</span>
-          </button>
+          </motion.button>
 
-          <button
+          <motion.button
+            {...BUTTON_INTERACTION}
             onClick={() => setFilter('Education')}
             className={`flex items-center space-x-2 px-4 py-2 rounded-xl text-xs font-extrabold uppercase tracking-wider transition-all duration-300 cursor-pointer border ${
               filter === 'Education'
@@ -121,9 +141,10 @@ export default function Education() {
           >
             <GraduationCap className="w-3.5 h-3.5" />
             <span>Education ({timeline.filter(i => i.type === 'Education').length})</span>
-          </button>
+          </motion.button>
 
-          <button
+          <motion.button
+            {...BUTTON_INTERACTION}
             onClick={() => setFilter('Training')}
             className={`flex items-center space-x-2 px-4 py-2 rounded-xl text-xs font-extrabold uppercase tracking-wider transition-all duration-300 cursor-pointer border ${
               filter === 'Training'
@@ -133,8 +154,8 @@ export default function Education() {
           >
             <BookOpen className="w-3.5 h-3.5" />
             <span>Training & Certs ({timeline.filter(i => i.type === 'Training').length})</span>
-          </button>
-        </div>
+          </motion.button>
+        </motion.div>
 
         {/* Timeline Container with Fluid "Straw" Filling Effect */}
         <div ref={containerRef} className="relative max-w-3xl mx-auto pl-5 sm:pl-8 md:pl-10">

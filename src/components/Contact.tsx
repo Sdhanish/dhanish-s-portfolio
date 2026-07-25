@@ -19,6 +19,14 @@ import {
 } from 'lucide-react';
 import { usePortfolio } from '../contexts/PortfolioContext';
 import { addMessage } from '../firebase/services';
+import {
+  FADE_IN_UP,
+  STAGGER_CONTAINER,
+  CARD_REVEAL,
+  BUTTON_INTERACTION,
+  ICON_BUTTON_INTERACTION,
+  VIEWPORT_ONCE,
+} from '../utils/motion';
 
 export default function Contact() {
   const { personalInfo } = usePortfolio();
@@ -127,7 +135,13 @@ export default function Contact() {
       <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10">
         
         {/* Section Header */}
-        <div className="mb-12 space-y-2">
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={VIEWPORT_ONCE}
+          variants={FADE_IN_UP}
+          className="mb-12 space-y-2"
+        >
           <div className="flex items-center space-x-2">
             <span className="font-mono text-xs font-bold uppercase tracking-[0.25em] text-[#6C8E12] dark:text-[#BDF869]">
               06 / Interactive Inquiry
@@ -137,7 +151,7 @@ export default function Contact() {
             Let's Build Together
           </h2>
           <div className="w-16 h-1 bg-[#6C8E12] dark:bg-[#BDF869] rounded-full mt-2" />
-        </div>
+        </motion.div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-start">
           
@@ -310,7 +324,7 @@ export default function Contact() {
                           required
                           value={formData.name}
                           onChange={handleChange}
-                          placeholder="John Doe"
+                          placeholder="Dhanish S."
                           disabled={status === 'submitting'}
                           className="w-full px-3.5 py-2.5 border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-950 rounded-xl text-xs sm:text-sm text-[#1B2410] dark:text-neutral-100 placeholder-neutral-400 dark:placeholder-neutral-500 focus:outline-none focus:border-[#6C8E12] dark:focus:border-[#BDF869] focus:ring-2 focus:ring-[#6C8E12]/20 dark:focus:ring-[#BDF869]/20 disabled:opacity-60 transition-all duration-300"
                         />
@@ -328,7 +342,7 @@ export default function Contact() {
                           required
                           value={formData.email}
                           onChange={handleChange}
-                          placeholder="john@example.com"
+                          placeholder="sdhanish92@gmail.com"
                           disabled={status === 'submitting'}
                           className="w-full px-3.5 py-2.5 border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-950 rounded-xl text-xs sm:text-sm text-[#1B2410] dark:text-neutral-100 placeholder-neutral-400 dark:placeholder-neutral-500 focus:outline-none focus:border-[#6C8E12] dark:focus:border-[#BDF869] focus:ring-2 focus:ring-[#6C8E12]/20 dark:focus:ring-[#BDF869]/20 disabled:opacity-60 transition-all duration-300"
                         />
