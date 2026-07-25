@@ -16,8 +16,11 @@ export default function Navbar({ theme, toggleTheme, onOpenResume }: NavbarProps
   const { personalInfo, logoUrl } = usePortfolio();
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isOverHero, setIsOverHero] = useState(true);
   const [activeSection, setActiveSection] = useState('about');
   const [hoveredLink, setHoveredLink] = useState<string | null>(null);
+
+  const isDarkLook = isOverHero || theme === 'dark';
 
   const nameParts = (personalInfo.name || 'DHANISH S.').trim().split(' ');
   const firstName = nameParts[0] || 'DHANISH';
@@ -38,6 +41,12 @@ export default function Navbar({ theme, toggleTheme, onOpenResume }: NavbarProps
         window.requestAnimationFrame(() => {
           const scrolled = window.scrollY > 20;
           setIsScrolled((prev) => (prev !== scrolled ? scrolled : prev));
+
+          const heroEl = document.getElementById('hero');
+          const heroHeight = heroEl ? heroEl.offsetHeight : window.innerHeight;
+          const overHero = window.scrollY < (heroHeight - 80);
+          setIsOverHero(overHero);
+
           ticking = false;
         });
         ticking = true;
@@ -88,9 +97,13 @@ export default function Navbar({ theme, toggleTheme, onOpenResume }: NavbarProps
       <nav
         id="navbar"
         className={`fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[92%] max-w-6xl rounded-full transition-all duration-300 border gpu-layer ${
-          isScrolled
-            ? 'bg-white/70 dark:bg-neutral-950/90 backdrop-blur-md border-[#6C8E12]/25 dark:border-neutral-800/80 py-2.5 shadow-lg shadow-black/5 dark:shadow-none'
-            : 'bg-white/40 dark:bg-neutral-950/60 backdrop-blur-sm border-[#6C8E12]/20 dark:border-neutral-800/40 py-3.5'
+          isDarkLook
+            ? isScrolled
+              ? 'bg-neutral-950/85 backdrop-blur-md border-white/15 py-2.5 shadow-lg shadow-black/20'
+              : 'bg-neutral-950/50 backdrop-blur-md border-white/10 py-3.5'
+            : isScrolled
+              ? 'bg-white/70 backdrop-blur-md border-[#6C8E12]/25 py-2.5 shadow-lg shadow-black/5'
+              : 'bg-white/40 backdrop-blur-sm border-[#6C8E12]/20 py-3.5'
         }`}
       >
         <div className="px-6 md:px-8 flex items-center justify-between">
@@ -104,7 +117,9 @@ export default function Navbar({ theme, toggleTheme, onOpenResume }: NavbarProps
             }}
             className="flex items-center space-x-3 text-neutral-900 dark:text-neutral-50 group"
           >
-            <div className="w-8 h-8 rounded-full overflow-hidden border border-[#6C8E12]/30 dark:border-neutral-800 bg-white dark:bg-neutral-950 flex items-center justify-center transition-transform duration-300 group-hover:scale-105">
+            <div className={`w-8 h-8 rounded-full overflow-hidden border flex items-center justify-center transition-transform duration-300 group-hover:scale-105 ${
+              isDarkLook ? 'border-white/20 bg-black/40' : 'border-[#6C8E12]/30 bg-white'
+            }`}>
               <img 
                 src={logoUrl} 
                 alt={`${personalInfo.name || 'Dhanish S.'} Logo`} 
@@ -112,14 +127,16 @@ export default function Navbar({ theme, toggleTheme, onOpenResume }: NavbarProps
                 referrerPolicy="no-referrer"
               />
             </div>
-            <span className="font-display text-xs sm:text-sm tracking-widest font-black uppercase text-[#1B2410] dark:text-white drop-shadow-sm flex items-center">
-              <span className="text-[#6C8E12] dark:text-[#BDF869]">{firstName}</span>
-              <span className="text-[#1B2410] dark:text-white ml-1">{lastName}</span>
+            <span className="font-display text-xs sm:text-sm tracking-widest font-black uppercase drop-shadow-sm flex items-center">
+              <span className={isDarkLook ? "text-[#BDF869]" : "text-[#6C8E12]"}>{firstName}</span>
+              <span className={`ml-1 ${isDarkLook ? "text-white" : "text-[#1B2410]"}`}>{lastName}</span>
             </span>
           </a>
 
           {/* Desktop Links */}
-          <div className="hidden lg:flex items-center bg-neutral-200/30 dark:bg-neutral-900/40 px-1.5 py-1.5 rounded-full border border-neutral-300/30 dark:border-neutral-800/30 relative">
+          <div className={`hidden lg:flex items-center px-1.5 py-1.5 rounded-full border relative transition-colors duration-300 ${
+            isDarkLook ? 'bg-black/40 border-white/15' : 'bg-neutral-200/30 border-neutral-300/30'
+          }`}>
             {navLinks.map((link) => {
               const isActive = activeSection === link.href.replace('#', '');
               return (
@@ -131,15 +148,17 @@ export default function Navbar({ theme, toggleTheme, onOpenResume }: NavbarProps
                   onMouseLeave={() => setHoveredLink(null)}
                   className={`text-[11px] font-extrabold uppercase tracking-wider px-4 py-2 rounded-full relative transition-colors duration-300 cursor-pointer ${
                     isActive 
-                      ? 'text-[#6C8E12] dark:text-[#BDF869]' 
-                      : 'text-neutral-700 hover:text-[#6C8E12] dark:text-neutral-300 dark:hover:text-[#BDF869]'
+                      ? isDarkLook ? 'text-[#BDF869]' : 'text-[#6C8E12]'
+                      : isDarkLook ? 'text-white/80 hover:text-[#BDF869]' : 'text-neutral-700 hover:text-[#6C8E12]'
                   }`}
                 >
                   {/* Hover background indicator */}
                   {hoveredLink === link.name && (
                     <motion.div
                       layoutId="navHover"
-                      className="absolute inset-0 bg-neutral-200/70 dark:bg-neutral-800/70 rounded-full -z-10"
+                      className={`absolute inset-0 rounded-full -z-10 ${
+                        isDarkLook ? 'bg-white/10' : 'bg-neutral-200/70'
+                      }`}
                       transition={{ type: 'spring', stiffness: 380, damping: 30 }}
                     />
                   )}
@@ -147,7 +166,11 @@ export default function Navbar({ theme, toggleTheme, onOpenResume }: NavbarProps
                   {isActive && (
                     <motion.div
                       layoutId="navActive"
-                      className="absolute inset-0 bg-white dark:bg-neutral-900 shadow-sm rounded-full -z-10 border border-[#6C8E12]/30 dark:border-[#BDF869]/30"
+                      className={`absolute inset-0 shadow-sm rounded-full -z-10 border ${
+                        isDarkLook
+                          ? 'bg-neutral-900 border-[#BDF869]/40'
+                          : 'bg-white border-[#6C8E12]/30'
+                      }`}
                       transition={{ type: 'spring', stiffness: 380, damping: 30 }}
                     />
                   )}
@@ -159,11 +182,15 @@ export default function Navbar({ theme, toggleTheme, onOpenResume }: NavbarProps
 
           {/* Actions */}
           <div className="hidden lg:flex items-center space-x-3">
-            <ThemeToggle theme={theme} toggleTheme={toggleTheme} />
+            <ThemeToggle theme={theme} toggleTheme={toggleTheme} isOverHero={isOverHero} />
             <button
               id="resume-btn"
               onClick={onOpenResume}
-              className="group flex items-center space-x-1.5 px-4 py-2 rounded-full text-[11px] font-extrabold uppercase tracking-wider cursor-pointer border transition-all duration-300 border-[#6C8E12] text-[#1B2410] bg-transparent hover:bg-[#6C8E12] hover:text-white hover:shadow-[0_0_15px_rgba(108,142,18,0.3)] dark:border-[#BDF869] dark:text-[#BDF869] dark:bg-transparent dark:hover:bg-[#BDF869] dark:hover:text-black dark:hover:border-[#BDF869] dark:hover:shadow-[0_0_18px_rgba(189,248,105,0.4)]"
+              className={`group flex items-center space-x-1.5 px-4 py-2 rounded-full text-[11px] font-extrabold uppercase tracking-wider cursor-pointer border transition-all duration-300 ${
+                isDarkLook
+                  ? 'border-[#BDF869] text-[#BDF869] bg-transparent hover:bg-[#BDF869] hover:text-black hover:border-[#BDF869] hover:shadow-[0_0_18px_rgba(189,248,105,0.4)]'
+                  : 'border-[#6C8E12] text-[#1B2410] bg-transparent hover:bg-[#6C8E12] hover:text-white hover:shadow-[0_0_15px_rgba(108,142,18,0.3)]'
+              }`}
             >
               <FileText className="w-3.5 h-3.5 transition-transform duration-300 group-hover:scale-110" />
               <span>Resume</span>
@@ -172,11 +199,15 @@ export default function Navbar({ theme, toggleTheme, onOpenResume }: NavbarProps
 
           {/* Mobile/Tablet Actions and Hamburger */}
           <div className="flex lg:hidden items-center space-x-3">
-            <ThemeToggle theme={theme} toggleTheme={toggleTheme} />
+            <ThemeToggle theme={theme} toggleTheme={toggleTheme} isOverHero={isOverHero} />
             <button
               id="mobile-menu-toggle"
               onClick={() => setIsOpen(!isOpen)}
-              className="p-2 rounded-full border border-[#6C8E12]/30 dark:border-neutral-800 text-[#1B2410] dark:text-neutral-200 focus:outline-none cursor-pointer hover:bg-[#6C8E12]/10 dark:hover:bg-neutral-800 transition-colors"
+              className={`p-2 rounded-full border focus:outline-none cursor-pointer transition-colors ${
+                isDarkLook
+                  ? 'border-white/20 text-white hover:bg-white/10'
+                  : 'border-[#6C8E12]/30 text-[#1B2410] hover:bg-[#6C8E12]/10'
+              }`}
               aria-label="Toggle Menu"
             >
               {isOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
@@ -193,7 +224,11 @@ export default function Navbar({ theme, toggleTheme, onOpenResume }: NavbarProps
             animate={{ opacity: 1, scale: 1, y: 0, x: '-50%' }}
             exit={{ opacity: 0, scale: 0.95, y: -10, x: '-50%' }}
             transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
-            className="fixed top-20 left-1/2 z-40 w-[92%] max-w-lg bg-white/95 dark:bg-neutral-950/95 backdrop-blur-md rounded-3xl border border-[#6C8E12]/30 dark:border-neutral-800/70 p-6 shadow-2xl flex flex-col justify-between lg:hidden"
+            className={`fixed top-20 left-1/2 z-40 w-[92%] max-w-lg backdrop-blur-md rounded-3xl border p-6 shadow-2xl flex flex-col justify-between lg:hidden ${
+              isDarkLook
+                ? 'bg-neutral-950/95 border-white/15'
+                : 'bg-white/95 border-[#6C8E12]/30'
+            }`}
           >
             <div className="flex flex-col space-y-4 my-2">
               {navLinks.map((link, idx) => {
@@ -208,8 +243,12 @@ export default function Navbar({ theme, toggleTheme, onOpenResume }: NavbarProps
                     onClick={(e) => handleLinkClick(e, link.href)}
                     className={`text-lg font-black tracking-wide py-1 transition-colors ${
                       isActive 
-                        ? 'text-[#6C8E12] dark:text-[#BDF869] pl-2 border-l-2 border-[#6C8E12] dark:border-[#BDF869]' 
-                        : 'text-neutral-700 hover:text-[#6C8E12] dark:text-neutral-300 dark:hover:text-[#BDF869]'
+                        ? isDarkLook
+                          ? 'text-[#BDF869] pl-2 border-l-2 border-[#BDF869]'
+                          : 'text-[#6C8E12] pl-2 border-l-2 border-[#6C8E12]'
+                        : isDarkLook
+                          ? 'text-white hover:text-[#BDF869]'
+                          : 'text-neutral-700 hover:text-[#6C8E12]'
                     }`}
                   >
                     {link.name}
