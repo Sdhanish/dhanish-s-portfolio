@@ -196,7 +196,7 @@ export default function Projects() {
                           width="600"
                           height="350"
                           referrerPolicy="no-referrer"
-                          className="w-full h-full object-cover grayscale brightness-[0.88] contrast-[1.05] group-hover:grayscale-0 group-hover:brightness-100 group-hover:scale-105 transition-all duration-700 ease-out"
+                          className="w-full h-full object-cover group-hover:scale-105 transition-all duration-700 ease-out"
                         />
                         
                         {/* Category Tag Overlay */}
@@ -218,9 +218,6 @@ export default function Projects() {
                             <ArrowUpRight className="w-3.5 h-3.5 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 transition-transform" />
                           </a>
                         </div>
-
-                        {/* Gradient Vignette */}
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent pointer-events-none" />
                       </div>
 
                       {/* Info Panel */}
