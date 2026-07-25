@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 interface TechConfig {
   color: string; // Primary brand color hex
@@ -8,6 +8,80 @@ interface TechConfig {
 }
 
 export const techDetailsMap: Record<string, TechConfig> = {
+  'WordPress': {
+    color: '#21759B',
+    bgLight: 'bg-[#21759B]/10',
+    bgDark: 'dark:bg-[#21759B]/20',
+    svg: (color) => (
+      <svg className="w-6 h-6" viewBox="0 0 24 24" fill={color}>
+        <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm0 22C6.486 22 2 17.514 2 12c0-1.282.242-2.508.682-3.633L8.03 20.301A9.972 9.972 0 0 0 12 22zm-7.618-9.062L8.272 2.68A9.953 9.953 0 0 0 2 12c0 3.321 1.621 6.262 4.113 8.082l-1.731-7.144zm8.683 9.006l2.368-6.837h-1.615l-1.921 5.549-1.922-5.549h-1.615l2.368 6.837a9.96 9.96 0 0 0 2.337.000zm8.817-9.944a9.953 9.953 0 0 0 .118-1.5c0-2.454-.897-4.162-1.861-5.837l-3.328 9.615 3.013 8.351A9.96 9.96 0 0 0 21.882 12z" />
+      </svg>
+    ),
+  },
+  'Java': {
+    color: '#ED8B00',
+    bgLight: 'bg-[#ED8B00]/10',
+    bgDark: 'dark:bg-[#ED8B00]/20',
+    svg: (color) => (
+      <svg className="w-6 h-6" viewBox="0 0 24 24" fill={color}>
+        <path d="M8.851 18.56s-.917.534.653.714c1.902.218 2.873.187 4.969-.211 0 0 .552.3461.328.611-1.358.502-5.282.632-7.587-.198-1.127-.406.848-.823 1.637-.916zm1.185-2.213s-1.21.688.468.807c1.865.133 3.655-.029 5.395-.426 0 0 .392.36.108.571-1.666.529-5.992.586-7.892-.128-.867-.327 1.055-.745 1.921-.824zm6.098-3.033c1.378.895.731 1.776-.328 2.363-2.128.847-5.946.814-7.869.213-.811-.253.847-.63 1.791-.72 2.766-.264 4.582-.44 6.406-1.856zm-4.708-5.32c.797.886-.188 2.05-1.55 3.237-1.396 1.213-2.617 2.083-4.305 2.083 0 0-.276-.237.215-.474 1.55-.749 2.585-1.468 3.731-2.483 1.146-1.015 1.909-2.363 1.909-2.363zm-2.073-7.994s2.831 2.39.262 5.093c-2.073 2.181-.797 3.398 0 4.793-1.642-1.472-2.316-2.825-1.802-4.148.736-1.898 2.949-2.648 1.54-5.738zm5.542 12.399s1.396-1.076.654-2.24c-.742-1.164-1.865-1.748-1.015-3.085 1.137 1.564 2.871 2.21 2.871 3.518 0 1.25-1.51 1.807-2.51 1.807zm1.185 2.112c.983-.797 2.05-1.688 1.119-2.859-.931-1.171-2.138-1.503-.984-2.84 1.258 1.458 2.628 2.152 2.628 3.559 0 1.341-1.704 2.14-2.763 2.14z" />
+      </svg>
+    ),
+  },
+  'PostgreSQL': {
+    color: '#4169E1',
+    bgLight: 'bg-[#4169E1]/10',
+    bgDark: 'dark:bg-[#4169E1]/20',
+    svg: (color) => (
+      <svg className="w-6 h-6" viewBox="0 0 24 24" fill={color}>
+        <path d="M12 0C5.37 0 0 5.37 0 12s5.37 12 12 12 12-5.37 12-12S18.63 0 12 0zm.602 20.861v-2.825c2.977-.866 5.02-3.665 5.02-6.915 0-5.321-4.321-9.742-5.02-10.499V0s.397.355.772.766c.375.41 4.85 5.378 4.85 11.355 0 3.73-2.181 6.944-5.26 8.277l-.362.155v3.308h-.002z" />
+      </svg>
+    ),
+  },
+  'Docker': {
+    color: '#2496ED',
+    bgLight: 'bg-[#2496ED]/10',
+    bgDark: 'dark:bg-[#2496ED]/20',
+    svg: (color) => (
+      <svg className="w-6 h-6" viewBox="0 0 24 24" fill={color}>
+        <path d="M13.983 11.078h2.119a.186.186 0 0 0 .186-.185V9.006a.186.186 0 0 0-.186-.186h-2.119a.185.185 0 0 0-.185.186v1.887c0 .102.083.185.185.185zm-2.954-2.258h2.118a.185.185 0 0 0 .186-.186V6.748a.185.185 0 0 0-.186-.186h-2.118a.185.185 0 0 0-.185.186v1.886c0 .103.083.186.185.186zm0 4.516h2.118a.185.185 0 0 0 .186-.185v-1.887a.185.185 0 0 0-.186-.186h-2.118a.185.185 0 0 0-.185.186v1.887c0 .102.083.185.185.185zm-2.954-4.516h2.119a.186.186 0 0 0 .185-.186V6.748a.186.186 0 0 0-.185-.186H8.075a.185.185 0 0 0-.185.186v1.886c0 .103.083.186.185.186zm0 4.516h2.119a.186.186 0 0 0 .185-.185v-1.887a.186.186 0 0 0-.185-.186H8.075a.185.185 0 0 0-.185.186v1.887c0 .102.083.185.185.185zm-2.955-4.516h2.119a.186.186 0 0 0 .185-.186V6.748a.186.186 0 0 0-.185-.186H5.12a.185.185 0 0 0-.185.186v1.886c0 .103.083.186.185.186zm0 4.516h2.119a.186.186 0 0 0 .185-.185v-1.887a.186.186 0 0 0-.185-.186H5.12a.185.185 0 0 0-.185.186v1.887c0 .102.083.185.185.185zm-2.954 0h2.119a.185.185 0 0 0 .185-.185v-1.887a.185.185 0 0 0-.185-.186H2.166a.185.185 0 0 0-.185.186v1.887c0 .102.083.185.185.185zm0-2.258h2.119a.186.186 0 0 0 .185-.186V9.006a.186.186 0 0 0-.185-.186H2.166a.185.185 0 0 0-.185.186v1.887c0 .102.083.185.185.185z" />
+      </svg>
+    ),
+  },
+  'Figma': {
+    color: '#F24E1E',
+    bgLight: 'bg-[#F24E1E]/10',
+    bgDark: 'dark:bg-[#F24E1E]/20',
+    svg: () => (
+      <svg className="w-6 h-6" viewBox="0 0 24 24">
+        <path fill="#F24E1E" d="M8 12a4 4 0 1 1 8 0 4 4 0 0 1-8 0z" />
+        <path fill="#A259FF" d="M8 4a4 4 0 0 1 4 4v4H8a4 4 0 1 1 0-8z" />
+        <path fill="#F24E1E" d="M12 0h4a4 4 0 0 1 0 8h-4V0z" />
+        <path fill="#1ABCFE" d="M16 12a4 4 0 0 1 0 8h-4v-8h4z" />
+        <path fill="#0ACF83" d="M8 16a4 4 0 0 1 4 4v4a4 4 0 1 1-4-8z" />
+      </svg>
+    ),
+  },
+  'Bootstrap': {
+    color: '#7952B3',
+    bgLight: 'bg-[#7952B3]/10',
+    bgDark: 'dark:bg-[#7952B3]/20',
+    svg: (color) => (
+      <svg className="w-6 h-6" viewBox="0 0 24 24" fill={color}>
+        <path d="M18.895 1.5H5.105A3.605 3.605 0 0 0 1.5 5.105v13.79A3.605 3.605 0 0 0 5.105 22.5h13.79a3.605 3.605 0 0 0 3.605-3.605V5.105A3.605 3.605 0 0 0 18.895 1.5zm-5.776 13.918c0 1.397-1.127 2.454-2.827 2.454H7.135V6.128h3.003c1.583 0 2.585.922 2.585 2.146 0 .914-.582 1.637-1.464 1.912 1.116.236 1.861 1.053 1.861 2.232z" />
+      </svg>
+    ),
+  },
+  'Supabase': {
+    color: '#3ECF8E',
+    bgLight: 'bg-[#3ECF8E]/10',
+    bgDark: 'dark:bg-[#3ECF8E]/20',
+    svg: (color) => (
+      <svg className="w-6 h-6" viewBox="0 0 24 24" fill={color}>
+        <path d="M13.359 1.12L1.782 12.697A1.5 1.5 0 0 0 2.843 15.26h8.082l-1.284 7.62a1.5 1.5 0 0 0 2.561 1.14l11.577-11.577a1.5 1.5 0 0 0-1.06-2.563h-8.083l1.284-7.62a1.5 1.5 0 0 0-2.56-1.14z" />
+      </svg>
+    ),
+  },
   'React.js': {
     color: '#61DAFB',
     bgLight: 'bg-[#61DAFB]/10',
@@ -242,20 +316,98 @@ export const techDetailsMap: Record<string, TechConfig> = {
   },
 };
 
+const aliasMap: Record<string, string> = {
+  'wordpress': 'WordPress',
+  'wp': 'WordPress',
+  'wordpress / cms': 'WordPress',
+  'java': 'Java',
+  'javascript': 'JavaScript',
+  'js': 'JavaScript',
+  'typescript': 'TypeScript',
+  'ts': 'TypeScript',
+  'react': 'React.js',
+  'reactjs': 'React.js',
+  'react.js': 'React.js',
+  'next': 'Next.js',
+  'nextjs': 'Next.js',
+  'next.js': 'Next.js',
+  'node': 'Node.js',
+  'nodejs': 'Node.js',
+  'node.js': 'Node.js',
+  'express': 'Express.js',
+  'expressjs': 'Express.js',
+  'express.js': 'Express.js',
+  'tailwind': 'Tailwind CSS',
+  'tailwindcss': 'Tailwind CSS',
+  'postgres': 'PostgreSQL',
+  'postgresql': 'PostgreSQL',
+  'mongo': 'MongoDB',
+  'mongodb': 'MongoDB',
+  'python': 'Python',
+  'php': 'PHP',
+  'git': 'Git',
+  'github': 'GitHub',
+  'html': 'HTML5',
+  'html5': 'HTML5',
+  'css': 'CSS3',
+  'css3': 'CSS3',
+  'docker': 'Docker',
+  'figma': 'Figma',
+  'bootstrap': 'Bootstrap',
+  'supabase': 'Supabase',
+  'redux': 'Redux',
+  'postman': 'Postman',
+  'vscode': 'VS Code',
+  'vs code': 'VS Code',
+  'vercel': 'Vercel',
+  'render': 'Render',
+  'mysql': 'MySQL',
+  'firebase': 'Firebase',
+  'rest api': 'REST APIs',
+  'rest apis': 'REST APIs',
+  'restapi': 'REST APIs',
+};
+
 export const TechIcon = React.memo(function TechIcon({ name }: { name: string }) {
-  const config = techDetailsMap[name];
-  if (!config) {
-    // Default fallback icon
+  const [imgError, setImgError] = useState(false);
+
+  const rawName = (name || '').trim();
+  const normalizedKey = rawName.toLowerCase();
+  const mappedKey = aliasMap[normalizedKey] || rawName;
+  const config = techDetailsMap[mappedKey] || techDetailsMap[rawName];
+
+  if (config) {
     return (
-      <div className="w-10 h-10 rounded-xl bg-[#6C8E12]/10 dark:bg-[#BDF869]/15 flex items-center justify-center text-[#6C8E12] dark:text-[#BDF869] font-black text-xs">
-        {name.substring(0, 2).toUpperCase()}
+      <div className={`w-11 h-11 rounded-xl ${config.bgLight} ${config.bgDark} flex items-center justify-center transition-transform duration-300 group-hover:scale-110 shadow-sm`}>
+        {config.svg(config.color)}
       </div>
     );
   }
 
+  // Dynamic SVG fetching for new/custom skills via Simple Icons CDN
+  const slug = normalizedKey
+    .replace(/\.js$/, 'dotjs')
+    .replace(/[^a-z0-9]/g, '');
+
+  if (!imgError && slug) {
+    return (
+      <div className="w-11 h-11 rounded-xl bg-neutral-100 dark:bg-neutral-800 border border-neutral-200/60 dark:border-neutral-700/60 flex items-center justify-center transition-transform duration-300 group-hover:scale-110 shadow-sm p-2">
+        <img
+          src={`https://cdn.simpleicons.org/${slug}`}
+          alt={`${name} icon`}
+          className="w-6 h-6 object-contain"
+          loading="lazy"
+          onError={() => setImgError(true)}
+        />
+      </div>
+    );
+  }
+
+  // Styled fallback badge for unrecognized skills
   return (
-    <div className={`w-11 h-11 rounded-xl ${config.bgLight} ${config.bgDark} flex items-center justify-center transition-transform duration-300 group-hover:scale-110 shadow-sm`}>
-      {config.svg(config.color)}
+    <div className="w-11 h-11 rounded-xl bg-[#6C8E12]/10 dark:bg-[#BDF869]/15 border border-[#6C8E12]/20 dark:border-[#BDF869]/20 flex items-center justify-center text-[#6C8E12] dark:text-[#BDF869] font-black text-xs shadow-sm">
+      {rawName.substring(0, 2).toUpperCase()}
     </div>
   );
 });
+

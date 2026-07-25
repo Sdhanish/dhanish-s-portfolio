@@ -123,7 +123,8 @@ export default function Skills() {
           >
           <AnimatePresence mode="popLayout">
             {visibleSkills.map((skill, index) => {
-              const techConfig = techDetailsMap[skill.name];
+              const nameKey = (skill.name || '').trim();
+              const techConfig = techDetailsMap[nameKey] || techDetailsMap[nameKey.toLowerCase()];
               const brandColor = techConfig?.color || '#6C8E12';
 
               return (

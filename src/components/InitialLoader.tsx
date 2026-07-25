@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Sparkles, Code2 } from 'lucide-react';
 import { usePortfolio } from '../contexts/PortfolioContext';
 import defaultLogoAsset from '../assets/images/dhanish-logo-light.png';
 
@@ -74,7 +73,7 @@ export default function InitialLoader({ onComplete }: InitialLoaderProps) {
           <div className="absolute w-[600px] h-[600px] bg-[#BDF869]/10 rounded-full blur-[140px] pointer-events-none animate-pulse" />
 
           {/* Center Brand Monogram & Identity */}
-          <div className="relative z-10 flex flex-col items-center space-y-7 px-6 text-center max-w-md w-full">
+          <div className="relative z-10 flex flex-col items-center space-y-6 px-6 text-center max-w-md w-full">
             {/* Monogram Badge */}
             <motion.div
               initial={{ scale: 0.7, opacity: 0, y: 15 }}
@@ -86,7 +85,7 @@ export default function InitialLoader({ onComplete }: InitialLoaderProps) {
               <div className="relative w-16 h-16 rounded-2xl bg-neutral-900 border border-neutral-800/80 flex items-center justify-center shadow-2xl overflow-hidden p-2">
                 <img
                   src={logoUrl}
-                  alt="Dhanish S Logo"
+                  alt="Logo"
                   className="w-full h-full object-contain"
                   loading="eager"
                   onError={(e) => {
@@ -103,38 +102,23 @@ export default function InitialLoader({ onComplete }: InitialLoaderProps) {
               </div>
             </motion.div>
 
-            {/* Pill Tagline */}
+            {/* Name */}
             <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.15, ease: 'easeOut' }}
-              className="flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-neutral-900/90 border border-neutral-800 text-[#BDF869] text-[11px] font-mono font-semibold tracking-wider uppercase shadow-inner"
-            >
-              <Sparkles className="w-3.5 h-3.5 text-[#BDF869] animate-spin" style={{ animationDuration: '4s' }} />
-              <span>Full Stack Portfolio</span>
-            </motion.div>
-
-            {/* Name & Title */}
-            <motion.div
-              initial={{ y: 15, opacity: 0 }}
+              initial={{ y: 10, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
-              transition={{ duration: 0.6, delay: 0.2, ease: 'easeOut' }}
-              className="space-y-1.5"
+              transition={{ duration: 0.5, delay: 0.15, ease: 'easeOut' }}
             >
-              <h1 className="text-3xl sm:text-5xl font-black font-sans tracking-tight uppercase text-white">
+              <h1 className="text-2xl sm:text-3xl font-black font-sans tracking-tight uppercase text-white">
                 Dhanish S<span className="text-[#BDF869]">.</span>
               </h1>
-              <p className="text-xs sm:text-sm font-mono text-neutral-400 tracking-wider uppercase">
-                Full Stack Developer & MERN Specialist
-              </p>
             </motion.div>
 
-            {/* Premium Micro Progress Bar */}
+            {/* Micro Progress Bar & Loading Status */}
             <motion.div
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.3, ease: 'easeOut' }}
-              className="w-56 sm:w-64 space-y-2.5 pt-2"
+              transition={{ duration: 0.5, delay: 0.25, ease: 'easeOut' }}
+              className="w-56 sm:w-64 space-y-2 pt-1"
             >
               <div className="relative h-1.5 w-full bg-neutral-900 rounded-full overflow-hidden border border-neutral-800/80 p-[1px]">
                 <motion.div
@@ -145,10 +129,7 @@ export default function InitialLoader({ onComplete }: InitialLoaderProps) {
                 />
               </div>
               <div className="flex justify-between items-center text-[10px] font-mono text-neutral-400 uppercase font-semibold tracking-wider px-0.5">
-                <span className="flex items-center gap-1">
-                  <Code2 className="w-3 h-3 text-[#BDF869]" />
-                  Initializing Environment
-                </span>
+                <span>Loading...</span>
                 <span className="text-[#BDF869] font-bold">{Math.min(progress, 100)}%</span>
               </div>
             </motion.div>
