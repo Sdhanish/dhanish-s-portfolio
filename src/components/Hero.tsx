@@ -4,8 +4,8 @@ import { motion, AnimatePresence, useReducedMotion } from 'motion/react';
 import { usePortfolio } from '../contexts/PortfolioContext';
 import { scrollToSection } from '../utils/scroll';
 
-import defaultHeroLight from '../assets/images/dhanish-light-theme.png';
-import defaultHeroDark from '../assets/images/dhanish-light-theme.png';
+import defaultHeroLight from '../assets/images/dhanish-dark-theme.png';
+import defaultHeroDark from '../assets/images/dhanish-dark-theme.png';
 
 interface HeroProps {
   onOpenResume: () => void;
