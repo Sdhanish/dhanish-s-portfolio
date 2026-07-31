@@ -195,7 +195,7 @@ export default function Hero({ onOpenResume }: HeroProps) {
   return (
     <section
       id="hero"
-      className="relative h-screen max-h-screen w-full flex flex-col justify-start overflow-hidden transition-colors duration-300 gpu-layer"
+      className="relative min-h-[100dvh] lg:h-screen lg:max-h-screen w-full flex flex-col justify-start overflow-hidden transition-colors duration-300 gpu-layer"
     >
       {/* Light theme hero background image */}
       <div
@@ -213,7 +213,7 @@ export default function Hero({ onOpenResume }: HeroProps) {
       <div className="absolute inset-0 bg-black/65 dark:bg-black/75 lg:bg-white/0 lg:dark:bg-black/30 pointer-events-none" />
 
       {/* Main Container */}
-      <div className="relative z-10 max-w-7xl mx-auto px-4 md:px-6 lg:px-6 w-full h-full flex-1 flex flex-col justify-between pt-16 pb-4 lg:pt-14 lg:pb-6 overflow-hidden">
+      <div className="relative z-10 max-w-7xl mx-auto px-4 md:px-6 lg:px-6 w-full h-full min-h-[100dvh] lg:min-h-0 flex-1 flex flex-col justify-between pt-16 pb-6 sm:py-12 lg:pt-14 lg:pb-6 overflow-hidden">
 
         {/* DESKTOP VIEW: Left section = name, buttons & get in touch at bottom; Right section = title at top & About text */}
         <div className="hidden lg:grid grid-cols-12 gap-6 lg:gap-12 w-full flex-1 items-stretch">
@@ -244,7 +244,7 @@ export default function Hero({ onOpenResume }: HeroProps) {
               </span>
             </motion.h1>
 
-            {/* Action Buttons - Greenish with Border & Subtle Non-Glossy Hover */}
+            {/* Action Buttons - Clean styles with no glowing effects */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -261,7 +261,7 @@ export default function Hero({ onOpenResume }: HeroProps) {
 
               <button
                 onClick={onOpenResume}
-                className="px-5 py-3 rounded-xl text-xs uppercase tracking-wider font-black transition-all duration-300 cursor-pointer w-full sm:w-auto text-center border-2 border-[#BDF869] bg-[#121b0b]/80 backdrop-blur-sm text-[#BDF869] hover:bg-[#BDF869]/25 hover:text-[#BDF869] shadow-[0_0_18px_rgba(189,248,105,0.3)] hover:shadow-[0_0_28px_rgba(189,248,105,0.6)] hover:scale-105 active:scale-95"
+                className="px-5 py-3 rounded-xl text-xs uppercase tracking-wider font-black transition-all duration-300 cursor-pointer w-full sm:w-auto text-center border-2 border-[#BDF869] bg-[#121b0b]/80 backdrop-blur-sm text-[#BDF869] hover:bg-[#BDF869]/25 hover:text-[#BDF869] shadow-sm hover:scale-105 active:scale-95"
               >
                 View Resume
               </button>
@@ -336,11 +336,11 @@ export default function Hero({ onOpenResume }: HeroProps) {
 
         </div>
 
-        {/* MOBILE / TABLET VIEW: Fully responsive full-screen vertical distribution */}
-        <div className="flex lg:hidden flex-col items-center justify-between text-center w-full h-full pt-16 sm:pt-20 pb-6 sm:pb-8 px-5 sm:px-8 max-w-md sm:max-w-lg md:max-w-xl mx-auto">
+        {/* MOBILE / TABLET VIEW: Content-adaptive height with balanced, elegant spacing */}
+        <div className="flex lg:hidden flex-col items-center justify-center text-center w-full h-full min-h-full my-auto py-6 sm:py-10 md:py-12 px-4 sm:px-8 max-w-md sm:max-w-lg md:max-w-xl mx-auto space-y-5 sm:space-y-6 md:space-y-7">
 
-          {/* Top/Middle Text Content Group - Spacious & Breathing */}
-          <div className="flex flex-col items-center space-y-2.5 sm:space-y-3.5 md:space-y-4 w-full my-auto">
+          {/* Text Content Group */}
+          <div className="flex flex-col items-center space-y-2 sm:space-y-3 md:space-y-3.5 w-full">
             {/* "Hello," text */}
             <motion.div
               initial={{ opacity: 0, y: 10 }}
@@ -363,7 +363,7 @@ export default function Hero({ onOpenResume }: HeroProps) {
             </motion.h1>
 
             {/* 2. Title / Specialization */}
-            <div className="flex items-center justify-center px-2 w-full py-1">
+            <div className="flex items-center justify-center px-2 w-full py-0.5">
               <h1 className="text-xl sm:text-2xl md:text-3xl font-sans font-black tracking-tight text-white leading-tight uppercase w-full">
                 <CinematicRoles words={typingWords} align="center" />
               </h1>
@@ -374,7 +374,7 @@ export default function Hero({ onOpenResume }: HeroProps) {
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.15 }}
-              className="px-2 max-w-xs sm:max-w-md md:max-w-lg mx-auto text-center pt-1"
+              className="px-2 max-w-xs sm:max-w-md md:max-w-lg mx-auto text-center pt-0.5"
             >
               <p className="font-monte-carlo italic text-sm sm:text-base md:text-lg text-neutral-200 leading-relaxed drop-shadow-md select-none">
                 "{personalInfo.introduction || "Full Stack Developer specializing in React.js, Node.js, and modern databases — crafting clean user interfaces & scalable web solutions."}"
@@ -382,9 +382,9 @@ export default function Hero({ onOpenResume }: HeroProps) {
             </motion.div>
           </div>
 
-          {/* Bottom Section: Action Buttons & Get in Touch Links */}
-          <div className="w-full space-y-4 sm:space-y-5 pt-4">
-            {/* 3. Action Buttons */}
+          {/* Action Buttons & Contact links - Grouped with even, balanced spacing */}
+          <div className="w-full space-y-4 sm:space-y-5">
+            {/* 3. Action Buttons - Clean styling with no glowing effect */}
             <motion.div
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
@@ -393,7 +393,7 @@ export default function Hero({ onOpenResume }: HeroProps) {
             >
               <button
                 onClick={handleScrollToProjects}
-                className="group flex items-center justify-center space-x-2 px-6 py-3 bg-[#BDF869] text-black font-black border-2 border-[#BDF869] rounded-xl text-xs sm:text-sm uppercase tracking-wider transition-all duration-300 cursor-pointer w-full sm:w-auto shadow-[0_0_20px_rgba(189,248,105,0.45)] hover:bg-[#BDF869]/85 hover:shadow-[0_0_30px_rgba(189,248,105,0.75)] hover:scale-105 active:scale-95"
+                className="group flex items-center justify-center space-x-2 px-6 py-3 bg-[#BDF869] text-black font-black border-2 border-[#BDF869] rounded-xl text-xs sm:text-sm uppercase tracking-wider transition-all duration-300 cursor-pointer w-full sm:w-auto shadow-sm hover:bg-[#a6ea43] hover:scale-105 active:scale-95"
               >
                 <span>Explore Projects</span>
                 <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-300" />
@@ -401,14 +401,14 @@ export default function Hero({ onOpenResume }: HeroProps) {
 
               <button
                 onClick={onOpenResume}
-                className="px-6 py-3 rounded-xl text-xs sm:text-sm uppercase tracking-wider font-black transition-all duration-300 cursor-pointer w-full sm:w-auto text-center border-2 border-[#BDF869] bg-[#121b0b]/80 backdrop-blur-sm text-[#BDF869] hover:bg-[#BDF869]/25 hover:text-[#BDF869] shadow-[0_0_18px_rgba(189,248,105,0.3)] hover:shadow-[0_0_28px_rgba(189,248,105,0.6)] hover:scale-105 active:scale-95"
+                className="px-6 py-3 rounded-xl text-xs sm:text-sm uppercase tracking-wider font-black transition-all duration-300 cursor-pointer w-full sm:w-auto text-center border-2 border-[#BDF869] bg-[#121b0b]/80 backdrop-blur-sm text-[#BDF869] hover:bg-[#BDF869]/25 hover:text-[#BDF869] shadow-sm hover:scale-105 active:scale-95"
               >
                 View Resume
               </button>
             </motion.div>
 
             {/* 4. Links & Contact */}
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-6 w-full max-w-sm sm:max-w-md mx-auto pt-1">
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-6 w-full max-w-sm sm:max-w-md mx-auto pt-0.5">
               <button
                 onClick={handleScrollToContact}
                 className="flex items-center space-x-1.5 text-xs sm:text-sm uppercase tracking-widest font-black text-[#BDF869] hover:text-white transition-colors cursor-pointer group"
@@ -422,7 +422,7 @@ export default function Hero({ onOpenResume }: HeroProps) {
                   href={github}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="p-2.5 rounded-xl border border-white/20 bg-black/40 text-white hover:border-[#BDF869] hover:text-[#BDF869] transition-all duration-300"
+                  className="p-2.5 rounded-xl border border-white/20 bg-black/40 text-white hover:border-[#BDF869] hover:text-[#BDF869] transition-all duration-300 shadow-sm"
                   aria-label="GitHub Profile"
                 >
                   <Github className="w-4 h-4" />
@@ -431,14 +431,14 @@ export default function Hero({ onOpenResume }: HeroProps) {
                   href={linkedin}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="p-2.5 rounded-xl border border-white/20 bg-black/40 text-white hover:border-[#BDF869] hover:text-[#BDF869] transition-all duration-300"
+                  className="p-2.5 rounded-xl border border-white/20 bg-black/40 text-white hover:border-[#BDF869] hover:text-[#BDF869] transition-all duration-300 shadow-sm"
                   aria-label="LinkedIn Profile"
                 >
                   <Linkedin className="w-4 h-4" />
                 </a>
                 <a
                   href={`mailto:${email}`}
-                  className="p-2.5 rounded-xl border border-white/20 bg-black/40 text-white hover:border-[#BDF869] hover:text-[#BDF869] transition-all duration-300"
+                  className="p-2.5 rounded-xl border border-white/20 bg-black/40 text-white hover:border-[#BDF869] hover:text-[#BDF869] transition-all duration-300 shadow-sm"
                   aria-label="Email Address"
                 >
                   <Mail className="w-4 h-4" />
