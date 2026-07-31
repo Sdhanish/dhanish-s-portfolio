@@ -270,11 +270,11 @@ export default function Hero({ onOpenResume }: HeroProps) {
           </div>
 
           {/* RIGHT SECTION: Specialization titles at top, About text in Monte Carlo font (smaller, right-aligned), Get in touch links at bottom */}
-          <div className="lg:col-span-6 flex flex-col justify-between text-right pt-10 lg:pt-14 xl:pt-16 pb-2">
+          <div className="lg:col-span-6 flex flex-col justify-between text-right pt-12 lg:pt-16 xl:pt-20 pb-4">
 
             {/* Specialization Title Animation */}
-            <div className="space-y-1 text-right">
-              <div className="flex items-start justify-end pt-1 pb-1">
+            <div className="space-y-1 text-right pt-2 lg:pt-3">
+              <div className="flex items-start justify-end pb-1">
                 <h1 className="text-xl sm:text-2xl lg:text-[2.6rem] xl:text-[3.0rem] font-sans font-black text-black dark:text-white leading-[1.08] uppercase max-w-md w-full tracking-tight">
                   <CinematicRoles words={typingWords} align="right" />
                 </h1>
@@ -294,40 +294,40 @@ export default function Hero({ onOpenResume }: HeroProps) {
             </motion.div>
 
             {/* Connect Details & Social icons on Right Side Bottom */}
-            <div className="flex flex-col items-end gap-2 pt-1">
+            <div className="flex flex-col items-end gap-2.5 pt-1">
               <button
                 onClick={handleScrollToContact}
-                className="flex items-center space-x-1.5 text-xs uppercase tracking-widest font-black text-black hover:text-lime-700 dark:text-[#BDF869] dark:hover:text-white transition-colors cursor-pointer group"
+                className="flex items-center space-x-2 text-xs lg:text-sm uppercase tracking-widest font-black text-black hover:text-lime-700 dark:text-[#BDF869] dark:hover:text-white transition-colors cursor-pointer group"
               >
                 <span>Get in Touch</span>
-                <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                <ArrowUpRight className="w-4 h-4 lg:w-4.5 lg:h-4.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
               </button>
 
-              <div className="flex items-center space-x-2.5">
+              <div className="flex items-center space-x-3">
                 <a
                   href={github}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="p-2 rounded-xl border border-black/20 bg-white/70 text-black hover:border-black hover:bg-[#BDF869] dark:border-white/20 dark:bg-black/40 dark:text-white dark:hover:border-[#BDF869] dark:hover:text-[#BDF869] dark:hover:bg-transparent transition-all duration-300 shadow-sm hover:scale-105"
+                  className="p-2.5 rounded-xl border border-black/20 bg-white/70 text-black hover:border-black hover:bg-[#BDF869] dark:border-white/20 dark:bg-black/40 dark:text-white dark:hover:border-[#BDF869] dark:hover:text-[#BDF869] dark:hover:bg-transparent transition-all duration-300 shadow-sm hover:scale-105"
                   aria-label="GitHub Profile"
                 >
-                  <Github className="w-4 h-4" />
+                  <Github className="w-4.5 h-4.5 lg:w-5 lg:h-5" />
                 </a>
                 <a
                   href={linkedin}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="p-2 rounded-xl border border-black/20 bg-white/70 text-black hover:border-black hover:bg-[#BDF869] dark:border-white/20 dark:bg-black/40 dark:text-white dark:hover:border-[#BDF869] dark:hover:text-[#BDF869] dark:hover:bg-transparent transition-all duration-300 shadow-sm hover:scale-105"
+                  className="p-2.5 rounded-xl border border-black/20 bg-white/70 text-black hover:border-black hover:bg-[#BDF869] dark:border-white/20 dark:bg-black/40 dark:text-white dark:hover:border-[#BDF869] dark:hover:text-[#BDF869] dark:hover:bg-transparent transition-all duration-300 shadow-sm hover:scale-105"
                   aria-label="LinkedIn Profile"
                 >
-                  <Linkedin className="w-4 h-4" />
+                  <Linkedin className="w-4.5 h-4.5 lg:w-5 lg:h-5" />
                 </a>
                 <a
                   href={`mailto:${email}`}
-                  className="p-2 rounded-xl border border-black/20 bg-white/70 text-black hover:border-black hover:bg-[#BDF869] dark:border-white/20 dark:bg-black/40 dark:text-white dark:hover:border-[#BDF869] dark:hover:text-[#BDF869] dark:hover:bg-transparent transition-all duration-300 shadow-sm hover:scale-105"
+                  className="p-2.5 rounded-xl border border-black/20 bg-white/70 text-black hover:border-black hover:bg-[#BDF869] dark:border-white/20 dark:bg-black/40 dark:text-white dark:hover:border-[#BDF869] dark:hover:text-[#BDF869] dark:hover:bg-transparent transition-all duration-300 shadow-sm hover:scale-105"
                   aria-label="Email Address"
                 >
-                  <Mail className="w-4 h-4" />
+                  <Mail className="w-4.5 h-4.5 lg:w-5 lg:h-5" />
                 </a>
               </div>
             </div>
