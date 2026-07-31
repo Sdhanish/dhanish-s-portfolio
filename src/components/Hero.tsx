@@ -210,12 +210,12 @@ export default function Hero({ onOpenResume }: HeroProps) {
       />
 
       {/* Readability overlay */}
-      <div className="absolute inset-0 bg-white/20 dark:bg-black/75 lg:bg-transparent lg:dark:bg-black/30 pointer-events-none" />
+      <div className="absolute inset-0 bg-black/65 dark:bg-black/75 lg:bg-white/20 lg:dark:bg-black/30 pointer-events-none" />
 
       {/* Main Container */}
       <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-12 lg:px-20 w-full flex-1 flex flex-col justify-center lg:justify-between pt-24 pb-16 lg:pt-20 lg:pb-6">
 
-        {/* DESKTOP VIEW: Left section = name, buttons & get in touch at bottom; Right section = title at top */}
+        {/* DESKTOP VIEW: Left section = name, buttons & get in touch at bottom; Right section = title at top & About Me */}
         <div className="hidden lg:grid grid-cols-12 gap-8 lg:gap-16 w-full flex-1 items-stretch">
 
           {/* LEFT SECTION: Hello, Name, Buttons, and Get in Touch aligned to bottom */}
@@ -244,7 +244,7 @@ export default function Hero({ onOpenResume }: HeroProps) {
               </span>
             </motion.h1>
 
-            {/* Action Buttons */}
+            {/* Action Buttons - Darker & Highlighted */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -253,7 +253,7 @@ export default function Hero({ onOpenResume }: HeroProps) {
             >
               <button
                 onClick={handleScrollToProjects}
-                className="group flex items-center justify-center space-x-2 px-6 py-3.5 bg-[#BDF869] hover:bg-[#a6e054] text-black border border-transparent rounded-xl text-xs uppercase tracking-wider font-extrabold transition-all duration-300 cursor-pointer w-full sm:w-auto shadow-md hover:shadow-[0_0_20px_rgba(189,248,105,0.4)]"
+                className="group flex items-center justify-center space-x-2 px-6 py-3.5 bg-[#BDF869] hover:bg-[#9ee232] text-black font-black border border-[#a2f238] rounded-xl text-xs uppercase tracking-wider transition-all duration-300 cursor-pointer w-full sm:w-auto shadow-[0_4px_22px_rgba(189,248,105,0.45)] hover:shadow-[0_6px_30px_rgba(189,248,105,0.65)] hover:scale-105 active:scale-95"
               >
                 <span>Explore Projects</span>
                 <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-300" />
@@ -261,7 +261,7 @@ export default function Hero({ onOpenResume }: HeroProps) {
 
               <button
                 onClick={onOpenResume}
-                className="px-6 py-3.5 rounded-xl text-xs uppercase tracking-wider font-extrabold transition-all duration-300 cursor-pointer w-full sm:w-auto text-center border border-black/80 bg-[#BDF869]/30 text-black hover:bg-[#BDF869] hover:text-black hover:border-[#BDF869] dark:border-[#BDF869]/70 dark:bg-[#BDF869]/20 dark:text-[#BDF869] dark:hover:bg-[#BDF869] dark:hover:text-black dark:hover:border-[#BDF869] shadow-[0_0_18px_rgba(189,248,105,0.25)] hover:scale-105 active:scale-95 font-black"
+                className="px-6 py-3.5 rounded-xl text-xs uppercase tracking-wider font-black transition-all duration-300 cursor-pointer w-full sm:w-auto text-center border-2 border-black bg-black text-white hover:bg-[#BDF869] hover:text-black hover:border-[#BDF869] dark:border-2 dark:border-[#BDF869] dark:bg-[#BDF869]/25 dark:text-[#BDF869] dark:hover:bg-[#BDF869] dark:hover:text-black shadow-[0_4px_16px_rgba(0,0,0,0.2)] dark:shadow-[0_0_22px_rgba(189,248,105,0.35)] hover:scale-105 active:scale-95"
               >
                 View Resume
               </button>
@@ -269,20 +269,35 @@ export default function Hero({ onOpenResume }: HeroProps) {
 
           </div>
 
-          {/* RIGHT SECTION: Specialization titles at top, Get in touch links at bottom */}
+          {/* RIGHT SECTION: Specialization titles at top, About Me in Monte Carlo font, Get in touch links at bottom */}
           <div className="lg:col-span-6 flex flex-col justify-between text-right pt-10 lg:pt-14 xl:pt-16 pb-0">
 
             {/* Specialization Title Animation */}
             <div className="space-y-2 text-right">
-              <div className="flex items-start justify-end pt-1 pb-4">
+              <div className="flex items-start justify-end pt-1 pb-2">
                 <h1 className="text-2xl sm:text-3xl lg:text-[3.6rem] font-sans font-black text-black dark:text-white leading-[1.08] uppercase max-w-md w-full tracking-tight">
                   <CinematicRoles words={typingWords} align="right" />
                 </h1>
               </div>
             </div>
 
+            {/* Right Side 1-2 sentence About Me in Monte Carlo Font */}
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, delay: 0.25 }}
+              className="my-auto py-4 text-right max-w-lg ml-auto space-y-1"
+            >
+              <span className="text-[11px] uppercase tracking-[0.25em] font-extrabold text-lime-900 dark:text-[#BDF869] block">
+                About Me
+              </span>
+              <p className="font-monte-carlo italic text-2xl lg:text-3xl xl:text-4xl leading-relaxed text-black/90 dark:text-neutral-100 drop-shadow-sm select-none">
+                "{personalInfo.introduction || "Full Stack Developer specializing in React.js, Node.js, and modern databases — crafting clean user interfaces & scalable web solutions."}"
+              </p>
+            </motion.div>
+
             {/* Connect Details & Social icons on Right Side Bottom */}
-            <div className="flex flex-col items-end gap-3 pt-4">
+            <div className="flex flex-col items-end gap-3 pt-2">
               <button
                 onClick={handleScrollToContact}
                 className="flex items-center space-x-1.5 text-xs uppercase tracking-widest font-black text-black hover:text-lime-700 dark:text-[#BDF869] dark:hover:text-white transition-colors cursor-pointer group"
@@ -324,38 +339,53 @@ export default function Hero({ onOpenResume }: HeroProps) {
 
         </div>
 
-        {/* MOBILE / TABLET VIEW */}
+        {/* MOBILE / TABLET VIEW: Dark background overlay & white text styling */}
         <div className="flex lg:hidden flex-col items-center justify-start text-center space-y-6 w-full pt-16 sm:pt-24 pb-12">
 
-          {/* "Hello," text */}
+          {/* "Hello," text - white/silver for mobile dark overlay */}
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
           >
-            <span className="inline-block tracking-[0.3em] font-extrabold scale-y-[1.2] font-serif text-xl italic text-neutral-800/80 dark:text-neutral-300/80 block select-none">
+            <span className="inline-block tracking-[0.3em] font-extrabold scale-y-[1.2] font-serif text-xl italic text-neutral-300/90 block select-none">
               Hello,
             </span>
           </motion.div>
 
-          {/* 1. Name */}
+          {/* 1. Name - White text for mobile dark overlay */}
           <motion.h1
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="text-4xl sm:text-5xl font-sans font-black tracking-tight text-black dark:text-white leading-none uppercase px-4"
+            className="text-4xl sm:text-5xl font-sans font-black tracking-tight text-white leading-none uppercase px-4"
           >
-            I'M <span className="text-black dark:text-white font-sans font-black">{name || 'DHANISH S.'}</span>
+            I'M <span className="text-white font-sans font-black">{name || 'DHANISH S.'}</span>
           </motion.h1>
 
-          {/* 2. Title / Specialization */}
+          {/* 2. Title / Specialization - White text */}
           <div className="min-h-[64px] flex items-center justify-center px-4 w-full">
-            <h1 className="text-2xl sm:text-3xl font-sans font-black tracking-tight text-black dark:text-white leading-none uppercase w-full">
+            <h1 className="text-2xl sm:text-3xl font-sans font-black tracking-tight text-white leading-none uppercase w-full">
               <CinematicRoles words={typingWords} align="center" />
             </h1>
           </div>
 
-          {/* 3. Action Buttons */}
+          {/* About Me short text in Monte Carlo font for mobile */}
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.15 }}
+            className="px-4 max-w-md mx-auto text-center"
+          >
+            <span className="text-[10px] uppercase tracking-[0.25em] font-extrabold text-[#BDF869] block mb-1">
+              About Me
+            </span>
+            <p className="font-monte-carlo italic text-2xl sm:text-3xl text-neutral-100 leading-snug drop-shadow-md select-none">
+              "{personalInfo.introduction || "Full Stack Developer specializing in React.js, Node.js, and modern databases — crafting clean user interfaces & scalable web solutions."}"
+            </p>
+          </motion.div>
+
+          {/* 3. Action Buttons - High contrast */}
           <motion.div
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
@@ -364,7 +394,7 @@ export default function Hero({ onOpenResume }: HeroProps) {
           >
             <button
               onClick={handleScrollToProjects}
-              className="group flex items-center justify-center space-x-2 px-6 py-3.5 bg-[#BDF869] hover:bg-[#a6e054] text-black border border-transparent rounded-xl text-xs uppercase tracking-wider font-extrabold transition-all duration-300 cursor-pointer w-full sm:w-auto shadow-md hover:shadow-[0_0_20px_rgba(189,248,105,0.4)]"
+              className="group flex items-center justify-center space-x-2 px-6 py-3.5 bg-[#BDF869] hover:bg-[#9ee232] text-black font-black border border-[#a2f238] rounded-xl text-xs uppercase tracking-wider transition-all duration-300 cursor-pointer w-full sm:w-auto shadow-[0_4px_22px_rgba(189,248,105,0.45)] hover:shadow-[0_6px_30px_rgba(189,248,105,0.65)] hover:scale-105 active:scale-95"
             >
               <span>Explore Projects</span>
               <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-300" />
@@ -372,7 +402,7 @@ export default function Hero({ onOpenResume }: HeroProps) {
 
             <button
               onClick={onOpenResume}
-              className="px-6 py-3.5 rounded-xl text-xs uppercase tracking-wider font-extrabold transition-all duration-300 cursor-pointer w-full sm:w-auto text-center border border-black/80 bg-[#BDF869]/30 text-black hover:bg-[#BDF869] hover:text-black dark:border-[#BDF869]/70 dark:bg-[#BDF869]/20 dark:text-[#BDF869] dark:hover:bg-[#BDF869] dark:hover:text-black shadow-[0_0_18px_rgba(189,248,105,0.25)] font-black"
+              className="px-6 py-3.5 rounded-xl text-xs uppercase tracking-wider font-black transition-all duration-300 cursor-pointer w-full sm:w-auto text-center border-2 border-[#BDF869] bg-[#BDF869]/20 text-[#BDF869] hover:bg-[#BDF869] hover:text-black shadow-[0_0_20px_rgba(189,248,105,0.3)] hover:scale-105 active:scale-95"
             >
               View Resume
             </button>
@@ -382,7 +412,7 @@ export default function Hero({ onOpenResume }: HeroProps) {
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4 w-full max-w-sm mx-auto px-4 pt-2">
             <button
               onClick={handleScrollToContact}
-              className="flex items-center space-x-1.5 text-xs uppercase tracking-widest font-black text-black hover:text-lime-700 dark:text-[#BDF869] dark:hover:text-white transition-colors cursor-pointer group"
+              className="flex items-center space-x-1.5 text-xs uppercase tracking-widest font-black text-[#BDF869] hover:text-white transition-colors cursor-pointer group"
             >
               <span>Get in Touch</span>
               <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
@@ -393,7 +423,7 @@ export default function Hero({ onOpenResume }: HeroProps) {
                 href={github}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-2.5 rounded-xl border border-black/20 bg-white/70 text-black hover:border-black hover:bg-[#BDF869] dark:border-white/20 dark:bg-black/40 dark:text-white dark:hover:border-[#BDF869] dark:hover:text-[#BDF869] dark:hover:bg-transparent transition-all duration-300"
+                className="p-2.5 rounded-xl border border-white/20 bg-black/40 text-white hover:border-[#BDF869] hover:text-[#BDF869] transition-all duration-300"
                 aria-label="GitHub Profile"
               >
                 <Github className="w-4 h-4" />
@@ -402,14 +432,14 @@ export default function Hero({ onOpenResume }: HeroProps) {
                 href={linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-2.5 rounded-xl border border-black/20 bg-white/70 text-black hover:border-black hover:bg-[#BDF869] dark:border-white/20 dark:bg-black/40 dark:text-white dark:hover:border-[#BDF869] dark:hover:text-[#BDF869] dark:hover:bg-transparent transition-all duration-300"
+                className="p-2.5 rounded-xl border border-white/20 bg-black/40 text-white hover:border-[#BDF869] hover:text-[#BDF869] transition-all duration-300"
                 aria-label="LinkedIn Profile"
               >
                 <Linkedin className="w-4 h-4" />
               </a>
               <a
                 href={`mailto:${email}`}
-                className="p-2.5 rounded-xl border border-black/20 bg-white/70 text-black hover:border-black hover:bg-[#BDF869] dark:border-white/20 dark:bg-black/40 dark:text-white dark:hover:border-[#BDF869] dark:hover:text-[#BDF869] dark:hover:bg-transparent transition-all duration-300"
+                className="p-2.5 rounded-xl border border-white/20 bg-black/40 text-white hover:border-[#BDF869] hover:text-[#BDF869] transition-all duration-300"
                 aria-label="Email Address"
               >
                 <Mail className="w-4 h-4" />

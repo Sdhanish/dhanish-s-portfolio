@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Manrope:wght@600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Monte+Carlo&family=Inter:wght@300;400;500;600;700;800;900&family=Manrope:wght@600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap');
 @import "tailwindcss";
 
 @variant dark (&:where(.dark, .dark *));
@@ -51,6 +51,10 @@
 }
 
 /* Custom font utilities */
+.font-monte-carlo {
+  font-family: "Monte Carlo", "Cormorant Garamond", cursive, serif;
+}
+
 .font-great-vibes {
   font-family: "Great Vibes", cursive;
 }
