@@ -210,7 +210,7 @@ export default function Hero({ onOpenResume }: HeroProps) {
       />
 
       {/* Readability overlay */}
-      <div className="absolute inset-0 bg-black/60 dark:bg-black/75 lg:bg-black/30 lg:dark:bg-black/30 pointer-events-none" />
+      <div className="absolute inset-0 bg-white/20 dark:bg-black/75 lg:bg-transparent lg:dark:bg-black/30 pointer-events-none" />
 
       {/* Main Container */}
       <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-12 lg:px-20 w-full flex-1 flex flex-col justify-center lg:justify-between pt-24 pb-16 lg:pt-20 lg:pb-6">
@@ -221,13 +221,13 @@ export default function Hero({ onOpenResume }: HeroProps) {
           {/* LEFT SECTION: Hello, Name, Buttons, and Get in Touch aligned to bottom */}
           <div className="lg:col-span-6 flex flex-col justify-end text-left space-y-6 pb-0 animate-fade-in">
 
-            {/* "Hello," text in light gray for contrast over dark hero background */}
+            {/* "Hello," text */}
             <motion.div
               initial={{ opacity: 0, x: -15 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6 }}
             >
-              <span className="inline-block font-serif scale-y-[1.3] font-extrabold italic text-5xl lg:text-6xl xl:text-7xl tracking-[0.15em] text-neutral-300/60 select-none">
+              <span className="inline-block font-serif scale-y-[1.3] font-extrabold italic text-5xl lg:text-6xl xl:text-7xl tracking-[0.15em] text-neutral-800/80 dark:text-neutral-300/60 select-none">
                 Hello,
               </span>
             </motion.div>
@@ -236,10 +236,10 @@ export default function Hero({ onOpenResume }: HeroProps) {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-              className="text-4xl sm:text-4xl lg:text-[3.1rem] xl:text-[4.0rem] font-sans font-black tracking-tight text-white leading-[1.05] uppercase"
+              className="text-4xl sm:text-4xl lg:text-[3.1rem] xl:text-[4.0rem] font-sans font-black tracking-tight text-black dark:text-white leading-[1.05] uppercase"
             >
               I'M <br />
-              <span className="text-white font-sans font-black">
+              <span className="text-black dark:text-white font-sans font-black">
                 {name || 'DHANISH S.'}
               </span>
             </motion.h1>
@@ -261,7 +261,7 @@ export default function Hero({ onOpenResume }: HeroProps) {
 
               <button
                 onClick={onOpenResume}
-                className="px-6 py-3.5 rounded-xl text-xs uppercase tracking-wider font-extrabold transition-all duration-300 cursor-pointer w-full sm:w-auto text-center border border-[#BDF869]/70 bg-[#BDF869]/20 text-[#BDF869] hover:bg-[#BDF869] hover:text-black hover:border-[#BDF869] shadow-[0_0_18px_rgba(189,248,105,0.25)] hover:scale-105 active:scale-95 font-black"
+                className="px-6 py-3.5 rounded-xl text-xs uppercase tracking-wider font-extrabold transition-all duration-300 cursor-pointer w-full sm:w-auto text-center border border-black/80 bg-[#BDF869]/30 text-black hover:bg-[#BDF869] hover:text-black hover:border-[#BDF869] dark:border-[#BDF869]/70 dark:bg-[#BDF869]/20 dark:text-[#BDF869] dark:hover:bg-[#BDF869] dark:hover:text-black dark:hover:border-[#BDF869] shadow-[0_0_18px_rgba(189,248,105,0.25)] hover:scale-105 active:scale-95 font-black"
               >
                 View Resume
               </button>
@@ -275,7 +275,7 @@ export default function Hero({ onOpenResume }: HeroProps) {
             {/* Specialization Title Animation */}
             <div className="space-y-2 text-right">
               <div className="flex items-start justify-end pt-1 pb-4">
-                <h1 className="text-2xl sm:text-3xl lg:text-[3.6rem] font-sans font-black text-white leading-[1.08] uppercase max-w-md w-full tracking-tight">
+                <h1 className="text-2xl sm:text-3xl lg:text-[3.6rem] font-sans font-black text-black dark:text-white leading-[1.08] uppercase max-w-md w-full tracking-tight">
                   <CinematicRoles words={typingWords} align="right" />
                 </h1>
               </div>
@@ -285,7 +285,7 @@ export default function Hero({ onOpenResume }: HeroProps) {
             <div className="flex flex-col items-end gap-3 pt-4">
               <button
                 onClick={handleScrollToContact}
-                className="flex items-center space-x-1.5 text-xs uppercase tracking-widest font-black text-[#BDF869] hover:text-white transition-colors cursor-pointer group"
+                className="flex items-center space-x-1.5 text-xs uppercase tracking-widest font-black text-black hover:text-lime-700 dark:text-[#BDF869] dark:hover:text-white transition-colors cursor-pointer group"
               >
                 <span>Get in Touch</span>
                 <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
@@ -296,7 +296,7 @@ export default function Hero({ onOpenResume }: HeroProps) {
                   href={github}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="p-2.5 rounded-xl border border-white/20 bg-black/40 text-white hover:border-[#BDF869] hover:text-[#BDF869] transition-all duration-300 shadow-sm hover:scale-105"
+                  className="p-2.5 rounded-xl border border-black/20 bg-white/70 text-black hover:border-black hover:bg-[#BDF869] dark:border-white/20 dark:bg-black/40 dark:text-white dark:hover:border-[#BDF869] dark:hover:text-[#BDF869] dark:hover:bg-transparent transition-all duration-300 shadow-sm hover:scale-105"
                   aria-label="GitHub Profile"
                 >
                   <Github className="w-4 h-4" />
@@ -305,14 +305,14 @@ export default function Hero({ onOpenResume }: HeroProps) {
                   href={linkedin}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="p-2.5 rounded-xl border border-white/20 bg-black/40 text-white hover:border-[#BDF869] hover:text-[#BDF869] transition-all duration-300 shadow-sm hover:scale-105"
+                  className="p-2.5 rounded-xl border border-black/20 bg-white/70 text-black hover:border-black hover:bg-[#BDF869] dark:border-white/20 dark:bg-black/40 dark:text-white dark:hover:border-[#BDF869] dark:hover:text-[#BDF869] dark:hover:bg-transparent transition-all duration-300 shadow-sm hover:scale-105"
                   aria-label="LinkedIn Profile"
                 >
                   <Linkedin className="w-4 h-4" />
                 </a>
                 <a
                   href={`mailto:${email}`}
-                  className="p-2.5 rounded-xl border border-white/20 bg-black/40 text-white hover:border-[#BDF869] hover:text-[#BDF869] transition-all duration-300 shadow-sm hover:scale-105"
+                  className="p-2.5 rounded-xl border border-black/20 bg-white/70 text-black hover:border-black hover:bg-[#BDF869] dark:border-white/20 dark:bg-black/40 dark:text-white dark:hover:border-[#BDF869] dark:hover:text-[#BDF869] dark:hover:bg-transparent transition-all duration-300 shadow-sm hover:scale-105"
                   aria-label="Email Address"
                 >
                   <Mail className="w-4 h-4" />
@@ -324,33 +324,33 @@ export default function Hero({ onOpenResume }: HeroProps) {
 
         </div>
 
-        {/* MOBILE / TABLET VIEW: Name -> Title -> Buttons -> Links (white text for readability) */}
+        {/* MOBILE / TABLET VIEW */}
         <div className="flex lg:hidden flex-col items-center justify-start text-center space-y-6 w-full pt-16 sm:pt-24 pb-12">
 
-          {/* "Hey there" text in silver / light gray */}
+          {/* "Hello," text */}
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
           >
-            <span className="inline-block tracking-[0.3em] font-extrabold scale-y-[1.2] font-serif text-xl italic text-neutral-300/80 block select-none">
+            <span className="inline-block tracking-[0.3em] font-extrabold scale-y-[1.2] font-serif text-xl italic text-neutral-800/80 dark:text-neutral-300/80 block select-none">
               Hello,
             </span>
           </motion.div>
 
-          {/* 1. Name - WHITE TEXT IN MOBILE / TABLET */}
+          {/* 1. Name */}
           <motion.h1
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="text-4xl sm:text-5xl font-sans font-black tracking-tight text-white leading-none uppercase px-4"
+            className="text-4xl sm:text-5xl font-sans font-black tracking-tight text-black dark:text-white leading-none uppercase px-4"
           >
-            I'M <span className="text-white font-sans font-black">{name || 'DHANISH S.'}</span>
+            I'M <span className="text-black dark:text-white font-sans font-black">{name || 'DHANISH S.'}</span>
           </motion.h1>
 
-          {/* 2. Title / Specialization - WHITE TEXT IN MOBILE / TABLET */}
+          {/* 2. Title / Specialization */}
           <div className="min-h-[64px] flex items-center justify-center px-4 w-full">
-            <h1 className="text-2xl sm:text-3xl font-sans font-black tracking-tight text-white leading-none uppercase w-full">
+            <h1 className="text-2xl sm:text-3xl font-sans font-black tracking-tight text-black dark:text-white leading-none uppercase w-full">
               <CinematicRoles words={typingWords} align="center" />
             </h1>
           </div>
@@ -372,7 +372,7 @@ export default function Hero({ onOpenResume }: HeroProps) {
 
             <button
               onClick={onOpenResume}
-              className="px-6 py-3.5 rounded-xl text-xs uppercase tracking-wider font-extrabold transition-all duration-300 cursor-pointer w-full sm:w-auto text-center border border-[#BDF869]/70 bg-[#BDF869]/20 text-[#BDF869] hover:bg-[#BDF869] hover:text-black hover:border-[#BDF869] shadow-[0_0_18px_rgba(189,248,105,0.25)]"
+              className="px-6 py-3.5 rounded-xl text-xs uppercase tracking-wider font-extrabold transition-all duration-300 cursor-pointer w-full sm:w-auto text-center border border-black/80 bg-[#BDF869]/30 text-black hover:bg-[#BDF869] hover:text-black dark:border-[#BDF869]/70 dark:bg-[#BDF869]/20 dark:text-[#BDF869] dark:hover:bg-[#BDF869] dark:hover:text-black shadow-[0_0_18px_rgba(189,248,105,0.25)] font-black"
             >
               View Resume
             </button>
@@ -382,7 +382,7 @@ export default function Hero({ onOpenResume }: HeroProps) {
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4 w-full max-w-sm mx-auto px-4 pt-2">
             <button
               onClick={handleScrollToContact}
-              className="flex items-center space-x-1.5 text-xs uppercase tracking-widest font-black text-[#BDF869] hover:text-white transition-colors cursor-pointer group"
+              className="flex items-center space-x-1.5 text-xs uppercase tracking-widest font-black text-black hover:text-lime-700 dark:text-[#BDF869] dark:hover:text-white transition-colors cursor-pointer group"
             >
               <span>Get in Touch</span>
               <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
@@ -393,7 +393,7 @@ export default function Hero({ onOpenResume }: HeroProps) {
                 href={github}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-2.5 rounded-xl border border-white/20 bg-black/40 text-white hover:border-[#BDF869] hover:text-[#BDF869] transition-all duration-300"
+                className="p-2.5 rounded-xl border border-black/20 bg-white/70 text-black hover:border-black hover:bg-[#BDF869] dark:border-white/20 dark:bg-black/40 dark:text-white dark:hover:border-[#BDF869] dark:hover:text-[#BDF869] dark:hover:bg-transparent transition-all duration-300"
                 aria-label="GitHub Profile"
               >
                 <Github className="w-4 h-4" />
@@ -402,14 +402,14 @@ export default function Hero({ onOpenResume }: HeroProps) {
                 href={linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-2.5 rounded-xl border border-white/20 bg-black/40 text-white hover:border-[#BDF869] hover:text-[#BDF869] transition-all duration-300"
+                className="p-2.5 rounded-xl border border-black/20 bg-white/70 text-black hover:border-black hover:bg-[#BDF869] dark:border-white/20 dark:bg-black/40 dark:text-white dark:hover:border-[#BDF869] dark:hover:text-[#BDF869] dark:hover:bg-transparent transition-all duration-300"
                 aria-label="LinkedIn Profile"
               >
                 <Linkedin className="w-4 h-4" />
               </a>
               <a
                 href={`mailto:${email}`}
-                className="p-2.5 rounded-xl border border-white/20 bg-black/40 text-white hover:border-[#BDF869] hover:text-[#BDF869] transition-all duration-300"
+                className="p-2.5 rounded-xl border border-black/20 bg-white/70 text-black hover:border-black hover:bg-[#BDF869] dark:border-white/20 dark:bg-black/40 dark:text-white dark:hover:border-[#BDF869] dark:hover:text-[#BDF869] dark:hover:bg-transparent transition-all duration-300"
                 aria-label="Email Address"
               >
                 <Mail className="w-4 h-4" />
