@@ -13,8 +13,8 @@ export const portfolioData: PortfolioData = {
     github: "https://github.com/Sdhanish",
     instagram: "https://instagram.com/sdhanish_",
     avatar: "/src/assets/images/dhanish-side.jpeg",
-    heroImageLight: "/src/assets/images/dhanish-light-theme.png",
-    heroImageDark: "/src/assets/images/dhanish-dark-theme.png",
+    heroImageLight: "/src/assets/images/light-theme.png",
+    heroImageDark: "/src/assets/images/dark-theme.png",
     logo: "/src/assets/images/dhanish-logo-light.png",
     logoLight: "/src/assets/images/dhanish-logo-light.png",
     logoDark: "/src/assets/images/logo-dark.png"

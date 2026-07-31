@@ -4,8 +4,8 @@ import { motion, AnimatePresence, useReducedMotion } from 'motion/react';
 import { usePortfolio } from '../contexts/PortfolioContext';
 import { scrollToSection } from '../utils/scroll';
 
-import defaultHeroLight from '../assets/images/dhanish-light-theme.png';
-import defaultHeroDark from '../assets/images/dhanish-dark-theme.png';
+import defaultHeroLight from '../assets/images/light-theme.png';
+import defaultHeroDark from '../assets/images/dark-theme.png';
 
 interface HeroProps {
   onOpenResume: () => void;
@@ -197,10 +197,16 @@ export default function Hero({ onOpenResume }: HeroProps) {
       id="hero"
       className="relative min-h-screen w-full flex flex-col justify-start overflow-hidden transition-colors duration-300 gpu-layer"
     >
-      {/* Single dark background image for both light and dark mode */}
+      {/* Light theme hero background image */}
       <div
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-all duration-300 gpu-layer"
-        style={{ backgroundImage: `url('${displayHeroDark || displayHeroLight}')` }}
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-opacity duration-500 gpu-layer opacity-100 dark:opacity-0"
+        style={{ backgroundImage: `url('${displayHeroLight}')` }}
+      />
+
+      {/* Dark theme hero background image */}
+      <div
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-opacity duration-500 gpu-layer opacity-0 dark:opacity-100"
+        style={{ backgroundImage: `url('${displayHeroDark}')` }}
       />
 
       {/* Readability overlay */}
