@@ -336,111 +336,114 @@ export default function Hero({ onOpenResume }: HeroProps) {
 
         </div>
 
-        {/* MOBILE / TABLET VIEW: Compact dark background overlay & white text styling to fit 100vh */}
-        <div className="flex lg:hidden flex-col items-center justify-center text-center w-full h-full pt-8 sm:pt-10 pb-4 px-4 sm:px-6 gap-3 sm:gap-4 md:gap-5">
+        {/* MOBILE / TABLET VIEW: Fully responsive full-screen vertical distribution */}
+        <div className="flex lg:hidden flex-col items-center justify-between text-center w-full h-full pt-16 sm:pt-20 pb-6 sm:pb-8 px-5 sm:px-8 max-w-md sm:max-w-lg md:max-w-xl mx-auto">
 
-          {/* Text Content Group - Tightly unified with small controlled gaps */}
-          <div className="flex flex-col items-center space-y-1.5 sm:space-y-2 md:space-y-2.5 w-full">
+          {/* Top/Middle Text Content Group - Spacious & Breathing */}
+          <div className="flex flex-col items-center space-y-2.5 sm:space-y-3.5 md:space-y-4 w-full my-auto">
             {/* "Hello," text */}
             <motion.div
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
             >
-              <span className="inline-block tracking-[0.3em] font-extrabold scale-y-[1.1] font-serif text-base sm:text-lg md:text-xl italic text-neutral-300/90 block select-none">
+              <span className="inline-block tracking-[0.25em] font-extrabold scale-y-[1.1] font-serif text-base sm:text-lg md:text-xl italic text-neutral-300/90 block select-none">
                 Hello,
               </span>
             </motion.div>
 
-            {/* 1. Name - Increased font size for mobile/tablet */}
+            {/* 1. Name */}
             <motion.h1
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
-              className="text-3xl sm:text-4xl md:text-5xl font-sans font-black tracking-tight text-white leading-none uppercase px-2"
+              className="text-3xl sm:text-4xl md:text-5xl font-sans font-black tracking-tight text-white leading-tight uppercase px-2"
             >
               I'M <span className="text-white font-sans font-black">{name || 'DHANISH S.'}</span>
             </motion.h1>
 
-            {/* 2. Title / Specialization - Increased font size for mobile/tablet */}
-            <div className="flex items-center justify-center px-2 w-full py-0.5">
-              <h1 className="text-xl sm:text-2xl md:text-3xl font-sans font-black tracking-tight text-white leading-none uppercase w-full">
+            {/* 2. Title / Specialization */}
+            <div className="flex items-center justify-center px-2 w-full py-1">
+              <h1 className="text-xl sm:text-2xl md:text-3xl font-sans font-black tracking-tight text-white leading-tight uppercase w-full">
                 <CinematicRoles words={typingWords} align="center" />
               </h1>
             </div>
 
-            {/* About text in Monte Carlo font for mobile/tablet - Center Aligned & Small */}
+            {/* About text in Monte Carlo font */}
             <motion.div
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.15 }}
-              className="px-3 max-w-xs sm:max-w-md md:max-w-lg mx-auto text-center pt-0.5"
+              className="px-2 max-w-xs sm:max-w-md md:max-w-lg mx-auto text-center pt-1"
             >
-              <p className="font-monte-carlo italic text-xs sm:text-sm md:text-base text-neutral-200 leading-snug drop-shadow-md select-none">
+              <p className="font-monte-carlo italic text-sm sm:text-base md:text-lg text-neutral-200 leading-relaxed drop-shadow-md select-none">
                 "{personalInfo.introduction || "Full Stack Developer specializing in React.js, Node.js, and modern databases — crafting clean user interfaces & scalable web solutions."}"
               </p>
             </motion.div>
           </div>
 
-          {/* 3. Action Buttons - Grouped closely below text */}
-          <motion.div
-            initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="flex flex-col sm:flex-row gap-2.5 w-full max-w-xs sm:max-w-md mx-auto justify-center px-2"
-          >
-            <button
-              onClick={handleScrollToProjects}
-              className="group flex items-center justify-center space-x-2 px-5 py-2.5 bg-[#BDF869] text-black font-black border-2 border-[#BDF869] rounded-xl text-xs sm:text-sm uppercase tracking-wider transition-all duration-300 cursor-pointer w-full sm:w-auto shadow-[0_0_20px_rgba(189,248,105,0.45)] hover:bg-[#BDF869]/85 hover:shadow-[0_0_30px_rgba(189,248,105,0.75)] hover:scale-105 active:scale-95"
+          {/* Bottom Section: Action Buttons & Get in Touch Links */}
+          <div className="w-full space-y-4 sm:space-y-5 pt-4">
+            {/* 3. Action Buttons */}
+            <motion.div
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="flex flex-col sm:flex-row gap-3 w-full max-w-xs sm:max-w-md mx-auto justify-center"
             >
-              <span>Explore Projects</span>
-              <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-300" />
-            </button>
-
-            <button
-              onClick={onOpenResume}
-              className="px-5 py-2.5 rounded-xl text-xs sm:text-sm uppercase tracking-wider font-black transition-all duration-300 cursor-pointer w-full sm:w-auto text-center border-2 border-[#BDF869] bg-[#121b0b]/80 backdrop-blur-sm text-[#BDF869] hover:bg-[#BDF869]/25 hover:text-[#BDF869] shadow-[0_0_18px_rgba(189,248,105,0.3)] hover:shadow-[0_0_28px_rgba(189,248,105,0.6)] hover:scale-105 active:scale-95"
-            >
-              View Resume
-            </button>
-          </motion.div>
-
-          {/* 4. Links & Contact - Grouped closely below buttons */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-6 w-full max-w-sm sm:max-w-md mx-auto px-2 pt-1">
-            <button
-              onClick={handleScrollToContact}
-              className="flex items-center space-x-1.5 text-xs sm:text-sm uppercase tracking-widest font-black text-[#BDF869] hover:text-white transition-colors cursor-pointer group"
-            >
-              <span>Get in Touch</span>
-              <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-            </button>
-
-            <div className="flex items-center space-x-2.5">
-              <a
-                href={github}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-2 rounded-xl border border-white/20 bg-black/40 text-white hover:border-[#BDF869] hover:text-[#BDF869] transition-all duration-300"
-                aria-label="GitHub Profile"
+              <button
+                onClick={handleScrollToProjects}
+                className="group flex items-center justify-center space-x-2 px-6 py-3 bg-[#BDF869] text-black font-black border-2 border-[#BDF869] rounded-xl text-xs sm:text-sm uppercase tracking-wider transition-all duration-300 cursor-pointer w-full sm:w-auto shadow-[0_0_20px_rgba(189,248,105,0.45)] hover:bg-[#BDF869]/85 hover:shadow-[0_0_30px_rgba(189,248,105,0.75)] hover:scale-105 active:scale-95"
               >
-                <Github className="w-4 h-4" />
-              </a>
-              <a
-                href={linkedin}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-2 rounded-xl border border-white/20 bg-black/40 text-white hover:border-[#BDF869] hover:text-[#BDF869] transition-all duration-300"
-                aria-label="LinkedIn Profile"
+                <span>Explore Projects</span>
+                <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-300" />
+              </button>
+
+              <button
+                onClick={onOpenResume}
+                className="px-6 py-3 rounded-xl text-xs sm:text-sm uppercase tracking-wider font-black transition-all duration-300 cursor-pointer w-full sm:w-auto text-center border-2 border-[#BDF869] bg-[#121b0b]/80 backdrop-blur-sm text-[#BDF869] hover:bg-[#BDF869]/25 hover:text-[#BDF869] shadow-[0_0_18px_rgba(189,248,105,0.3)] hover:shadow-[0_0_28px_rgba(189,248,105,0.6)] hover:scale-105 active:scale-95"
               >
-                <Linkedin className="w-4 h-4" />
-              </a>
-              <a
-                href={`mailto:${email}`}
-                className="p-2 rounded-xl border border-white/20 bg-black/40 text-white hover:border-[#BDF869] hover:text-[#BDF869] transition-all duration-300"
-                aria-label="Email Address"
+                View Resume
+              </button>
+            </motion.div>
+
+            {/* 4. Links & Contact */}
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-6 w-full max-w-sm sm:max-w-md mx-auto pt-1">
+              <button
+                onClick={handleScrollToContact}
+                className="flex items-center space-x-1.5 text-xs sm:text-sm uppercase tracking-widest font-black text-[#BDF869] hover:text-white transition-colors cursor-pointer group"
               >
-                <Mail className="w-4 h-4" />
-              </a>
+                <span>Get in Touch</span>
+                <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+              </button>
+
+              <div className="flex items-center space-x-3">
+                <a
+                  href={github}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="p-2.5 rounded-xl border border-white/20 bg-black/40 text-white hover:border-[#BDF869] hover:text-[#BDF869] transition-all duration-300"
+                  aria-label="GitHub Profile"
+                >
+                  <Github className="w-4 h-4" />
+                </a>
+                <a
+                  href={linkedin}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="p-2.5 rounded-xl border border-white/20 bg-black/40 text-white hover:border-[#BDF869] hover:text-[#BDF869] transition-all duration-300"
+                  aria-label="LinkedIn Profile"
+                >
+                  <Linkedin className="w-4 h-4" />
+                </a>
+                <a
+                  href={`mailto:${email}`}
+                  className="p-2.5 rounded-xl border border-white/20 bg-black/40 text-white hover:border-[#BDF869] hover:text-[#BDF869] transition-all duration-300"
+                  aria-label="Email Address"
+                >
+                  <Mail className="w-4 h-4" />
+                </a>
+              </div>
             </div>
           </div>
 
