@@ -270,7 +270,7 @@ export default function Hero({ onOpenResume }: HeroProps) {
           </div>
 
           {/* RIGHT SECTION: Specialization titles at top, About text in Monte Carlo font (smaller, right-aligned), Get in touch links at bottom */}
-          <div className="lg:col-span-6 flex flex-col justify-between text-right pt-6 lg:pt-8 xl:pt-10 pb-2">
+          <div className="lg:col-span-6 flex flex-col justify-between text-right pt-10 lg:pt-14 xl:pt-16 pb-2">
 
             {/* Specialization Title Animation */}
             <div className="space-y-1 text-right">
@@ -281,14 +281,14 @@ export default function Hero({ onOpenResume }: HeroProps) {
               </div>
             </div>
 
-            {/* Right Side 1-2 sentence About text in Monte Carlo Font - Right Aligned & Smaller */}
+            {/* Right Side 1-2 sentence About text in Monte Carlo Font - Right Aligned & Compact Spacing */}
             <motion.div
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8, delay: 0.25 }}
-              className="my-auto py-2 text-right max-w-sm ml-auto space-y-1"
+              className="my-auto py-0.5 text-right max-w-sm ml-auto space-y-0.5"
             >
-              <p className="font-monte-carlo italic text-base lg:text-lg xl:text-xl leading-relaxed text-black/90 dark:text-neutral-200 drop-shadow-sm select-none">
+              <p className="font-monte-carlo italic text-base lg:text-lg xl:text-xl leading-snug text-black/90 dark:text-neutral-200 drop-shadow-sm select-none">
                 "{personalInfo.introduction || "Full Stack Developer specializing in React.js, Node.js, and modern databases — crafting clean user interfaces & scalable web solutions."}"
               </p>
             </motion.div>
@@ -337,7 +337,7 @@ export default function Hero({ onOpenResume }: HeroProps) {
         </div>
 
         {/* MOBILE / TABLET VIEW: Compact dark background overlay & white text styling to fit 100vh */}
-        <div className="flex lg:hidden flex-col items-center justify-between text-center space-y-3 w-full h-full pt-12 pb-6">
+        <div className="flex lg:hidden flex-col items-center justify-between text-center space-y-1.5 sm:space-y-2 w-full h-full pt-10 pb-4">
 
           {/* "Hello," text */}
           <motion.div
@@ -345,7 +345,7 @@ export default function Hero({ onOpenResume }: HeroProps) {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
           >
-            <span className="inline-block tracking-[0.3em] font-extrabold scale-y-[1.1] font-serif text-lg italic text-neutral-300/90 block select-none">
+            <span className="inline-block tracking-[0.3em] font-extrabold scale-y-[1.1] font-serif text-base sm:text-lg italic text-neutral-300/90 block select-none">
               Hello,
             </span>
           </motion.div>
@@ -355,14 +355,14 @@ export default function Hero({ onOpenResume }: HeroProps) {
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="text-3xl sm:text-4xl font-sans font-black tracking-tight text-white leading-none uppercase px-2"
+            className="text-2xl sm:text-3xl font-sans font-black tracking-tight text-white leading-none uppercase px-2"
           >
             I'M <span className="text-white font-sans font-black">{name || 'DHANISH S.'}</span>
           </motion.h1>
 
           {/* 2. Title / Specialization */}
-          <div className="min-h-[48px] flex items-center justify-center px-2 w-full">
-            <h1 className="text-xl sm:text-2xl font-sans font-black tracking-tight text-white leading-none uppercase w-full">
+          <div className="min-h-[38px] flex items-center justify-center px-2 w-full">
+            <h1 className="text-lg sm:text-xl font-sans font-black tracking-tight text-white leading-none uppercase w-full">
               <CinematicRoles words={typingWords} align="center" />
             </h1>
           </div>
@@ -372,9 +372,9 @@ export default function Hero({ onOpenResume }: HeroProps) {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.15 }}
-            className="px-4 max-w-sm mx-auto text-center"
+            className="px-3 max-w-sm mx-auto text-center my-0"
           >
-            <p className="font-monte-carlo italic text-sm sm:text-base text-neutral-200 leading-snug drop-shadow-md select-none">
+            <p className="font-monte-carlo italic text-xs sm:text-sm text-neutral-200 leading-snug drop-shadow-md select-none">
               "{personalInfo.introduction || "Full Stack Developer specializing in React.js, Node.js, and modern databases — crafting clean user interfaces & scalable web solutions."}"
             </p>
           </motion.div>
@@ -384,11 +384,11 @@ export default function Hero({ onOpenResume }: HeroProps) {
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="flex flex-col sm:flex-row gap-3 w-full max-w-xs sm:max-w-md mx-auto justify-center px-2"
+            className="flex flex-col sm:flex-row gap-2 w-full max-w-xs sm:max-w-md mx-auto justify-center px-2"
           >
             <button
               onClick={handleScrollToProjects}
-              className="group flex items-center justify-center space-x-2 px-5 py-3 bg-[#BDF869] text-black font-black border-2 border-[#BDF869] rounded-xl text-xs uppercase tracking-wider transition-all duration-300 cursor-pointer w-full sm:w-auto shadow-[0_0_20px_rgba(189,248,105,0.45)] hover:bg-[#BDF869]/85 hover:shadow-[0_0_30px_rgba(189,248,105,0.75)] hover:scale-105 active:scale-95"
+              className="group flex items-center justify-center space-x-2 px-4 py-2.5 bg-[#BDF869] text-black font-black border-2 border-[#BDF869] rounded-xl text-xs uppercase tracking-wider transition-all duration-300 cursor-pointer w-full sm:w-auto shadow-[0_0_20px_rgba(189,248,105,0.45)] hover:bg-[#BDF869]/85 hover:shadow-[0_0_30px_rgba(189,248,105,0.75)] hover:scale-105 active:scale-95"
             >
               <span>Explore Projects</span>
               <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-300" />
@@ -396,14 +396,14 @@ export default function Hero({ onOpenResume }: HeroProps) {
 
             <button
               onClick={onOpenResume}
-              className="px-5 py-3 rounded-xl text-xs uppercase tracking-wider font-black transition-all duration-300 cursor-pointer w-full sm:w-auto text-center border-2 border-[#BDF869] bg-[#121b0b]/80 backdrop-blur-sm text-[#BDF869] hover:bg-[#BDF869]/25 hover:text-[#BDF869] shadow-[0_0_18px_rgba(189,248,105,0.3)] hover:shadow-[0_0_28px_rgba(189,248,105,0.6)] hover:scale-105 active:scale-95"
+              className="px-4 py-2.5 rounded-xl text-xs uppercase tracking-wider font-black transition-all duration-300 cursor-pointer w-full sm:w-auto text-center border-2 border-[#BDF869] bg-[#121b0b]/80 backdrop-blur-sm text-[#BDF869] hover:bg-[#BDF869]/25 hover:text-[#BDF869] shadow-[0_0_18px_rgba(189,248,105,0.3)] hover:shadow-[0_0_28px_rgba(189,248,105,0.6)] hover:scale-105 active:scale-95"
             >
               View Resume
             </button>
           </motion.div>
 
           {/* 4. Links & Contact */}
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-3 w-full max-w-sm mx-auto px-2 pt-1">
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-1.5 w-full max-w-sm mx-auto px-2 pt-0.5">
             <button
               onClick={handleScrollToContact}
               className="flex items-center space-x-1.5 text-xs uppercase tracking-widest font-black text-[#BDF869] hover:text-white transition-colors cursor-pointer group"
