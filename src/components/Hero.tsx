@@ -219,7 +219,7 @@ export default function Hero({ onOpenResume }: HeroProps) {
         <div className="hidden lg:grid grid-cols-12 gap-6 lg:gap-12 w-full flex-1 items-stretch">
 
           {/* LEFT SECTION: Hello, Name, Buttons, and Get in Touch aligned to bottom */}
-          <div className="lg:col-span-6 flex flex-col justify-end text-left space-y-4 pb-2 animate-fade-in">
+          <div className="lg:col-span-6 flex flex-col justify-end text-left space-y-4 pt-10 pb-12 animate-fade-in">
 
             {/* "Hello," text */}
             <motion.div
@@ -244,7 +244,7 @@ export default function Hero({ onOpenResume }: HeroProps) {
               </span>
             </motion.h1>
 
-            {/* Action Buttons - Dark Feel with Glowing Borders & Overlay Hover Effect */}
+            {/* Action Buttons - Greenish with Border & Subtle Non-Glossy Hover */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -253,7 +253,7 @@ export default function Hero({ onOpenResume }: HeroProps) {
             >
               <button
                 onClick={handleScrollToProjects}
-                className="group flex items-center justify-center space-x-2 px-5 py-3 bg-[#BDF869] text-black font-black border-2 border-[#BDF869] rounded-xl text-xs uppercase tracking-wider transition-all duration-300 cursor-pointer w-full sm:w-auto shadow-[0_0_20px_rgba(189,248,105,0.45)] hover:bg-[#BDF869]/85 hover:shadow-[0_0_30px_rgba(189,248,105,0.75)] hover:scale-105 active:scale-95"
+                className="group flex items-center justify-center space-x-2 px-5 py-3 bg-[#BDF869] text-black font-black border-2 border-[#7ecb15] dark:border-[#BDF869] rounded-xl text-xs uppercase tracking-wider transition-all duration-300 cursor-pointer w-full sm:w-auto shadow-sm hover:bg-[#a6ea43] hover:border-black dark:hover:border-white hover:scale-105 active:scale-95"
               >
                 <span>Explore Projects</span>
                 <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-300" />
@@ -367,12 +367,12 @@ export default function Hero({ onOpenResume }: HeroProps) {
             </h1>
           </div>
 
-          {/* About text in Monte Carlo font for mobile - Right Aligned & Small */}
+          {/* About text in Monte Carlo font for mobile - Center Aligned & Small */}
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.15 }}
-            className="px-4 max-w-sm mx-auto text-right"
+            className="px-4 max-w-sm mx-auto text-center"
           >
             <p className="font-monte-carlo italic text-sm sm:text-base text-neutral-200 leading-snug drop-shadow-md select-none">
               "{personalInfo.introduction || "Full Stack Developer specializing in React.js, Node.js, and modern databases — crafting clean user interfaces & scalable web solutions."}"
