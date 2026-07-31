@@ -337,54 +337,57 @@ export default function Hero({ onOpenResume }: HeroProps) {
         </div>
 
         {/* MOBILE / TABLET VIEW: Compact dark background overlay & white text styling to fit 100vh */}
-        <div className="flex lg:hidden flex-col items-center justify-between text-center space-y-1.5 sm:space-y-2 w-full h-full pt-10 pb-4">
+        <div className="flex lg:hidden flex-col items-center justify-between text-center w-full h-full pt-10 pb-4 px-3">
 
-          {/* "Hello," text */}
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-          >
-            <span className="inline-block tracking-[0.3em] font-extrabold scale-y-[1.1] font-serif text-base sm:text-lg italic text-neutral-300/90 block select-none">
-              Hello,
-            </span>
-          </motion.div>
+          {/* Text Content Group - Tightly spaced */}
+          <div className="flex flex-col items-center space-y-1 sm:space-y-1.5 w-full my-auto">
+            {/* "Hello," text */}
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+            >
+              <span className="inline-block tracking-[0.3em] font-extrabold scale-y-[1.1] font-serif text-base sm:text-lg italic text-neutral-300/90 block select-none">
+                Hello,
+              </span>
+            </motion.div>
 
-          {/* 1. Name */}
-          <motion.h1
-            initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="text-2xl sm:text-3xl font-sans font-black tracking-tight text-white leading-none uppercase px-2"
-          >
-            I'M <span className="text-white font-sans font-black">{name || 'DHANISH S.'}</span>
-          </motion.h1>
+            {/* 1. Name */}
+            <motion.h1
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              className="text-2xl sm:text-3xl font-sans font-black tracking-tight text-white leading-none uppercase px-2"
+            >
+              I'M <span className="text-white font-sans font-black">{name || 'DHANISH S.'}</span>
+            </motion.h1>
 
-          {/* 2. Title / Specialization */}
-          <div className="min-h-[38px] flex items-center justify-center px-2 w-full">
-            <h1 className="text-lg sm:text-xl font-sans font-black tracking-tight text-white leading-none uppercase w-full">
-              <CinematicRoles words={typingWords} align="center" />
-            </h1>
+            {/* 2. Title / Specialization */}
+            <div className="flex items-center justify-center px-2 w-full py-0.5">
+              <h1 className="text-lg sm:text-xl font-sans font-black tracking-tight text-white leading-none uppercase w-full">
+                <CinematicRoles words={typingWords} align="center" />
+              </h1>
+            </div>
+
+            {/* About text in Monte Carlo font for mobile - Center Aligned & Small */}
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.15 }}
+              className="px-3 max-w-sm mx-auto text-center pt-1"
+            >
+              <p className="font-monte-carlo italic text-xs sm:text-sm text-neutral-200 leading-snug drop-shadow-md select-none">
+                "{personalInfo.introduction || "Full Stack Developer specializing in React.js, Node.js, and modern databases — crafting clean user interfaces & scalable web solutions."}"
+              </p>
+            </motion.div>
           </div>
-
-          {/* About text in Monte Carlo font for mobile - Center Aligned & Small */}
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.15 }}
-            className="px-3 max-w-sm mx-auto text-center my-0"
-          >
-            <p className="font-monte-carlo italic text-xs sm:text-sm text-neutral-200 leading-snug drop-shadow-md select-none">
-              "{personalInfo.introduction || "Full Stack Developer specializing in React.js, Node.js, and modern databases — crafting clean user interfaces & scalable web solutions."}"
-            </p>
-          </motion.div>
 
           {/* 3. Action Buttons - Dark Feel with Glowing Borders & Overlay Hover Effect */}
           <motion.div
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="flex flex-col sm:flex-row gap-2 w-full max-w-xs sm:max-w-md mx-auto justify-center px-2"
+            className="flex flex-col sm:flex-row gap-2 w-full max-w-xs sm:max-w-md mx-auto justify-center px-2 pt-2"
           >
             <button
               onClick={handleScrollToProjects}
