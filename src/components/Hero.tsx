@@ -337,34 +337,34 @@ export default function Hero({ onOpenResume }: HeroProps) {
         </div>
 
         {/* MOBILE / TABLET VIEW: Compact dark background overlay & white text styling to fit 100vh */}
-        <div className="flex lg:hidden flex-col items-center justify-between text-center w-full h-full pt-10 sm:pt-12 pb-4 px-4 sm:px-6">
+        <div className="flex lg:hidden flex-col items-center justify-center text-center w-full h-full pt-8 sm:pt-10 pb-4 px-4 sm:px-6 gap-3 sm:gap-4 md:gap-5">
 
-          {/* Text Content Group - Balanced responsive spacing */}
-          <div className="flex flex-col items-center space-y-2 sm:space-y-3 md:space-y-3.5 w-full my-auto">
+          {/* Text Content Group - Tightly unified with small controlled gaps */}
+          <div className="flex flex-col items-center space-y-1.5 sm:space-y-2 md:space-y-2.5 w-full">
             {/* "Hello," text */}
             <motion.div
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
             >
-              <span className="inline-block tracking-[0.3em] font-extrabold scale-y-[1.1] font-serif text-sm sm:text-base md:text-lg italic text-neutral-300/90 block select-none">
+              <span className="inline-block tracking-[0.3em] font-extrabold scale-y-[1.1] font-serif text-base sm:text-lg md:text-xl italic text-neutral-300/90 block select-none">
                 Hello,
               </span>
             </motion.div>
 
-            {/* 1. Name */}
+            {/* 1. Name - Increased font size for mobile/tablet */}
             <motion.h1
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
-              className="text-2xl sm:text-3xl md:text-3xl font-sans font-black tracking-tight text-white leading-none uppercase px-2"
+              className="text-3xl sm:text-4xl md:text-5xl font-sans font-black tracking-tight text-white leading-none uppercase px-2"
             >
               I'M <span className="text-white font-sans font-black">{name || 'DHANISH S.'}</span>
             </motion.h1>
 
-            {/* 2. Title / Specialization */}
+            {/* 2. Title / Specialization - Increased font size for mobile/tablet */}
             <div className="flex items-center justify-center px-2 w-full py-0.5">
-              <h1 className="text-base sm:text-lg md:text-xl font-sans font-black tracking-tight text-white leading-none uppercase w-full">
+              <h1 className="text-xl sm:text-2xl md:text-3xl font-sans font-black tracking-tight text-white leading-none uppercase w-full">
                 <CinematicRoles words={typingWords} align="center" />
               </h1>
             </div>
@@ -382,16 +382,16 @@ export default function Hero({ onOpenResume }: HeroProps) {
             </motion.div>
           </div>
 
-          {/* 3. Action Buttons - Dark Feel with Glowing Borders & Overlay Hover Effect */}
+          {/* 3. Action Buttons - Grouped closely below text */}
           <motion.div
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="flex flex-col sm:flex-row gap-2 w-full max-w-xs sm:max-w-md mx-auto justify-center px-2 pt-2"
+            className="flex flex-col sm:flex-row gap-2.5 w-full max-w-xs sm:max-w-md mx-auto justify-center px-2"
           >
             <button
               onClick={handleScrollToProjects}
-              className="group flex items-center justify-center space-x-2 px-4 py-2.5 bg-[#BDF869] text-black font-black border-2 border-[#BDF869] rounded-xl text-xs uppercase tracking-wider transition-all duration-300 cursor-pointer w-full sm:w-auto shadow-[0_0_20px_rgba(189,248,105,0.45)] hover:bg-[#BDF869]/85 hover:shadow-[0_0_30px_rgba(189,248,105,0.75)] hover:scale-105 active:scale-95"
+              className="group flex items-center justify-center space-x-2 px-5 py-2.5 bg-[#BDF869] text-black font-black border-2 border-[#BDF869] rounded-xl text-xs sm:text-sm uppercase tracking-wider transition-all duration-300 cursor-pointer w-full sm:w-auto shadow-[0_0_20px_rgba(189,248,105,0.45)] hover:bg-[#BDF869]/85 hover:shadow-[0_0_30px_rgba(189,248,105,0.75)] hover:scale-105 active:scale-95"
             >
               <span>Explore Projects</span>
               <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-300" />
@@ -399,17 +399,17 @@ export default function Hero({ onOpenResume }: HeroProps) {
 
             <button
               onClick={onOpenResume}
-              className="px-4 py-2.5 rounded-xl text-xs uppercase tracking-wider font-black transition-all duration-300 cursor-pointer w-full sm:w-auto text-center border-2 border-[#BDF869] bg-[#121b0b]/80 backdrop-blur-sm text-[#BDF869] hover:bg-[#BDF869]/25 hover:text-[#BDF869] shadow-[0_0_18px_rgba(189,248,105,0.3)] hover:shadow-[0_0_28px_rgba(189,248,105,0.6)] hover:scale-105 active:scale-95"
+              className="px-5 py-2.5 rounded-xl text-xs sm:text-sm uppercase tracking-wider font-black transition-all duration-300 cursor-pointer w-full sm:w-auto text-center border-2 border-[#BDF869] bg-[#121b0b]/80 backdrop-blur-sm text-[#BDF869] hover:bg-[#BDF869]/25 hover:text-[#BDF869] shadow-[0_0_18px_rgba(189,248,105,0.3)] hover:shadow-[0_0_28px_rgba(189,248,105,0.6)] hover:scale-105 active:scale-95"
             >
               View Resume
             </button>
           </motion.div>
 
-          {/* 4. Links & Contact */}
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-1.5 w-full max-w-sm mx-auto px-2 pt-0.5">
+          {/* 4. Links & Contact - Grouped closely below buttons */}
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-6 w-full max-w-sm sm:max-w-md mx-auto px-2 pt-1">
             <button
               onClick={handleScrollToContact}
-              className="flex items-center space-x-1.5 text-xs uppercase tracking-widest font-black text-[#BDF869] hover:text-white transition-colors cursor-pointer group"
+              className="flex items-center space-x-1.5 text-xs sm:text-sm uppercase tracking-widest font-black text-[#BDF869] hover:text-white transition-colors cursor-pointer group"
             >
               <span>Get in Touch</span>
               <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
