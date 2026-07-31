@@ -337,17 +337,17 @@ export default function Hero({ onOpenResume }: HeroProps) {
         </div>
 
         {/* MOBILE / TABLET VIEW: Compact dark background overlay & white text styling to fit 100vh */}
-        <div className="flex lg:hidden flex-col items-center justify-between text-center w-full h-full pt-10 pb-4 px-3">
+        <div className="flex lg:hidden flex-col items-center justify-between text-center w-full h-full pt-10 sm:pt-12 pb-4 px-4 sm:px-6">
 
-          {/* Text Content Group - Tightly spaced */}
-          <div className="flex flex-col items-center space-y-1 sm:space-y-1.5 w-full my-auto">
+          {/* Text Content Group - Balanced responsive spacing */}
+          <div className="flex flex-col items-center space-y-2 sm:space-y-3 md:space-y-3.5 w-full my-auto">
             {/* "Hello," text */}
             <motion.div
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
             >
-              <span className="inline-block tracking-[0.3em] font-extrabold scale-y-[1.1] font-serif text-base sm:text-lg italic text-neutral-300/90 block select-none">
+              <span className="inline-block tracking-[0.3em] font-extrabold scale-y-[1.1] font-serif text-sm sm:text-base md:text-lg italic text-neutral-300/90 block select-none">
                 Hello,
               </span>
             </motion.div>
@@ -357,26 +357,26 @@ export default function Hero({ onOpenResume }: HeroProps) {
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
-              className="text-2xl sm:text-3xl font-sans font-black tracking-tight text-white leading-none uppercase px-2"
+              className="text-2xl sm:text-3xl md:text-3xl font-sans font-black tracking-tight text-white leading-none uppercase px-2"
             >
               I'M <span className="text-white font-sans font-black">{name || 'DHANISH S.'}</span>
             </motion.h1>
 
             {/* 2. Title / Specialization */}
             <div className="flex items-center justify-center px-2 w-full py-0.5">
-              <h1 className="text-lg sm:text-xl font-sans font-black tracking-tight text-white leading-none uppercase w-full">
+              <h1 className="text-base sm:text-lg md:text-xl font-sans font-black tracking-tight text-white leading-none uppercase w-full">
                 <CinematicRoles words={typingWords} align="center" />
               </h1>
             </div>
 
-            {/* About text in Monte Carlo font for mobile - Center Aligned & Small */}
+            {/* About text in Monte Carlo font for mobile/tablet - Center Aligned & Small */}
             <motion.div
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.15 }}
-              className="px-3 max-w-sm mx-auto text-center pt-1"
+              className="px-3 max-w-xs sm:max-w-md md:max-w-lg mx-auto text-center pt-0.5"
             >
-              <p className="font-monte-carlo italic text-xs sm:text-sm text-neutral-200 leading-snug drop-shadow-md select-none">
+              <p className="font-monte-carlo italic text-xs sm:text-sm md:text-base text-neutral-200 leading-snug drop-shadow-md select-none">
                 "{personalInfo.introduction || "Full Stack Developer specializing in React.js, Node.js, and modern databases — crafting clean user interfaces & scalable web solutions."}"
               </p>
             </motion.div>
