@@ -236,10 +236,10 @@ export default function Hero({ onOpenResume }: HeroProps) {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-              className="text-3xl sm:text-4xl lg:text-[2.6rem] xl:text-[3.2rem] font-sans font-black tracking-tight text-black dark:text-white leading-[1.05] uppercase"
+              className="text-3xl sm:text-4xl lg:text-[2.6rem] xl:text-[3.2rem] font-sans font-black tracking-tight text-[#111a0e] dark:text-white leading-[1.05] uppercase"
             >
               I'M <br />
-              <span className="text-black dark:text-white font-sans font-black">
+              <span className="text-[#111a0e] dark:text-white font-sans font-black">
                 {name || 'DHANISH S.'}
               </span>
             </motion.h1>
@@ -275,7 +275,7 @@ export default function Hero({ onOpenResume }: HeroProps) {
             {/* Specialization Title Animation */}
             <div className="space-y-1 text-right pt-2 lg:pt-3">
               <div className="flex items-start justify-end pb-1">
-                <h1 className="text-xl sm:text-2xl lg:text-[2.6rem] xl:text-[3.0rem] font-sans font-black text-black dark:text-white leading-[1.08] uppercase max-w-md w-full tracking-tight">
+                <h1 className="text-xl sm:text-2xl lg:text-[2.6rem] xl:text-[3.0rem] font-sans font-black text-[#111a0e] dark:text-white leading-[1.08] uppercase max-w-md w-full tracking-tight">
                   <CinematicRoles words={typingWords} align="right" />
                 </h1>
               </div>
@@ -288,7 +288,7 @@ export default function Hero({ onOpenResume }: HeroProps) {
               transition={{ duration: 0.8, delay: 0.25 }}
               className="my-auto py-0.5 text-right max-w-sm ml-auto space-y-0.5"
             >
-              <p className="font-monte-carlo italic text-base lg:text-lg xl:text-xl leading-snug text-black/90 dark:text-neutral-200 drop-shadow-sm select-none">
+              <p className="font-monte-carlo italic text-base lg:text-lg xl:text-xl leading-snug text-[#111a0e]/90 dark:text-neutral-200 drop-shadow-sm select-none">
                 "{personalInfo.introduction || "Full Stack Developer specializing in React.js, Node.js, and modern databases — crafting clean user interfaces & scalable web solutions."}"
               </p>
             </motion.div>
@@ -297,7 +297,7 @@ export default function Hero({ onOpenResume }: HeroProps) {
             <div className="flex flex-col items-end gap-2.5 pt-1">
               <button
                 onClick={handleScrollToContact}
-                className="flex items-center space-x-2 text-xs lg:text-sm uppercase tracking-widest font-black text-black hover:text-lime-700 dark:text-[#BDF869] dark:hover:text-white transition-colors cursor-pointer group"
+                className="flex items-center space-x-2 text-xs lg:text-sm uppercase tracking-widest font-black text-[#111a0e] hover:text-lime-700 dark:text-[#BDF869] dark:hover:text-white transition-colors cursor-pointer group"
               >
                 <span>Get in Touch</span>
                 <ArrowUpRight className="w-4 h-4 lg:w-4.5 lg:h-4.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
